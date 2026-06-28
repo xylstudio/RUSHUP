@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xylem - ไม่มีเน็ต</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #FDFDFB 0%, #F7F7F2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .container {
+      background: white;
+      border-radius: 2.5rem;
+      padding: 3rem;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    .icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      color: #1a1a1a;
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: #70706b;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .info-box {
+      background: #f7f7f2;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid #2a4532;
+    }
+
+    .info-box p {
+      color: #70706b;
+      font-size: 0.9rem;
+      margin: 0.5rem 0;
+      text-align: left;
+    }
+
+    .button {
+      display: inline-block;
+      background: #1a1a1a;
+      color: white;
+      padding: 0.75rem 2rem;
+      border-radius: 2rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .button:hover {
+      background: #2a2a2a;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .retry-text {
+      color: #b5b5b0;
+      font-size: 0.85rem;
+      margin-top: 2rem;
+    }
+
+    .cached-pages {
+      text-align: left;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e5e5df;
+    }
+
+    .cached-pages h3 {
+      color: #1a1a1a;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .cached-pages ul {
+      list-style: none;
+    }
+
+    .cached-pages li {
+      padding: 0.5rem 0;
+      color: #70706b;
+      font-size: 0.9rem;
+    }
+
+    .cached-pages a {
+      color: #2a4532;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .cached-pages a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">📡</div>
+    <h1>ไม่มีเน็ตสัญญาณ</h1>
+    <p class="subtitle">
+      ดูเหมือนว่าคุณปิดการเชื่อมต่อจากอินเทอร์เน็ต 
+      โปรดตรวจสอบการเชื่อมต่อและลองอีกครั้ง
+    </p>
+
+    <div class="info-box">
+      <p>
+        💡 <strong>ข่าวดี:</strong> แอปพลิเคชัน Xylem มีการจัดเก็บข้อมูลบางส่วน 
+        คุณสามารถดูข้อมูลที่เก็บไว้ได้
+      </p>
+    </div>
+
+    <button class="button" onclick="reloadPage()">
+      ลองใหม่อีกครั้ง
+    </button>
+
+    <p class="retry-text">
+      การเชื่อมต่ออินเทอร์เน็ตจะถูกตรวจสอบชาติละครั้ง
+    </p>
+
+    <div class="cached-pages">
+      <h3>📖 หน้าที่มีบันทึกไว้</h3>
+      <ul>
+        <li>
+          <a href="/" onclick="loadPage('/')">หน้าแรก</a>
+        </li>
+        <li text-gray-600>
+          ข้อมูลอื่นๆ จะปรากฏเมื่อคุณเยี่ยมชมในการเชื่อมต่อแรก
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function reloadPage() {
+      location.reload()
+    }
+
+    function loadPage(url) {
+      window.location.href = url
+    }
+
+    // Auto-check connection every 3 seconds
+    setInterval(() => {
+      fetch('/api/health', { method: 'HEAD' })
+        .then(() => {
+          // Connection restored
+          console.log('Connection restored')
+          location.reload()
+        })
+        .catch(() => {
+          // Still offline
+        })
+    }, 3000)
+  </script>
+</body>
+</html>

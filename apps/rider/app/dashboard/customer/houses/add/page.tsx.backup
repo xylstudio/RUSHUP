@@ -1,0 +1,1058 @@
+'use client'
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../../../../../lib/AuthContext';
+import { findBranchByZipCode, createHouse, createMeasurementRequest } from '../../../../../lib/supabaseClient';
+import { validateHouseForm } from '@/lib/validation';
+import { FormInput } from '@/components/ui/FormInput';
+import { useToastContext } from '@/components/Toast';
+import GoogleMapsLocationPicker from '../../../../../components/GoogleMapsLocationPicker';
+import {
+  HomeIcon,
+  MapPinIcon,
+  KeyIcon,
+  ExclamationCircleIcon,
+  CheckCircleIcon,
+  Square3Stack3DIcon,
+  CalendarDaysIcon,
+  UserIcon,
+  PhoneIcon,
+  EnvelopeIcon,
+  ClipboardDocumentListIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  BuildingOffice2Icon,
+  PlusIcon,
+  ClockIcon,
+} from "@heroicons/react/24/solid";
+
+const WEEKDAYS = [
+  "จันทร์",
+  "อังคาร",
+  "พุธ",
+  "พฤหัส",
+  "ศุกร์",
+  "เสาร์",
+  "อาทิตย์",
+];
+
+const steps = [
+  { label: "ข้อมูลพื้นฐาน", icon: <HomeIcon className="w-5 h-5" /> },
+  { label: "ที่อยู่และรายละเอียด", icon: <MapPinIcon className="w-5 h-5" /> },
+  { label: "การเข้าถึงและการตั้งค่า", icon: <KeyIcon className="w-5 h-5" /> },
+];
+
+// Helper function to calculate duration between two times
+const calculateDuration = (startTime: string, endTime: string): string => {
+  if (!startTime || !endTime) return '';
+  
+  const [startHour, startMin] = startTime.split(':').map(Number);
+  const [endHour, endMin] = endTime.split(':').map(Number);
+  
+  const startInMinutes = startHour * 60 + startMin;
+  const endInMinutes = endHour * 60 + endMin;
+  
+  const diffInMinutes = endInMinutes - startInMinutes;
+  
+  if (diffInMinutes <= 0) return 'ไม่ถูกต้อง';
+  
+  const hours = Math.floor(diffInMinutes / 60);
+  const minutes = diffInMinutes % 60;
+  
+  if (hours === 0) return `${minutes} นาที`;
+  if (minutes === 0) return `${hours} ชั่วโมง`;
+  return `${hours} ชั่วโมง ${minutes} นาที`;
+};
+
+export default function AddHousePage() {
+  const router = useRouter();
+  const { profile } = useAuth();
+  const { success, error: showError } = useToastContext();
+  
+  // State
+  const [step, setStep] = useState(0);
+  const [houseName, setHouseName] = useState('');
+  const [address, setAddress] = useState('');
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
+  const [showMapPicker, setShowMapPicker] = useState(false);
+  const [areaSize, setAreaSize] = useState<number | ''>('');
+  const [keyLocation, setKeyLocation] = useState('');
+  const [zipCode, setZipCode] = useState('');
+  const [branchCode, setBranchCode] = useState('');
+  const [branchName, setBranchName] = useState('');
+  const [branchLookupError, setBranchLookupError] = useState<string | null>(null);
+  const [serviceDays, setServiceDays] = useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // ข้อมูลติดต่อ
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [contactPerson, setContactPerson] = useState('');
+
+  // ข้อมูลบ้านเพิ่มเติม
+  const [houseType, setHouseType] = useState('');
+  const [specialNotes, setSpecialNotes] = useState('');
+
+  // ข้อมูลการเข้าถึง
+  const [parkingAvailable, setParkingAvailable] = useState(false);
+  const [parkingSpaces, setParkingSpaces] = useState<number | ''>('');
+
+  // ข้อมูลการร้องขอวัดพื้นที่
+  const [needsMeasurement, setNeedsMeasurement] = useState(false);
+  const [measurementNotes, setMeasurementNotes] = useState('');
+  const [preferredMeasurementDate, setPreferredMeasurementDate] = useState('');
+  const [preferredTimeStart, setPreferredTimeStart] = useState('');
+  const [preferredTimeEnd, setPreferredTimeEnd] = useState('');
+  const [timeError, setTimeError] = useState('');
+  const [isSubmittingMeasurement, setIsSubmittingMeasurement] = useState(false);
+
+  // Time validation
+  const validateTimeSelection = (start: string, end: string) => {
+    if (!start || !end) {
+      setTimeError('');
+      return true;
+    }
+    
+    const [startHour, startMin] = start.split(':').map(Number);
+    const [endHour, endMin] = end.split(':').map(Number);
+    
+    const startInMinutes = startHour * 60 + startMin;
+    const endInMinutes = endHour * 60 + endMin;
+    
+    if (endInMinutes <= startInMinutes) {
+      setTimeError('เวลาสิ้นสุดต้องมากกว่าเวลาเริ่ม');
+      return false;
+    }
+    
+    if (endInMinutes - startInMinutes < 30) {
+      setTimeError('ระยะเวลาขั้นต่ำ 30 นาที');
+      return false;
+    }
+    
+    if (endInMinutes - startInMinutes > 240) { // 4 hours
+      setTimeError('ระยะเวลาสูงสุด 4 ชั่วโมง');
+      return false;
+    }
+    
+    setTimeError('');
+    return true;
+  };
+
+  // Handle time changes with validation
+  const handleTimeStartChange = (time: string) => {
+    setPreferredTimeStart(time);
+    if (preferredTimeEnd) {
+      validateTimeSelection(time, preferredTimeEnd);
+    }
+  };
+
+  const handleTimeEndChange = (time: string) => {
+    setPreferredTimeEnd(time);
+    if (preferredTimeStart) {
+      validateTimeSelection(preferredTimeStart, time);
+    }
+  };
+
+  // Field validation states
+  const [fieldStates, setFieldStates] = useState<{ [key: string]: { hasBeenTouched: boolean; hasBeenBlurred: boolean; isCurrentlyFocused: boolean; lastValidatedValue: any } }>({
+    phoneNumber: { hasBeenTouched: false, hasBeenBlurred: false, isCurrentlyFocused: false, lastValidatedValue: null },
+    houseName: { hasBeenTouched: false, hasBeenBlurred: false, isCurrentlyFocused: false, lastValidatedValue: null },
+    zipCode: { hasBeenTouched: false, hasBeenBlurred: false, isCurrentlyFocused: false, lastValidatedValue: null },
+    specialNotes: { hasBeenTouched: false, hasBeenBlurred: false, isCurrentlyFocused: false, lastValidatedValue: null },
+  });
+  const [fieldErrors, setFieldErrors] = useState<{ [key: string]: { message: string; type: 'error' | 'warning' } }>({});
+
+  // Helper functions for field state management
+  const updateFieldState = (fieldName: string, value: any) => {
+    setFieldStates(prev => ({
+      ...prev,
+      [fieldName]: {
+        ...prev[fieldName],
+        lastValidatedValue: value,
+        hasBeenTouched: true
+      }
+    }));
+  };
+
+  const markFieldAsBlurred = (fieldName: string) => {
+    setFieldStates(prev => ({
+      ...prev,
+      [fieldName]: {
+        ...prev[fieldName],
+        hasBeenBlurred: true,
+        isCurrentlyFocused: false
+      }
+    }));
+  };
+
+  // Form data for validation
+  const formData = {
+    houseName,
+    address: address || '',
+    zipCode,
+    phoneNumber,
+    specialNotes
+  };
+
+  // สร้าง error messages สำหรับแต่ละ field
+  const getFieldError = (fieldName: string) => {
+    // แสดง error เฉพาะเมื่อ field ถูก blur แล้ว หรือเมื่อกดบันทึกแล้ว
+    const fieldState = fieldStates[fieldName];
+    if (!fieldState?.hasBeenBlurred && !isSubmitting) {
+      return undefined;
+    }
+
+    if (fieldName === 'houseName' && !houseName.trim()) {
+      return 'กรุณากรอกชื่อบ้าน';
+    }
+    if (fieldName === 'phoneNumber' && !phoneNumber.trim()) {
+      return 'กรุณากรอกเบอร์ติดต่อ';
+    }
+    if (fieldName === 'address' && !address.trim()) {
+      return 'กรุณากรอกที่อยู่';
+    }
+    if (fieldName === 'zipCode' && !zipCode.trim()) {
+      return 'กรุณากรอกรหัสไปรษณีย์';
+    }
+    return fieldErrors[fieldName]?.message;
+  };
+
+  // ตรวจสอบว่าฟอร์มไม่สมบูรณ์ (สำหรับแสดง error เมื่อกดบันทึก)
+  const getFormErrors = () => {
+    const errors = [];
+    if (!houseName.trim()) {
+      errors.push({ field: 'houseName', message: 'กรุณากรอกชื่อบ้าน' });
+    }
+    if (!phoneNumber.trim()) {
+      errors.push({ field: 'phoneNumber', message: 'กรุณากรอกเบอร์ติดต่อ' });
+    }
+    if (!address.trim()) {
+      errors.push({ field: 'address', message: 'กรุณากรอกที่อยู่' });
+    }
+    if (!zipCode.trim()) {
+      errors.push({ field: 'zipCode', message: 'กรุณากรอกรหัสไปรษณีย์' });
+    }
+    return errors;
+  };
+
+  // ตรวจสอบว่าฟอร์มไม่สมบูรณ์หรือมี error (สำหรับปุ่มบันทึก)
+  const isFormInvalid =
+    !houseName.trim() ||
+    !phoneNumber.trim() ||
+    !address.trim() ||
+    !zipCode.trim() ||
+    !!fieldErrors['houseName'] ||
+    !!fieldErrors['phoneNumber'] ||
+    !!fieldErrors['address'] ||
+    !!fieldErrors['zipCode'];
+
+  // Google Maps Autofill (placeholder)
+  const handleGoogleMapsAutofill = () => {
+    setAddress("123 ถนนสุขุมวิท, แขวงบางนา เขตบางนา กรุงเทพฯ");
+  };
+
+  const handleZipCodeBlur = async () => {
+    setBranchLookupError(null);
+    setBranchCode('');
+    setBranchName('');
+    if (zipCode.trim().length === 0) return;
+    const { data, error } = await findBranchByZipCode(zipCode.trim());
+    if (error || !data) {
+      setBranchCode('');
+      setBranchName('');
+      setBranchLookupError('ไม่พบสาขาที่ให้บริการรหัสไปรษณีย์นี้');
+    } else {
+      setBranchCode(data.branch_code);
+      setBranchName(data.branch_name);
+    }
+  };
+
+  const handleLocationSelect = (location: { lat: number; lng: number; address: string }) => {
+    setLatitude(location.lat);
+    setLongitude(location.lng);
+    setAddress(location.address);
+    updateFieldState('address', location.address);
+  };
+
+  const handleServiceDayToggle = (day: string) => {
+    setServiceDays((prev) =>
+      prev.includes(day) ? prev.filter((d) => d !== day) : [...prev, day]
+    );
+  };
+
+  // จัดการ submit form
+  const handleFormSubmit = async () => {
+    if (isSubmitting) return;
+    
+    // ตรวจสอบข้อมูลที่จำเป็น
+    const formErrors = getFormErrors();
+    if (formErrors.length > 0) {
+      // แสดง error และเด้งไปที่ field แรกที่มีปัญหา
+      const firstError = formErrors[0];
+      showError(`กรุณากรอกข้อมูลให้ครบถ้วน: ${firstError.message}`);
+      
+      // Mark field as blurred เพื่อแสดง error
+      markFieldAsBlurred(firstError.field);
+      
+      // Focus ไปที่ field ที่มีปัญหา
+      setTimeout(() => {
+        const element = document.getElementById(firstError.field);
+        if (element) {
+          element.focus();
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 100);
+      
+      return;
+    }
+    
+    setIsSubmitting(true);
+    setBranchLookupError(null);
+    
+    if (!profile) {
+      showError("ไม่พบข้อมูลผู้ใช้ โปรดเข้าสู่ระบบใหม่");
+      setIsSubmitting(false);
+      return;
+    }
+    
+    if (!branchCode) {
+      setBranchLookupError('กรุณากรอกรหัสไปรษณีย์ที่อยู่ในเขตบริการ');
+      showError('ไม่พบสาขาที่ให้บริการรหัสไปรษณีย์นี้');
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      // สร้าง house_code จากข้อมูลที่มี
+      const houseCode = `${branchCode}-${Date.now()}`;
+      
+      // ใช้ฟังก์ชัน createHouse จาก supabaseClient
+      const { data, error } = await createHouse({
+        user_id: profile.id,
+        name: houseName || 'บ้านของฉัน',
+        address,
+        latitude,
+        longitude,
+        zip_code: zipCode,
+        branch_code: branchCode,
+        phone_number: phoneNumber,
+        contact_person: contactPerson,
+        house_type: houseType,
+        special_notes: specialNotes,
+        parking_available: parkingAvailable,
+        parking_spaces: parkingSpaces ? parseInt(parkingSpaces.toString()) : undefined,
+        area_size: areaSize ? parseInt(areaSize.toString()) : undefined,
+        key_location: keyLocation,
+        service_days: serviceDays,
+        house_code: houseCode,
+      });
+
+      if (error) {
+        showError("เกิดข้อผิดพลาดในการเพิ่มบ้าน: " + error.message);
+      } else {
+        // สร้างคำขอการวัดพื้นที่หากลูกค้าเลือก
+        if (needsMeasurement && data) {
+          try {
+            const measurementRequestData = {
+              house_id: data.id,
+              customer_id: profile.id,
+              request_type: 'initial_measurement' as const,
+              special_instructions: measurementNotes || null,
+              preferred_date: preferredMeasurementDate || null,
+              preferred_time_start: preferredTimeStart || null,
+              preferred_time_end: preferredTimeEnd || null,
+              priority_level: 'normal' as const,
+              branch_code: branchCode
+            };
+            
+            const { error: measurementError } = await createMeasurementRequest(measurementRequestData);
+            
+            if (measurementError) {
+              showError("เพิ่มบ้านสำเร็จ แต่เกิดข้อผิดพลาดในการส่งคำขอวัดพื้นที่: " + measurementError.message);
+            } else {
+              success("เพิ่มบ้านและส่งคำขอการวัดพื้นที่สำเร็จแล้ว! ทีมงานจะติดต่อกลับภายใน 24 ชั่วโมง");
+            }
+          } catch (measurementErr: any) {
+            showError("เพิ่มบ้านสำเร็จ แต่เกิดข้อผิดพลาดในการส่งคำขอวัดพื้นที่: " + measurementErr.message);
+          }
+        } else {
+          success("เพิ่มบ้านใหม่สำเร็จแล้ว!");
+        }
+        
+        setTimeout(() => router.push('/dashboard/customer/houses'), 1500);
+      }
+    } catch (err: any) {
+      showError("เกิดข้อผิดพลาดที่ไม่คาดคิด: " + err.message);
+    }
+    
+    setIsSubmitting(false);
+  };
+
+  // ฟังก์ชันสำหรับการส่งคำขอการวัดพื้นที่แยกต่างหาก
+  const handleMeasurementRequest = async (houseId?: string) => {
+    if (!profile) {
+      showError("ไม่พบข้อมูลผู้ใช้ โปรดเข้าสู่ระบบใหม่");
+      return;
+    }
+
+    setIsSubmittingMeasurement(true);
+    
+    try {
+      const measurementRequestData = {
+        house_id: houseId || '', // จะต้องมี houseId ถ้าเรียกแยก
+        customer_id: profile.id,
+        request_type: 'initial_measurement' as const,
+        special_instructions: measurementNotes || null,
+        preferred_date: preferredMeasurementDate || null,
+        preferred_time_start: preferredTimeStart || null,
+        preferred_time_end: preferredTimeEnd || null,
+        priority_level: 'normal' as const,
+        branch_code: branchCode
+      };
+      
+      const { data, error } = await createMeasurementRequest(measurementRequestData);
+      
+      if (error) {
+        showError("เกิดข้อผิดพลาดในการส่งคำขอวัดพื้นที่: " + error.message);
+      } else {
+        success("ส่งคำขอการวัดพื้นที่สำเร็จแล้ว! ทีมงานจะติดต่อกลับภายใน 24 ชั่วโมง");
+      }
+    } catch (err: any) {
+      showError("เกิดข้อผิดพลาดที่ไม่คาดคิด: " + err.message);
+    }
+    
+    setIsSubmittingMeasurement(false);
+  };
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+      {/* Header */}
+      <div className="mb-8">
+        <a
+          href="/dashboard/customer/houses"
+          className="text-green-600 hover:text-green-700 mb-4 inline-flex items-center gap-2 text-sm md:text-base"
+        >
+          ← กลับไปหน้าบ้าน
+        </a>
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2">เพิ่มบ้านใหม่</h1>
+            <p className="text-gray-600 text-base md:text-lg">กรอกข้อมูลบ้านเพื่อเริ่มใช้บริการ</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content Card */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sm:p-6 md:p-8">
+        <form onSubmit={e => { e.preventDefault(); handleFormSubmit(); }}>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 md:gap-8 lg:gap-12">
+            {/* Left Column - ข้อมูลสำคัญ */}
+            <div className="space-y-6 md:space-y-8">
+              {/* ข้อมูลติดต่อหลัก */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <HomeIcon className="w-6 h-6 text-xylem-dark" />
+                  <h2 className="text-xl font-semibold text-gray-900">ข้อมูลพื้นฐาน</h2>
+                </div>
+                
+                <div className="space-y-6">
+                  <FormInput
+                    label="ชื่อบ้าน"
+                    name="houseName"
+                    type="text"
+                    value={houseName}
+                    onChange={(value) => {
+                      setHouseName(value);
+                      updateFieldState('houseName', value);
+                    }}
+                    onBlur={() => markFieldAsBlurred('houseName')}
+                    error={getFieldError('houseName')}
+                    placeholder="เช่น บ้านคุณแม่, บ้านพักตากอากาศ"
+                    maxLength={100}
+                    required={true}
+                  />
+
+                  <FormInput
+                    label="เบอร์ติดต่อ"
+                    name="phoneNumber"
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(value) => {
+                      setPhoneNumber(value);
+                      updateFieldState('phoneNumber', value);
+                    }}
+                    onBlur={() => markFieldAsBlurred('phoneNumber')}
+                    error={getFieldError('phoneNumber')}
+                    placeholder="เช่น 081-234-5678"
+                    maxLength={15}
+                    required={true}
+                  />
+
+                  <FormInput
+                    label="ชื่อผู้ติดต่อ"
+                    name="contactPerson"
+                    type="text"
+                    value={contactPerson}
+                    onChange={setContactPerson}
+                    placeholder="ชื่อผู้ติดต่อหรือผู้ดูแลบ้าน"
+                    maxLength={100}
+                  />
+
+                  <div className="space-y-4">
+                    <FormInput
+                      label="ที่อยู่"
+                      name="address"
+                      type="textarea"
+                      value={address}
+                      onChange={(value) => {
+                        setAddress(value);
+                        updateFieldState('address', value);
+                      }}
+                      onBlur={() => markFieldAsBlurred('address')}
+                      error={getFieldError('address')}
+                      placeholder="ที่อยู่บ้าน เช่น 123 ถนนสุขุมวิท, แขวงบางนา เขตบางนา กรุงเทพฯ"
+                      maxLength={500}
+                      rows={3}
+                      required={true}
+                    />
+                    
+                    {/* Google Maps Integration */}
+                    <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                      <div className="flex items-center gap-2 text-sm text-gray-700">
+                        <MapPinIcon className="w-4 h-4" />
+                        <span className="font-medium">ตำแหน่งบนแผนที่</span>
+                      </div>
+                      
+                      <div className="space-y-3">
+                        <button
+                          type="button"
+                          onClick={() => setShowMapPicker(true)}
+                          className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 text-sm font-medium shadow-md hover:shadow-lg transform hover:scale-105"
+                        >
+                          <MapPinIcon className="w-5 h-5" />
+                          <span>เลือกตำแหน่งจาก Google Maps</span>
+                        </button>
+                        
+                        {latitude && longitude ? (
+                          <div className="bg-green-50 border border-green-200 rounded-lg p-3 space-y-2">
+                            <div className="flex items-center gap-2">
+                              <CheckCircleIcon className="w-5 h-5 text-green-600" />
+                              <span className="text-green-800 font-medium text-sm">ตำแหน่งถูกบันทึกแล้ว</span>
+                            </div>
+                            <div className="ml-7 space-y-1">
+                              <p className="text-green-700 text-xs">
+                                <span className="font-medium">พิกัด:</span> {latitude.toFixed(6)}, {longitude.toFixed(6)}
+                              </p>
+                              <p className="text-green-600 text-xs">
+                                ✓ ตำแหน่งนี้จะช่วยให้ทีมงานหาบ้านได้ง่ายขึ้น
+                              </p>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                            <div className="flex items-start gap-2">
+                              <ExclamationCircleIcon className="w-4 h-4 text-yellow-600 mt-0.5" />
+                              <div className="text-yellow-700 text-xs">
+                                <p className="font-medium mb-1">ยังไม่ได้เลือกตำแหน่ง</p>
+                                <p>การเลือกตำแหน่งบนแผนที่จะช่วยให้ทีมงานสามารถหาบ้านของคุณได้แม่นยำขึ้น</p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <div className="flex-1">
+                      <FormInput
+                        label="รหัสไปรษณีย์"
+                        name="zipCode"
+                        type="text"
+                        value={zipCode}
+                        onChange={(value) => {
+                          setZipCode(value);
+                          updateFieldState('zipCode', value);
+                        }}
+                        onBlur={() => {
+                          markFieldAsBlurred('zipCode');
+                          handleZipCodeBlur();
+                        }}
+                        error={getFieldError('zipCode') || branchLookupError || undefined}
+                        placeholder="เช่น 10260"
+                        maxLength={5}
+                        required={true}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">สาขา</label>
+                      <input 
+                        type="text" 
+                        value={branchName} 
+                        readOnly 
+                        className="w-full px-3 py-2.5 border border-gray-200 bg-gray-50 rounded-lg text-sm" 
+                        placeholder="จะแสดงอัตโนมัติ"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-100 pt-8">
+                {/* ข้อมูลบ้าน */}
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-3">ประเภทบ้าน</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {['บ้านเดี่ยว','คาเฟ่/ร้านอาหาร','โรงแรม/รีสอร์ท','โครงการหมู่บ้าน/คอนโด'].map(type => (
+                        <button 
+                          type="button" 
+                          key={type} 
+                          onClick={()=>setHouseType(type)} 
+                          className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm transition-colors ${
+                            houseType===type
+                              ?'border-xylem-dark bg-xylem-dark/10 text-xylem-dark'
+                              :'border-gray-300 bg-white text-gray-700 hover:border-xylem-medium'
+                          }`}
+                        >
+                          <BuildingOffice2Icon className="w-4 h-4 flex-shrink-0" /> 
+                          <span className="truncate">{type}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <FormInput
+                    label="ขนาดพื้นที่ (ตร.ม.)"
+                    name="areaSize"
+                    type="number"
+                    value={areaSize === '' ? '' : String(areaSize)}
+                    onChange={(value) => setAreaSize(value === '' ? '' : Number(value))}
+                    placeholder="เช่น 150"
+                    min={0}
+                  />
+
+                  {/* การร้องขอการวัดพื้นที่ */}
+                  <div className="border border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-4 md:p-6 shadow-sm">
+                    <div className="flex flex-col sm:flex-row sm:items-start gap-3">
+                      <div className="flex-shrink-0">
+                        <Square3Stack3DIcon className="w-6 h-6 text-blue-600" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+                          <h3 className="text-lg font-semibold text-blue-900">
+                            ต้องการให้ทีมงานมาวัดพื้นที่ให้หรือไม่?
+                          </h3>
+                          <label className="relative inline-flex items-center cursor-pointer">
+                            <input
+                              type="checkbox"
+                              className="sr-only peer"
+                              checked={needsMeasurement}
+                              onChange={(e) => setNeedsMeasurement(e.target.checked)}
+                            />
+                            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                          </label>
+                        </div>
+                        <p className="text-sm text-blue-700 mb-4">
+                          ทีมงานมืออาชีพของเราจะมาวัดพื้นที่อย่างแม่นยำเพื่อให้คุณได้รับบริการที่ตรงตามความต้องการ 
+                          <span className="font-semibold"> (ฟรี!)</span>
+                        </p>
+
+                        {needsMeasurement && (
+                          <div className="space-y-4 border-t border-blue-200 pt-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-sm font-medium text-blue-800 mb-2">
+                                  <CalendarDaysIcon className="w-4 h-4 inline mr-1" />
+                                  วันที่ต้องการ
+                                </label>
+                                <input
+                                  type="date"
+                                  value={preferredMeasurementDate}
+                                  onChange={(e) => setPreferredMeasurementDate(e.target.value)}
+                                  min={new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0]}
+                                  className="w-full px-3 py-2.5 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white"
+                                />
+                              </div>
+                              
+                              {/* Quick Time Presets */}
+                              <div className="col-span-full">
+                                <label className="block text-sm font-medium text-blue-800 mb-2">
+                                  <ClockIcon className="w-4 h-4 inline mr-1" />
+                                  ช่วงเวลายอดนิยม
+                                </label>
+                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                  {[
+                                    { label: 'เช้า 8:00-10:00', start: '08:00', end: '10:00', icon: '🌅' },
+                                    { label: 'เช้า 9:00-11:00', start: '09:00', end: '11:00', icon: '🌅' },
+                                    { label: 'บ่าย 13:00-15:00', start: '13:00', end: '15:00', icon: '🕐' },
+                                    { label: 'บ่าย 14:00-16:00', start: '14:00', end: '16:00', icon: '🕐' },
+                                  ].map((preset) => (
+                                    <button
+                                      key={preset.label}
+                                      type="button"
+                                      onClick={() => {
+                                        handleTimeStartChange(preset.start);
+                                        handleTimeEndChange(preset.end);
+                                      }}
+                                      className={`p-2 rounded-lg border text-xs font-medium transition-all duration-200 ${
+                                        preferredTimeStart === preset.start && preferredTimeEnd === preset.end
+                                          ? 'border-blue-500 bg-blue-500 text-white shadow-md'
+                                          : 'border-blue-200 bg-white text-blue-700 hover:border-blue-300 hover:bg-blue-50'
+                                      }`}
+                                    >
+                                      <div className="flex flex-col items-center gap-1">
+                                        <span className="text-lg">{preset.icon}</span>
+                                        <span className="leading-tight">{preset.label}</span>
+                                      </div>
+                                    </button>
+                                  ))}
+                                </div>
+                                <p className="text-xs text-blue-600 mt-2">
+                                  💡 คลิกเพื่อเลือกช่วงเวลาที่แนะนำ หรือปรับแต่งเองข้างล่าง
+                                </p>
+                              </div>
+                              
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                  <label className="block text-sm font-medium text-blue-800 mb-2">
+                                    <ClockIcon className="w-4 h-4 inline mr-1" />
+                                    เวลาเริ่ม
+                                  </label>
+                                  <div className="relative">
+                                    <select
+                                      value={preferredTimeStart}
+                                      onChange={(e) => handleTimeStartChange(e.target.value)}
+                                      className="w-full px-3 py-2.5 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white appearance-none cursor-pointer"
+                                    >
+                                      <option value="">เลือกเวลาเริ่ม</option>
+                                      <optgroup label="🌅 ช่วงเช้า">
+                                        <option value="07:00">07:00 น. (เช้ามาก)</option>
+                                        <option value="07:30">07:30 น.</option>
+                                        <option value="08:00">08:00 น. (แนะนำ)</option>
+                                        <option value="08:30">08:30 น.</option>
+                                        <option value="09:00">09:00 น. (แนะนำ)</option>
+                                        <option value="09:30">09:30 น.</option>
+                                        <option value="10:00">10:00 น.</option>
+                                        <option value="10:30">10:30 น.</option>
+                                        <option value="11:00">11:00 น.</option>
+                                        <option value="11:30">11:30 น.</option>
+                                      </optgroup>
+                                      <optgroup label="🕐 ช่วงบ่าย">
+                                        <option value="13:00">13:00 น. (แนะนำ)</option>
+                                        <option value="13:30">13:30 น.</option>
+                                        <option value="14:00">14:00 น. (แนะนำ)</option>
+                                        <option value="14:30">14:30 น.</option>
+                                        <option value="15:00">15:00 น.</option>
+                                        <option value="15:30">15:30 น.</option>
+                                        <option value="16:00">16:00 น.</option>
+                                        <option value="16:30">16:30 น.</option>
+                                      </optgroup>
+                                    </select>
+                                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                      <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                      </svg>
+                                    </div>
+                                  </div>
+                                  {preferredTimeStart && (
+                                    <p className="text-xs text-blue-600 mt-1">
+                                      ✓ เริ่มเวลา {preferredTimeStart} น.
+                                    </p>
+                                  )}
+                                </div>
+                                <div>
+                                  <label className="block text-sm font-medium text-blue-800 mb-2">
+                                    <ClockIcon className="w-4 h-4 inline mr-1" />
+                                    เวลาสิ้นสุด
+                                  </label>
+                                  <div className="relative">
+                                    <select
+                                      value={preferredTimeEnd}
+                                      onChange={(e) => handleTimeEndChange(e.target.value)}
+                                      className="w-full px-3 py-2.5 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white appearance-none cursor-pointer"
+                                      disabled={!preferredTimeStart}
+                                    >
+                                      <option value="">
+                                        {preferredTimeStart ? "เลือกเวลาสิ้นสุด" : "เลือกเวลาเริ่มก่อน"}
+                                      </option>
+                                      {preferredTimeStart && (
+                                        <>
+                                          <optgroup label="🌅 ช่วงเช้า">
+                                            {preferredTimeStart <= "09:00" && <option value="10:00">10:00 น. (1 ชม.)</option>}
+                                            {preferredTimeStart <= "09:30" && <option value="10:30">10:30 น.</option>}
+                                            {preferredTimeStart <= "10:00" && <option value="11:00">11:00 น. (1 ชม.)</option>}
+                                            {preferredTimeStart <= "10:30" && <option value="11:30">11:30 น.</option>}
+                                            {preferredTimeStart <= "11:00" && <option value="12:00">12:00 น. (1 ชม.)</option>}
+                                          </optgroup>
+                                          <optgroup label="🕐 ช่วงบ่าย">
+                                            {preferredTimeStart <= "13:00" && <option value="14:00">14:00 น. (1 ชม.)</option>}
+                                            {preferredTimeStart <= "13:30" && <option value="14:30">14:30 น.</option>}
+                                            {preferredTimeStart <= "14:00" && <option value="15:00">15:00 น. (1 ชม.)</option>}
+                                            {preferredTimeStart <= "14:30" && <option value="15:30">15:30 น.</option>}
+                                            {preferredTimeStart <= "15:00" && <option value="16:00">16:00 น. (1 ชม.)</option>}
+                                            {preferredTimeStart <= "15:30" && <option value="16:30">16:30 น.</option>}
+                                            {preferredTimeStart <= "16:00" && <option value="17:00">17:00 น. (1 ชม.)</option>}
+                                            {preferredTimeStart <= "16:30" && <option value="17:30">17:30 น.</option>}
+                                            {preferredTimeStart <= "17:00" && <option value="18:00">18:00 น. (1 ชม.)</option>}
+                                          </>
+                                        </>
+                                      )}
+                                    </select>
+                                    <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                      <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                      </svg>
+                                    </div>
+                                  </div>
+                                  {preferredTimeStart && preferredTimeEnd && !timeError && (
+                                    <p className="text-xs text-green-600 mt-1">
+                                      ✓ ระยะเวลา: {calculateDuration(preferredTimeStart, preferredTimeEnd)}
+                                    </p>
+                                  )}
+                                  {timeError && (
+                                    <p className="text-xs text-red-600 mt-1">
+                                      ❌ {timeError}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                              
+                              {timeError && (
+                                <div className="col-span-full mt-2 p-3 bg-red-50 border border-red-200 rounded-lg">
+                                  <div className="flex items-center gap-2">
+                                    <ExclamationCircleIcon className="w-4 h-4 text-red-600" />
+                                    <p className="text-sm text-red-800 font-medium">
+                                      กรุณาปรับเวลาให้ถูกต้อง: {timeError}
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
+                              
+                              {/* Time Selection Tips */}
+                              <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                <div className="flex items-start gap-2">
+                                  <svg className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                                  </svg>
+                                  <div className="text-xs text-blue-700">
+                                    <p className="font-medium mb-1">💡 คำแนะนำการเลือกเวลา:</p>
+                                    <ul className="space-y-1">
+                                      <li>• <strong>เช้า 8:00-11:00:</strong> อากาศเย็นสบาย เหมาะกับการทำงานกลางแจ้ง</li>
+                                      <li>• <strong>บ่าย 13:00-16:00:</strong> หลีกเลี่ยงช่วงพักกลางวัน ทีมงานพร้อมทำงาน</li>
+                                      <li>• <strong>ระยะเวลาแนะนำ:</strong> 1-2 ชั่วโมงสำหรับการวัดบ้านทั่วไป</li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <label className="block text-sm font-medium text-blue-800 mb-2">
+                                <ClipboardDocumentListIcon className="w-4 h-4 inline mr-1" />
+                                หมายเหตุสำหรับการวัดพื้นที่
+                              </label>
+                              <textarea
+                                value={measurementNotes}
+                                onChange={(e) => setMeasurementNotes(e.target.value)}
+                                placeholder="ข้อมูลเพิ่มเติมที่ต้องการให้ทีมงานทราบ เช่น สถานที่จอดรถ, วิธีการเข้าบ้าน, เวลาที่สะดวก"
+                                rows={3}
+                                maxLength={500}
+                                className="w-full px-3 py-2.5 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none bg-white"
+                              />
+                              <p className="text-xs text-blue-600 mt-1">
+                                {measurementNotes.length}/500 ตัวอักษร
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <FormInput
+                    label="หมายเหตุ"
+                    name="specialNotes"
+                    type="textarea"
+                    value={specialNotes}
+                    onChange={(value) => {
+                      setSpecialNotes(value);
+                      updateFieldState('specialNotes', value);
+                    }}
+                    onBlur={() => markFieldAsBlurred('specialNotes')}
+                    error={fieldErrors['specialNotes']?.message}
+                    placeholder="รายละเอียดเพิ่มเติมหรือข้อควรระวัง เช่น มีสุนัข 2 ตัว, ระบบรักษาความปลอดภัย"
+                    maxLength={1000}
+                    rows={3}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - ข้อมูลเพิ่มเติม */}
+            <div className="space-y-6 md:space-y-8">
+              {/* การเข้าถึง */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <KeyIcon className="w-6 h-6 text-xylem-dark" />
+                  <h2 className="text-xl font-semibold text-gray-900">การเข้าถึง</h2>
+                </div>
+                
+                <div className="space-y-6">
+                  <FormInput
+                    label="จุดรับกุญแจ"
+                    name="keyLocation"
+                    type="textarea"
+                    value={keyLocation}
+                    onChange={setKeyLocation}
+                    placeholder="คำแนะนำการเข้าถึง เช่น กุญแจอยู่ที่ผู้ดูแล, รหัสประตู 1234"
+                    maxLength={500}
+                    rows={3}
+                  />
+
+                  <div className="space-y-3">
+                    <label className="block text-sm font-medium text-gray-700">ที่จอดรถ</label>
+                    <div className="flex items-center gap-4">
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={parkingAvailable}
+                          onChange={(e) => setParkingAvailable(e.target.checked)}
+                          className="rounded border-gray-300 text-green-600 focus:ring-green-500"
+                        />
+                        <span className="text-gray-900">มีที่จอดรถ</span>
+                      </label>
+                    </div>
+                    {parkingAvailable && (
+                      <FormInput
+                        label="จำนวนที่จอดรถ (คัน)"
+                        name="parkingSpaces"
+                        type="number"
+                        value={parkingSpaces === '' ? '' : String(parkingSpaces)}
+                        onChange={(value) => setParkingSpaces(value === '' ? '' : Number(value))}
+                        placeholder="เช่น 2"
+                        min={1}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-100 pt-8">
+                {/* บริการ */}
+                <div className="space-y-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <CalendarDaysIcon className="w-6 h-6 text-xylem-dark" />
+                    <h2 className="text-xl font-semibold text-gray-900">บริการ</h2>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-3">วันให้บริการ</label>
+                      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-2 2xl:grid-cols-3 gap-2">
+                        {WEEKDAYS.map((day) => (
+                          <button
+                            type="button"
+                            key={day}
+                            onClick={() => handleServiceDayToggle(day)}
+                            className={`px-3 py-2 rounded-lg border text-sm transition-colors ${
+                              serviceDays.includes(day)
+                                ? 'bg-xylem-dark text-white border-xylem-dark'
+                                : 'bg-gray-100 text-gray-700 border-gray-300 hover:border-xylem-medium'
+                            }`}
+                          >
+                            {day}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">เวลาทำการ</label>
+                      <div className="flex items-center gap-2">
+                        <input 
+                          type="time" 
+                          value="08:00" 
+                          className="px-3 py-2.5 border border-gray-300 rounded-lg text-sm bg-gray-50" 
+                          readOnly 
+                        />
+                        <span className="text-gray-500">-</span>
+                        <input 
+                          type="time" 
+                          value="18:00" 
+                          className="px-3 py-2.5 border border-gray-300 rounded-lg text-sm bg-gray-50" 
+                          readOnly 
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Action Buttons - Fixed at bottom */}
+          <div className="border-t bg-gray-50 -mx-4 sm:-mx-6 md:-mx-8 mt-8 px-4 sm:px-6 md:px-8 py-6">
+            <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-end">
+              <button 
+                type="button"
+                onClick={() => router.push('/dashboard/customer/houses')}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-200 font-medium shadow-sm hover:shadow-md"
+              >
+                <ArrowLeftIcon className="w-4 h-4" />
+                <span>ยกเลิก</span>
+              </button>
+              
+              <button 
+                type="submit"
+                onClick={handleFormSubmit}
+                className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 rounded-lg transition-all duration-200 font-medium text-white shadow-lg ${
+                  isSubmitting || isFormInvalid
+                    ? 'bg-gray-400 cursor-not-allowed shadow-none'
+                    : 'bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 hover:shadow-xl transform hover:scale-105'
+                }`}
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                    <span>กำลังบันทึก...</span>
+                  </>
+                ) : (
+                  <>
+                    <PlusIcon className="w-5 h-5" />
+                    <span>เพิ่มบ้าน</span>
+                  </>
+                )}
+              </button>
+            </div>
+            
+            {isFormInvalid && !isSubmitting && (
+              <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <ExclamationCircleIcon className="w-5 h-5 text-yellow-600" />
+                  <p className="text-sm text-yellow-800 font-medium">
+                    กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน
+                  </p>
+                </div>
+                <ul className="mt-2 text-xs text-yellow-700 list-disc list-inside space-y-1">
+                  {!houseName.trim() && <li>ชื่อบ้าน</li>}
+                  {!phoneNumber.trim() && <li>เบอร์ติดต่อ</li>}
+                  {!address.trim() && <li>ที่อยู่</li>}
+                  {!zipCode.trim() && <li>รหัสไปรษณีย์</li>}
+                </ul>
+              </div>
+            )}
+          </div>
+        </form>
+      </div>
+
+      {/* Google Maps Location Picker */}
+      <GoogleMapsLocationPicker
+        isOpen={showMapPicker}
+        onClose={() => setShowMapPicker(false)}
+        onLocationSelect={handleLocationSelect}
+        initialLocation={latitude && longitude ? { lat: latitude, lng: longitude } : undefined}
+      />
+    </div>
+  );
+} 

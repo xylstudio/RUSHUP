@@ -1,0 +1,25 @@
+{
+  "name": "custom-printer-plugin",
+  "version": "1.0.0",
+  "description": "Custom Printer Socket Plugin",
+  "main": "dist/plugin.cjs.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "scripts": {
+    "build": "npm run tsc",
+    "tsc": "tsc"
+  },
+  "author": "Antigravity",
+  "license": "MIT",
+  "dependencies": {
+    "@capacitor/core": "^6.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    }
+  }
+}

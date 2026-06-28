@@ -1,0 +1,3106 @@
+{
+  "พิกัดปัจจุบัน:": {
+    "en": "Current coordinates:",
+    "zh": "当前坐标："
+  },
+  "* คุณสามารถลากหมุดบนแผนที่เพื่อระบุตำแหน่งที่แน่นอนได้": {
+    "en": "* You can drag the pin on the map to pinpoint the exact location.",
+    "zh": "* 您可以拖动地图上的图钉来精确定位。"
+  },
+  "ค้นหาชื่อสถานที่ หรือที่อยู่...": {
+    "en": "Search for place names or address...",
+    "zh": "搜索地名或地址..."
+  },
+  "ตำแหน่งปัจจุบัน": {
+    "en": "Current position",
+    "zh": "当前位置"
+  },
+  "เลือกตำแหน่งบนแผนที่": {
+    "en": "Select a location on the map",
+    "zh": "在地图上选择一个位置"
+  },
+  "ค้นหาสถานที่หรือพิมพ์ที่อยู่...": {
+    "en": "Search for a place or type an address...",
+    "zh": "搜索地点或输入地址..."
+  },
+  "ขนาดพื้นที่:": {
+    "en": "Area size:",
+    "zh": "面积大小："
+  },
+  "ตร.ม.": {
+    "en": "sq m.",
+    "zh": "平方米。"
+  },
+  "ประเภท:": {
+    "en": "type:",
+    "zh": "类型："
+  },
+  "รหัสไปรษณีย์:": {
+    "en": "zip code:",
+    "zh": "邮政编码："
+  },
+  "เพิ่มเมื่อ:": {
+    "en": "Added on:",
+    "zh": "添加于："
+  },
+  "เวลาให้บริการ:": {
+    "en": "Service time:",
+    "zh": "服务时间："
+  },
+  "🚗 มีที่จอดรถ": {
+    "en": "🚗 There is parking.",
+    "zh": "🚗 有停车位。"
+  },
+  "คัน)": {
+    "en": "vehicle)",
+    "zh": "车辆）"
+  },
+  "หมายเหตุพิเศษ:": {
+    "en": "Special Note:",
+    "zh": "特别提示："
+  },
+  "ดูรายละเอียด": {
+    "en": "View details",
+    "zh": "查看详情"
+  },
+  "สั่งบริการ": {
+    "en": "Order service",
+    "zh": "订单服务"
+  },
+  "แจ้งเตือน": {
+    "en": "warn",
+    "zh": "警告"
+  },
+  "อ่านทั้งหมด": {
+    "en": "Read all",
+    "zh": "阅读全部"
+  },
+  "กำลังโหลด...": {
+    "en": "Loading...",
+    "zh": "加载中..."
+  },
+  "แตะเพื่อดูรายละเอียด": {
+    "en": "Tap to see details.",
+    "zh": "点击查看详细信息。"
+  },
+  "ไม่มีแจ้งเตือน": {
+    "en": "No notification",
+    "zh": "无通知"
+  },
+  "แจ้งเตือนใหม่จะปรากฏที่นี่": {
+    "en": "New notifications will appear here.",
+    "zh": "新的通知将出现在这里。"
+  },
+  "สรุปรายการสั่งซื้อ": {
+    "en": "Order summary",
+    "zh": "订单汇总"
+  },
+  "รหัสออเดอร์:": {
+    "en": "Order code:",
+    "zh": "订购代码："
+  },
+  "ลูกค้า:": {
+    "en": "customer:",
+    "zh": "顾客："
+  },
+  "บริการ:": {
+    "en": "serve:",
+    "zh": "服务："
+  },
+  "ที่อยู่:": {
+    "en": "address:",
+    "zh": "地址："
+  },
+  "วันที่นัดหมาย:": {
+    "en": "Appointment date:",
+    "zh": "预约日期："
+  },
+  "ความเร่งด่วน:": {
+    "en": "Urgency:",
+    "zh": "紧急程度："
+  },
+  "บริการเสริม": {
+    "en": "Additional services",
+    "zh": "附加服务"
+  },
+  "รวม": {
+    "en": "together",
+    "zh": "一起"
+  },
+  "ราคาฐาน:": {
+    "en": "Base price:",
+    "zh": "基价："
+  },
+  "ราคาคำนวณตามพื้นที่:": {
+    "en": "Price calculated according to area:",
+    "zh": "按面积计算价格："
+  },
+  "บริการเสริม:": {
+    "en": "Additional services:",
+    "zh": "附加服务："
+  },
+  "หมายเหตุ": {
+    "en": "note",
+    "zh": "笔记"
+  },
+  "คำแนะนำพิเศษ:": {
+    "en": "Special instructions:",
+    "zh": "特别说明："
+  },
+  "ราคารวมทั้งสิ้น:": {
+    "en": "Total price:",
+    "zh": "总价："
+  },
+  "ระยะเวลาโดยประมาณ:": {
+    "en": "Estimated duration:",
+    "zh": "预计持续时间："
+  },
+  "สร้างเมื่อ:": {
+    "en": "Created on:",
+    "zh": "创建于："
+  },
+  "เปิดเมนู": {
+    "en": "Open menu",
+    "zh": "打开菜单"
+  },
+  "ปิดเมนู": {
+    "en": "Close menu",
+    "zh": "关闭菜单"
+  },
+  "ระยะเวลา:": {
+    "en": "period:",
+    "zh": "时期："
+  },
+  "พื้นที่:": {
+    "en": "area:",
+    "zh": "区域："
+  },
+  "฿": {
+    "en": null,
+    "zh": null
+  },
+  "*ราคาประมาณการตามพื้นที่": {
+    "en": "*Price estimates according to area",
+    "zh": "*根据地区估算价格"
+  },
+  "ขึ้นไป": {
+    "en": "up",
+    "zh": "向上"
+  },
+  "ราคาตามพื้นที่:": {
+    "en": "Price according to area:",
+    "zh": "按面积价格："
+  },
+  "+ ฿": {
+    "en": "+ ฿",
+    "zh": "+ ฿"
+  },
+  "/ตร.ม.": {
+    "en": "/sq m.",
+    "zh": "/平方米。"
+  },
+  "และอีก": {
+    "en": "and another",
+    "zh": "和另一个"
+  },
+  "แพ็กเกจ": {
+    "en": "Package",
+    "zh": "包裹"
+  },
+  "สร้างบัญชีผู้ดูแลระบบ": {
+    "en": "Create an administrator account",
+    "zh": "创建管理员帐户"
+  },
+  "สำหรับผู้ดูแลระบบ Xylem Landscape เท่านั้น": {
+    "en": "For Xylem Landscape administrators only.",
+    "zh": "仅适用于赛莱默景观管理员。"
+  },
+  "ชื่อ-นามสกุล": {
+    "en": "First and last name",
+    "zh": "名字和姓氏"
+  },
+  "อีเมล": {
+    "en": "Email",
+    "zh": "电子邮件"
+  },
+  "รหัสผ่าน": {
+    "en": "password",
+    "zh": "密码"
+  },
+  "กำลังสร้างบัญชี...": {
+    "en": "Creating an account...",
+    "zh": "创建帐户..."
+  },
+  "มีบัญชีแล้ว? เข้าสู่ระบบ": {
+    "en": "Already have an account? Login",
+    "zh": "已经有帐户？登录"
+  },
+  "สร้างบัญชีลูกค้าทั่วไป": {
+    "en": "Create a general customer account",
+    "zh": "创建一般客户帐户"
+  },
+  "รหัสผ่าน (อย่างน้อย 6 ตัวอักษร)": {
+    "en": "Password (at least 6 characters)",
+    "zh": "密码（至少6个字符）"
+  },
+  "ตรวจสอบ database schema และ Row Level Security (RLS) permissions": {
+    "en": "Check the database schema and Row Level Security (RLS) permissions.",
+    "zh": "检查数据库架构和行级安全性 (RLS) 权限。"
+  },
+  "สะสมแต้ม\r                   ' : locale === 'zh' ? '\r                     สะสมแต้ม\r                   ' : '\r                     สะสมแต้ม\r                   '}": {
+    "en": "Collect points\r                   ' : locale === 'zh' ? '\r                     Collect points\r                   ' : '\r                     Collect points\r                   '}",
+    "zh": "收集积分\r                   ' : 语言环境 === 'zh' ? '\r                     收集积分\r                   '：'\r                     收集积分\r                   '}"
+  },
+  "สะสมแก้ว\r                   ' : locale === 'zh' ? '\r                     สะสมแก้ว\r                   ' : '\r                     สะสมแก้ว\r                   '}": {
+    "en": "Collect glass\r                   ' : locale === 'zh' ? '\r                     Collect glass\r                   ' : '\r                     Collect glass\r                   '}",
+    "zh": "收集玻璃\r                   ' : 语言环境 === 'zh' ? '\r                     收集玻璃\r                   '：'\r                     收集玻璃\r                   '}"
+  },
+  "ตกลง\r                           ' : locale === 'zh' ? '\r                             ตกลง\r                           ' : '\r                             ตกลง\r                           '}": {
+    "en": "OK\r                           ' : locale === 'zh' ? '\r                             OK\r                           ' : '\r                             OK\r                           '}",
+    "zh": "好的\r                           ' : 语言环境 === 'zh' ? '\r                             好的\r                           '：'\r                             好的\r                           '}"
+  },
+  "' : locale === 'zh' ? ' ทำใหม่\r                 ' : ' ทำใหม่\r                 '}": {
+    "en": "' : locale === 'zh' ? ' redo\r                 ' : ' Do it again.\r                 '}",
+    "zh": "' : 语言环境 === 'zh' ? '重做\r                 ”：“再做一次。\r                 '}"
+  },
+  "เสร็จสิ้น\r                 ' : locale === 'zh' ? '\r                   เสร็จสิ้น\r                 ' : '\r                   เสร็จสิ้น\r                 '}": {
+    "en": "Finished\r                 ' : locale === 'zh' ? '\r                   Finished\r                 ' : '\r                   Finished\r                 '}",
+    "zh": "完成\r                 ' : 语言环境 === 'zh' ? '\r                   完成\r                 '：'\r                   完成\r                 '}"
+  },
+  "' : locale === 'zh' ? ' ลงทะเบียนสมาชิกใหม่\r                             ' : ' ลงทะเบียนสมาชิกใหม่\r                             '}": {
+    "en": "' : locale === 'zh' ? ' Register a new member.\r                             ' : ' Register new member.\r                             '}",
+    "zh": "' : 语言环境 === 'zh' ? ' 注册新会员。\r                             ' : '注册新会员。\r                             '}"
+  },
+  "' : locale === 'zh' ? ' จัดการฐานข้อมูลสมาชิกทั้งหมด\r                                 ' : ' จัดการฐานข้อมูลสมาชิกทั้งหมด\r                                 '}": {
+    "en": "' : locale === 'zh' ? ' Manage all member databases.\r                                 ' : ' Manage all member databases.\r                                 '}",
+    "zh": "' : 语言环境 === 'zh' ? ' 管理所有会员数据库。\r                                 ' : '管理所有会员数据库。\r                                 '}"
+  },
+  "ยกเลิก\r                                 ' : locale === 'zh' ? '\r                                     ยกเลิก\r                                 ' : '\r                                     ยกเลิก\r                                 '}": {
+    "en": "Cancel\r                                 ' : locale === 'zh' ? '\r                                     Cancel\r                                 ' : '\r                                     Cancel\r                                 '}",
+    "zh": "取消\r                                 ' : 语言环境 === 'zh' ? '\r                                     取消\r                                 '：'\r                                     取消\r                                 '}"
+  },
+  "' : locale === 'zh' ? ' ปรับแต่งตาราง\r                   ' : ' ปรับแต่งตาราง\r                   '}": {
+    "en": "' : locale === 'zh' ? ' Customize table\r                   ' : ' Customize table\r                   '}",
+    "zh": "' : 语言环境 === 'zh' ? ' 自定义表格\r                   ':'自定义表格\r                   '}"
+  },
+  "สูตรอาหารเมนู\r               ' : locale === 'zh' ? '\r                   สูตรอาหารเมนู\r               ' : '\r                   สูตรอาหารเมนู\r               '}": {
+    "en": "food recipes menu\r               ' : locale === 'zh' ? '\r                   food recipes menu\r               ' : '\r                   food recipes menu\r               '}",
+    "zh": "食物食谱菜单\r               ' : 语言环境 === 'zh' ? '\r                   食物食谱菜单\r               '：'\r                   食物食谱菜单\r               '}"
+  },
+  "สูตรตัวเลือกเสริม\r               ' : locale === 'zh' ? '\r                   สูตรตัวเลือกเสริม\r               ' : '\r                   สูตรตัวเลือกเสริม\r               '}": {
+    "en": "Optional formula\r               ' : locale === 'zh' ? '\r                   Optional formula\r               ' : '\r                   Optional formula\r               '}",
+    "zh": "可选配方\r               ' : 语言环境 === 'zh' ? '\r                   可选配方\r               '：'\r                   可选配方\r               '}"
+  },
+  "' : locale === 'zh' ? ' ส่งออก CSV\r               ' : ' ส่งออก CSV\r               '}": {
+    "en": "' : locale === 'zh' ? ' Export CSV\r               ' : ' Export CSV\r               '}",
+    "zh": "' : 语言环境 === 'zh' ? ' 导出 CSV\r               ':'导出 CSV\r               '}"
+  },
+  "' : locale === 'zh' ? ' Signature Series • เมนูแนะนำ\r             ' : ' Signature Series • เมนูแนะนำ\r             '}": {
+    "en": "' : locale === 'zh' ? ' Signature Series • Recommended menu\r             ' : ' Signature Series • Recommended menu\r             '}",
+    "zh": "' : 语言环境 === 'zh' ? ' 招牌系列 • 推荐菜单\r             ' : ' 招牌系列 • 推荐菜单\r             '}"
+  },
+  "฿' : locale === 'zh' ? '\r                               ฿' : '\r                               ฿'}": {
+    "en": "฿' : locale === 'zh' ? '\r                               ฿' : '\r                               ฿'}",
+    "zh": "฿' : 语言环境 === 'zh' ? '\r                               ฿' : '\r                               ฿'}"
+  },
+  "' : locale === 'zh' ? ' เพิ่มที่อยู่ใหม่\r                           ' : ' เพิ่มที่อยู่ใหม่\r                           '}": {
+    "en": "' : locale === 'zh' ? ' Add a new address.\r                           ' : ' Add a new address.\r                           '}",
+    "zh": "' : 语言环境 === 'zh' ? ' 添加新地址。\r                           ' : ' 添加新地址。\r                           '}"
+  },
+  "' : locale === 'zh' ? ' รายการ\r                         ' : ' รายการ\r                         '}": {
+    "en": "' : locale === 'zh' ? ' list\r                         ' : ' item\r                         '}",
+    "zh": "' : 语言环境 === 'zh' ? ' 列表\r                         ':' 项目\r                         '}"
+  },
+  "เลือกใช้\r                                 ' : locale === 'zh' ? '\r                                   เลือกใช้\r                                 ' : '\r                                   เลือกใช้\r                                 '}": {
+    "en": "choose to use\r                                 ' : locale === 'zh' ? '\r                                   choose to use\r                                 ' : '\r                                   choose to use\r                                 '}",
+    "zh": "选择使用\r                                 ' : 语言环境 === 'zh' ? '\r                                   选择使用\r                                 '：'\r                                   选择使用\r                                 '}"
+  },
+  "' : locale === 'zh' ? ' แก้ไข\r                                 ' : ' แก้ไข\r                                 '}": {
+    "en": "' : locale === 'zh' ? ' edit\r                                 ' : ' edit\r                                 '}",
+    "zh": "' : 语言环境 === 'zh' ? ' 编辑\r                                 '：'编辑\r                                 '}"
+  },
+  "บันทึกข้อมูลส่วนตัว": {
+    "en": "Save personal information",
+    "zh": "保存个人信息"
+  },
+  "ข้อมูลบัญชีสำหรับการรับเงิน": {
+    "en": "Account information for receiving money",
+    "zh": "收款账户信息"
+  },
+  "คุณสามารถแก้ไขข้อมูลบัญชีธนาคารได้ที่นี่ ข้อมูลนี้จะใช้สำหรับการโอนเงินค่าจ้างและคอมมิชชั่น": {
+    "en": "You can edit your bank account information here. This information is used for transferring wages and commissions.",
+    "zh": "您可以在此处编辑您的银行帐户信息。该信息用于转移工资和佣金。"
+  },
+  "ธนาคาร": {
+    "en": "bank",
+    "zh": "银行"
+  },
+  "เลือกธนาคาร": {
+    "en": "Choose a bank",
+    "zh": "选择银行"
+  },
+  "กสิกรไทย": {
+    "en": "Kasikorn Thai",
+    "zh": "泰泰华泰"
+  },
+  "ไทยพาณิชย์": {
+    "en": "Siam Commercial Bank",
+    "zh": "暹罗商业银行"
+  },
+  "กรุงเทพ": {
+    "en": "Bangkok",
+    "zh": "曼谷"
+  },
+  "กรุงศรีอยุธยา": {
+    "en": "Ayutthaya",
+    "zh": "大城府"
+  },
+  "กรุงไทย": {
+    "en": "Krungthai",
+    "zh": "恭泰"
+  },
+  "เลขบัญชีธนาคาร": {
+    "en": "bank account number",
+    "zh": "银行帐号"
+  },
+  "อยู่ระหว่างการตรวจสอบ": {
+    "en": "Under investigation",
+    "zh": "正在调查中"
+  },
+  "คุณได้ส่งข้อมูลแล้ว แอดมินกำลังดำเนินการตรวจสอบข้อมูลของคุณโดยเร็วที่สุด": {
+    "en": "You have submitted your information. Admin is working to verify your information as quickly as possible.",
+    "zh": "您已提交您的信息。管理员正在尽快验证您的信息。"
+  },
+  "รูปถ่ายบัตรประชาชน (หรือรูปถือคู่หน้า)": {
+    "en": "ID card photo (or a picture holding the pair in front)",
+    "zh": "身份证照片（或两人正面的照片）"
+  },
+  "เปลี่ยนรูป": {
+    "en": "change shape",
+    "zh": "改变形状"
+  },
+  "คลิกเพื่ออัปโหลด": {
+    "en": "Click to upload",
+    "zh": "点击上传"
+  },
+  "เลขบัตรประชาชน 13 หลัก": {
+    "en": "13 digit ID card number",
+    "zh": "13位身份证号码"
+  },
+  "มีข้อมูลในระบบแล้ว": {
+    "en": "There is already information in the system.",
+    "zh": "系统里已经有信息了。"
+  },
+  "อัปเดตข้อมูลการทำงาน": {
+    "en": "Update work information",
+    "zh": "更新工作信息"
+  },
+  "ข้อมูลภาษา": {
+    "en": "Language information",
+    "zh": "语言信息"
+  },
+  "การตั้งค่าภาษานี้จะส่งผลต่อการแสดงผลของแดชบอร์ดและรายงานต่างๆ ในระบบของคุณเท่านั้น": {
+    "en": "This language setting affects the display of dashboards and reports. only in your system",
+    "zh": "此语言设置会影响仪表板和报告的显示。仅在您的系统中"
+  },
+  "เพื่อความปลอดภัย แนะนำให้เปลี่ยนรหัสผ่านทุกๆ 3-6 เดือน": {
+    "en": "for safety It is recommended to change your password every 3-6 months.",
+    "zh": "为了安全，建议每 3-6 个月更改一次密码。"
+  },
+  "รับการแจ้งเตือนทั้งหมด": {
+    "en": "Get all notifications",
+    "zh": "获取所有通知"
+  },
+  "การมอบหมายงานใหม่": {
+    "en": "Assigning new work",
+    "zh": "分配新工作"
+  },
+  "สถานะออเดอร์": {
+    "en": "Order status",
+    "zh": "订单状态"
+  },
+  "ส่งข้อมูลเรียบร้อยแล้ว": {
+    "en": "Information has been sent successfully.",
+    "zh": "信息已发送成功。"
+  },
+  "ตารางงานของฉัน": {
+    "en": "My work schedule",
+    "zh": "我的工作安排"
+  },
+  "คอมโพเนนต์ปฏิทินจะแสดงที่นี่": {
+    "en": "The Calendar component is displayed here.",
+    "zh": "此处显示日历组件。"
+  },
+  "กำลังดำเนินการ...": {
+    "en": "In progress...",
+    "zh": "进行中..."
+  },
+  "ขออภัย ลิงก์คำเชิญนี้ไม่ถูกต้อง (ไม่พบ Token)": {
+    "en": "Sorry, this invitation link is invalid (Token not found).",
+    "zh": "抱歉，此邀请链接无效（未找到令牌）。"
+  },
+  "กลับสู่หน้าหลัก": {
+    "en": "Return to home page",
+    "zh": "返回首页"
+  },
+  "ขออภัย ลิงก์คำเชิญนี้ไม่ถูกต้อง": {
+    "en": "Sorry, this invitation link is invalid.",
+    "zh": "抱歉，此邀请链接无效。"
+  },
+  "ขออภัย ไม่พบคำเชิญนี้หรือถูกยกเลิกไปแล้ว": {
+    "en": "Sorry, this invitation was not found or has been cancelled.",
+    "zh": "抱歉，未找到此邀请或已取消。"
+  },
+  "คำเชิญเข้าสู่โครงการ": {
+    "en": "Invitation to the project",
+    "zh": "项目邀请"
+  },
+  "สถานที่ตั้ง": {
+    "en": "Location",
+    "zh": "地点"
+  },
+  "เจ้าของโครงการ": {
+    "en": "Project owner",
+    "zh": "项目业主"
+  },
+  "สิทธิ์นี้ถูกใช้ไปแล้ว": {
+    "en": "This permission has already been used.",
+    "zh": "该权限已被使用。"
+  },
+  "ลิงก์คำเชิญนี้ถูกกดรับสิทธิ์ไปแล้ว และไม่สามารถใช้งานได้อีก": {
+    "en": "This invitation link has already been redeemed. and cannot be used again",
+    "zh": "该邀请链接已被兑换。并且不能再次使用"
+  },
+  "สิทธิ์การเข้าถึงของคุณ": {
+    "en": "Your access rights",
+    "zh": "您的访问权限"
+  },
+  "เมื่อกดยอมรับสิทธิ์ คุณจะสามารถเข้าดูและจัดการโครงการนี้ได้ทันที": {
+    "en": "When you press to accept the rights You will be able to view and manage this project immediately.",
+    "zh": "当您按下接受权利时，您将能够立即查看和管理该项目。"
+  },
+  "ติดตามออเดอร์": {
+    "en": "Track orders",
+    "zh": "追踪订单"
+  },
+  "เลขที่ออเดอร์:": {
+    "en": "Order number:",
+    "zh": "订单号："
+  },
+  "บาริสต้ารับออเดอร์แล้ว กำลังเริ่มเตรียมเครื่องดื่ม": {
+    "en": "The barista took the order. Starting to prepare drinks",
+    "zh": "咖啡师接了订单。开始准备饮料"
+  },
+  "กำลังเตรียมเมนู": {
+    "en": "Preparing the menu",
+    "zh": "准备菜单"
+  },
+  "ระหว่างนำส่ง": {
+    "en": "During delivery",
+    "zh": "交货期间"
+  },
+  "จัดส่งสำเร็จ": {
+    "en": "Successful delivery",
+    "zh": "发货成功"
+  },
+  "ให้คะแนนความพึงพอใจ": {
+    "en": "Rate satisfaction",
+    "zh": "评价满意度"
+  },
+  "ข้อเสนอแนะเพิ่มเติม": {
+    "en": "Additional suggestions",
+    "zh": "附加建议"
+  },
+  "ขอบคุณสำหรับฟีดแบ็คครับ": {
+    "en": "Thank you for the feedback.",
+    "zh": "感谢您的反馈。"
+  },
+  "รายการสั่งซื้อ": {
+    "en": "Order list",
+    "zh": "订单清单"
+  },
+  "ยอดรวม: ฿": {
+    "en": "Total: ฿",
+    "zh": "总计：฿"
+  },
+  "(฿": {
+    "en": null,
+    "zh": "（฿"
+  },
+  "/ชิ้น)": {
+    "en": "/item)",
+    "zh": "/物品）"
+  },
+  "กำลังติดตามสัญญาณความอร่อย...": {
+    "en": "Following deliciousness signals...",
+    "zh": "遵循美味信号..."
+  },
+  "คุณประทับใจอะไร หรือต้องการให้เราปรับปรุงส่วนไหน...": {
+    "en": "What impressed you? Or would you like us to improve any part...",
+    "zh": "什么让你印象深刻？或者您希望我们改进任何部分..."
+  },
+  "กำลังโหลดข้อมูล...": {
+    "en": "Loading data...",
+    "zh": "正在加载数据..."
+  },
+  "ยกเลิกและย้อนกลับ": {
+    "en": "Cancel and return",
+    "zh": "取消并返回"
+  },
+  "ไม่พบข้อมูลลูกค้า": {
+    "en": "No customer information found.",
+    "zh": "没有找到客户信息。"
+  },
+  "กลับสู่หน้ารายชื่อ": {
+    "en": "Return to the list page",
+    "zh": "返回列表页面"
+  },
+  "ข้อมูลโปรไฟล์ลูกค้า": {
+    "en": "Customer profile information",
+    "zh": "客户资料信息"
+  },
+  "เข้าร่วมเมื่อ": {
+    "en": "Join when",
+    "zh": "加入时间"
+  },
+  "อสังหาริมทรัพย์ในครอบครอง": {
+    "en": "Real estate in possession",
+    "zh": "拥有的房地产"
+  },
+  "เพิ่มบ้านใหม่": {
+    "en": "Add a new house",
+    "zh": "添加新房子"
+  },
+  "มี": {
+    "en": "have",
+    "zh": "有"
+  },
+  "แผนบริการที่ใช้งาน": {
+    "en": "Active service plan",
+    "zh": "主动服务计划"
+  },
+  "จัดการข้อมูลบ้าน": {
+    "en": "Manage home information",
+    "zh": "管理家庭信息"
+  },
+  "ยังไม่มีข้อมูลบ้านที่ลงทะเบียน": {
+    "en": "There is no registered house information yet.",
+    "zh": "目前还没有登记的房屋信息。"
+  },
+  "แผนบริการและงานดูแลสวน": {
+    "en": "Service plan and garden care work",
+    "zh": "服务计划和花园护理工作"
+  },
+  "กำหนดแผนใหม่": {
+    "en": "Set a new plan",
+    "zh": "制定新计划"
+  },
+  "ความคืบหน้าการดูแลสวน": {
+    "en": "Garden care progress",
+    "zh": "园林养护进展"
+  },
+  "ครั้ง": {
+    "en": "time",
+    "zh": "时间"
+  },
+  "เริ่มเมื่อ": {
+    "en": "Started when",
+    "zh": "开始时间"
+  },
+  "เลื่อนนัด": {
+    "en": "Postpone the appointment",
+    "zh": "推迟预约"
+  },
+  "ปรับเปลี่ยนแผน": {
+    "en": "Change plans",
+    "zh": "改变计划"
+  },
+  "ยังไม่มีประวัติการรายงาน": {
+    "en": "There is no reporting history yet.",
+    "zh": "目前还没有报告历史。"
+  },
+  "โดย": {
+    "en": "by",
+    "zh": "经过"
+  },
+  "เปิดดู →": {
+    "en": "Open and view →",
+    "zh": "打开并查看 →"
+  },
+  "ยังไม่มีแผนบริการที่ใช้งานอยู่": {
+    "en": "There is no active service plan yet.",
+    "zh": "目前还没有主动的服务计划。"
+  },
+  "สรุปกิจกรรมล่าสุด": {
+    "en": "Summary of latest activities",
+    "zh": "最新活动总结"
+  },
+  "เมนูดำเนินการด่วน": {
+    "en": "Quick action menu",
+    "zh": "快速操作菜单"
+  },
+  "สร้างใบเสนอราคา": {
+    "en": "Create a quote",
+    "zh": "创建报价"
+  },
+  "นัดหมายการเข้างาน": {
+    "en": "Make an appointment to work",
+    "zh": "预约上班"
+  },
+  "ตั้งค่าบัญชีลูกค้า": {
+    "en": "Set up customer accounts",
+    "zh": "设置客户帐户"
+  },
+  "ประเภทสัญญา": {
+    "en": "Contract type",
+    "zh": "合同类型"
+  },
+  "สัญญารับเหมาจัดสวน": {
+    "en": "Garden contract",
+    "zh": "园林承包"
+  },
+  "สัญญาดูแลสวนรายปี": {
+    "en": "Annual garden care contract",
+    "zh": "年度花园护理合同"
+  },
+  "อ้างอิง": {
+    "en": "refer",
+    "zh": "参考"
+  },
+  "ดึงข้อมูลลูกค้า": {
+    "en": "Retrieve customer information",
+    "zh": "检索客户信息"
+  },
+  "ดึงข้อมูลบริษัท": {
+    "en": "Retrieve company information",
+    "zh": "检索公司信息"
+  },
+  "ล้างค่า override": {
+    "en": "Clear override value",
+    "zh": "清除覆盖值"
+  },
+  "เลขที่สัญญา": {
+    "en": "Contract number",
+    "zh": "合同号"
+  },
+  "วันที่ทำสัญญา": {
+    "en": "Contract date",
+    "zh": "合约日期"
+  },
+  "เอกสารอ้างอิง": {
+    "en": "Reference documents",
+    "zh": "参考文件"
+  },
+  "สถานที่ทำสัญญา": {
+    "en": "Place of contract",
+    "zh": "合同地点"
+  },
+  "สัญญาฉบับนี้จัดทำขึ้น ณ": {
+    "en": "This contract was made at",
+    "zh": "本合同签订于"
+  },
+  "ระหว่างคู่สัญญาทั้งสองฝ่าย ซึ่งได้ตรวจสอบรายละเอียดคู่สัญญา หน้างาน และเอกสารอ้างอิงแล้ว จึงตกลงผูกพันตามข้อความและเงื่อนไขดังต่อไปนี้": {
+    "en": "between the two contracting parties We have checked the details of the contracting party, the work site, and reference documents. Therefore agree to be bound by the following statements and conditions.",
+    "zh": "两个缔约方之间的关系 我们已检查了缔约方的详细信息、工作地点和参考文件。因此同意受以下声明和条件的约束。"
+  },
+  "ฝ่ายผู้ว่าจ้าง": {
+    "en": "Employer's side",
+    "zh": "雇主方"
+  },
+  "ชื่อ / นิติบุคคล:": {
+    "en": "Name/Juristic Person:",
+    "zh": "姓名/法人："
+  },
+  "เลขประจำตัว:": {
+    "en": "Identification number:",
+    "zh": "识别号码："
+  },
+  "ผู้ลงนาม:": {
+    "en": "Signer:",
+    "zh": "签名人："
+  },
+  "ฝ่ายผู้รับจ้าง": {
+    "en": "Contractor's side",
+    "zh": "承包商方"
+  },
+  "ชื่อบริษัท:": {
+    "en": "Company name:",
+    "zh": "公司名称："
+  },
+  "เลขทะเบียน:": {
+    "en": "Registration number:",
+    "zh": "注册号："
+  },
+  "ที่ตั้งสำนักงาน:": {
+    "en": "Office location:",
+    "zh": "办公地点："
+  },
+  "สรุปโครงการ": {
+    "en": "Project summary",
+    "zh": "项目概要"
+  },
+  "ประเภทสัญญา:": {
+    "en": "Contract type:",
+    "zh": "合同类型："
+  },
+  "เลขที่โฉนด:": {
+    "en": "Title deed number:",
+    "zh": "产权契据号码："
+  },
+  "สถานที่โครงการ:": {
+    "en": "Project location:",
+    "zh": "项目地点："
+  },
+  "ข้อมูลเอกสารอ้างอิง": {
+    "en": "Reference information",
+    "zh": "参考信息"
+  },
+  "เลขที่": {
+    "en": "number",
+    "zh": "数字"
+  },
+  "วันที่": {
+    "en": "date",
+    "zh": "日期"
+  },
+  "ระยะเวลาดำเนินการ:": {
+    "en": "Processing time:",
+    "zh": "处理时间："
+  },
+  "ถึง": {
+    "en": "to",
+    "zh": "到"
+  },
+  "วงเงินสัญญา:": {
+    "en": "Contract limit:",
+    "zh": "合约限额："
+  },
+  "บาท": {
+    "en": "baht",
+    "zh": "铢"
+  },
+  "บัญชีรายการงานแนบท้ายสัญญา": {
+    "en": "Work list attached to the contract",
+    "zh": "工作清单附在合同上"
+  },
+  "หน้า 1 / 2": {
+    "en": "Page 1 / 2",
+    "zh": "第 1 / 2 页"
+  },
+  "เงื่อนไขการชำระเงิน": {
+    "en": "Payment terms",
+    "zh": "付款条件"
+  },
+  "ชำระเต็มจำนวน": {
+    "en": "Full payment",
+    "zh": "全额付款"
+  },
+  "บาท (": {
+    "en": "baht (",
+    "zh": "泰铢（"
+  },
+  ") ผ่านบัญชี": {
+    "en": ") through account",
+    "zh": ") 通过账户"
+  },
+  "เงื่อนไขประกอบสัญญา": {
+    "en": "Contract conditions",
+    "zh": "合同条件"
+  },
+  "หมายเหตุเพิ่มเติม": {
+    "en": "Additional Notes",
+    "zh": "附加说明"
+  },
+  "บัญชีเอกสารท้ายสัญญา": {
+    "en": "Account of documents at the end of the contract",
+    "zh": "合同结束时的文件说明"
+  },
+  "ใบเสนอราคาเลขที่": {
+    "en": "Quotation number",
+    "zh": "报价单号"
+  },
+  "จำนวน": {
+    "en": "quantity",
+    "zh": "数量"
+  },
+  "แผ่น": {
+    "en": "sheet",
+    "zh": "床单"
+  },
+  "ใบแจ้งหนี้เลขที่": {
+    "en": "Invoice number",
+    "zh": "发票号码"
+  },
+  "ผู้ลงนามฝ่ายผู้ว่าจ้าง": {
+    "en": "Employer's signature",
+    "zh": "雇主签名"
+  },
+  "ผู้ลงนามฝ่ายผู้รับจ้าง": {
+    "en": "Contractor's signatory",
+    "zh": "承包商签字人"
+  },
+  "สำเนาบัตรประชาชนผู้ว่าจ้าง": {
+    "en": "Copy of employer's ID card",
+    "zh": "雇主身份证复印件"
+  },
+  "สำเนาบัตรประชาชนผู้รับจ้าง": {
+    "en": "Copy of the contractor's ID card",
+    "zh": "承包商身份证复印件"
+  },
+  "หน้า 2 / 2": {
+    "en": "Page 2 / 2",
+    "zh": "第 2 / 2 页"
+  },
+  "หน้า": {
+    "en": "page",
+    "zh": "页"
+  },
+  "แบบฟอร์ม": {
+    "en": "form",
+    "zh": "形式"
+  },
+  "เอกสารพืช": {
+    "en": "plant documents",
+    "zh": "工厂文件"
+  },
+  "ใบเสนอราคา": {
+    "en": "quotation",
+    "zh": "引述"
+  },
+  "ใบแจ้งหนี้": {
+    "en": "Invoice",
+    "zh": "发票"
+  },
+  "ใบเสร็จ": {
+    "en": "receipt",
+    "zh": "收据"
+  },
+  "สัญญา": {
+    "en": "contract",
+    "zh": "合同"
+  },
+  "เลือกรูปแบบ": {
+    "en": "Choose a format",
+    "zh": "选择格式"
+  },
+  "ตัวจริง + สำเนา": {
+    "en": "Original + copy",
+    "zh": "原件+复印件"
+  },
+  "ตัวจริงเท่านั้น": {
+    "en": "Only the real one",
+    "zh": "只有真品"
+  },
+  "สำเนาเท่านั้น": {
+    "en": "Copy only",
+    "zh": "仅复制"
+  },
+  "ข้อมูลยังไม่ครบ": {
+    "en": "The information is not complete.",
+    "zh": "信息不完整。"
+  },
+  "จุด (คลิกดูรายการ)": {
+    "en": "Point (Click to see the list)",
+    "zh": "点（点击查看列表）"
+  },
+  "ดูใบแจ้งหนี้": {
+    "en": "View invoice",
+    "zh": "查看发票"
+  },
+  "สร้างใบแจ้งหนี้": {
+    "en": "Create an invoice",
+    "zh": "创建发票"
+  },
+  "บันทึกใบเสร็จ": {
+    "en": "Save the receipt",
+    "zh": "保存收据"
+  },
+  "จุด": {
+    "en": "point",
+    "zh": "观点"
+  },
+  "ดาวน์โหลด PDF": {
+    "en": "Download PDF",
+    "zh": "下载PDF"
+  },
+  "เลือกใบแจ้งหนี้อ้างอิง": {
+    "en": "Select reference invoice",
+    "zh": "选择参考发票"
+  },
+  "เอกสารอ้างอิง (ใบแจ้งหนี้)": {
+    "en": "Reference documents (invoices)",
+    "zh": "参考文件（发票）"
+  },
+  "ยอดสุทธิเอกสารอ้างอิง": {
+    "en": "Net balance of reference documents",
+    "zh": "参考文件净余额"
+  },
+  "ยอดรับชำระตามเอกสารนี้": {
+    "en": "Total payment received according to this document",
+    "zh": "根据本文件收到的总付款"
+  },
+  "วันที่รับชำระ": {
+    "en": "Payment received date",
+    "zh": "付款收到日期"
+  },
+  "วิธีการชำระเงิน": {
+    "en": "Payment method",
+    "zh": "付款方式"
+  },
+  "ขอบเขตการชำระ": {
+    "en": "Scope of payment",
+    "zh": "付款范围"
+  },
+  "วันที่รับชำระ *": {
+    "en": "Date of receipt of payment *",
+    "zh": "收到付款日期 *"
+  },
+  "วิธีการชำระเงิน *": {
+    "en": "Payment method *",
+    "zh": "付款方式 *"
+  },
+  "เลือกวิธีการชำระเงิน": {
+    "en": "Choose payment method",
+    "zh": "选择付款方式"
+  },
+  "โอนเงิน": {
+    "en": "transfer money",
+    "zh": "转账"
+  },
+  "เงินสด": {
+    "en": "cash",
+    "zh": "现金"
+  },
+  "บัตรเครดิต": {
+    "en": "credit card",
+    "zh": "信用卡"
+  },
+  "เช็ค": {
+    "en": "check",
+    "zh": "查看"
+  },
+  "อื่นๆ": {
+    "en": "other",
+    "zh": "其他"
+  },
+  "ยอดรับชำระ": {
+    "en": "Total payment received",
+    "zh": "收到的付款总额"
+  },
+  "การชำระของใบเสร็จ": {
+    "en": "payment of receipt",
+    "zh": "付款收据"
+  },
+  "ชำระเต็ม": {
+    "en": "Paid in full",
+    "zh": "已全额付款"
+  },
+  "เลือกงวด": {
+    "en": "Select period",
+    "zh": "选择期间"
+  },
+  "ยอดสุทธิใบแจ้งหนี้": {
+    "en": "Invoice net amount",
+    "zh": "发票净额"
+  },
+  "สถานะการชำระ": {
+    "en": "Payment status",
+    "zh": "付款状态"
+  },
+  "กำหนดชำระภายในวันที่ *": {
+    "en": "Payment is due within *",
+    "zh": "付款期限为 *"
+  },
+  "เลือกงวดที่ออกใบแจ้งหนี้": {
+    "en": "Select the invoice period.",
+    "zh": "选择发票期间。"
+  },
+  "วันครบกำหนดของงวดนี้:": {
+    "en": "Due date for this period:",
+    "zh": "此期间的截止日期："
+  },
+  "กำหนดตามขอบเขตงาน:": {
+    "en": "Determined according to the scope of work:",
+    "zh": "根据工作范围确定："
+  },
+  "แผนการชำระเงิน": {
+    "en": "Payment plan",
+    "zh": "付款计划"
+  },
+  "แบ่งงวด": {
+    "en": "Split installments",
+    "zh": "分期付款"
+  },
+  "แผนชำระเงินของใบแจ้งหนี้ถูกกำหนดจากใบเสนอราคาแล้ว": {
+    "en": "The invoice payment plan is determined from the quote.",
+    "zh": "发票付款计划根据报价确定。"
+  },
+  "ชำระยอดสุทธิ": {
+    "en": "Pay the net amount",
+    "zh": "支付净额"
+  },
+  "ในงวดเดียว": {
+    "en": "in one installment",
+    "zh": "一次性"
+  },
+  "ระบุยอดเงิน": {
+    "en": "Specify the amount",
+    "zh": "指定金额"
+  },
+  "ระบุสัดส่วน": {
+    "en": "Specify the proportion",
+    "zh": "指定比例"
+  },
+  "งวด": {
+    "en": "period",
+    "zh": "时期"
+  },
+  "รายละเอียดงวดที่": {
+    "en": "Period details",
+    "zh": "期间详情"
+  },
+  "กำหนดตามขอบเขตงาน": {
+    "en": "Set according to the scope of work",
+    "zh": "根据工作范围设定"
+  },
+  "เพิ่มงวดชำระ": {
+    "en": "Increase payment period",
+    "zh": "延长付款期限"
+  },
+  "ยอดรวมที่แบ่งงวด (": {
+    "en": "Total amount divided into installments (",
+    "zh": "总金额分为分期付款（"
+  },
+  ") ไม่ตรงกับยอดสุทธิ (": {
+    "en": ") does not match the net amount (",
+    "zh": ") 与净额 ("
+  },
+  "สัดส่วนรวม (": {
+    "en": "Total proportion (",
+    "zh": "总比例（"
+  },
+  "%) ไม่เท่ากับ 100%": {
+    "en": "%) is not equal to 100%",
+    "zh": "%) 不等于 100%"
+  },
+  "ข้อมูลการชำระของใบแจ้งหนี้": {
+    "en": "Invoice payment information",
+    "zh": "发票付款信息"
+  },
+  "กำหนดชำระ:": {
+    "en": "Payment due date:",
+    "zh": "付款到期日："
+  },
+  "ประเภทชำระ:": {
+    "en": "Payment type:",
+    "zh": "付款方式："
+  },
+  "จำนวนงวด:": {
+    "en": "Number of installments:",
+    "zh": "分期付款次数："
+  },
+  "ข้อมูลพื้นฐาน": {
+    "en": "Basic information",
+    "zh": "基本信息"
+  },
+  "ดึงข้อมูลจากคำสั่งซื้อ (ไม่บังคับ)": {
+    "en": "Extract data from orders (optional)",
+    "zh": "从订单中提取数据（可选）"
+  },
+  "กรอกเองทั้งหมด": {
+    "en": "Fill it all out yourself",
+    "zh": "全部自己填写"
+  },
+  "ลูกค้า / ผู้รับเอกสาร *": {
+    "en": "Customer / document recipient *",
+    "zh": "客户/文件收件人*"
+  },
+  "เลขที่เอกสาร": {
+    "en": "Document number",
+    "zh": "文件编号"
+  },
+  "ชื่อโปรเจค / ชื่องาน": {
+    "en": "Project name / Work name",
+    "zh": "项目名称/作品名称"
+  },
+  "ที่อยู่บ้านลูกค้า": {
+    "en": "Customer's home address",
+    "zh": "客户的家庭住址"
+  },
+  "+ เลือกจากบันทึก": {
+    "en": "+ Choose from notes",
+    "zh": "+ 从笔记中选择"
+  },
+  "เบอร์โทรศัพท์ผู้รับ": {
+    "en": "Recipient phone number",
+    "zh": "收件人电话号码"
+  },
+  "เลขประจำตัวผู้เสียภาษี": {
+    "en": "Tax identification number",
+    "zh": "税号"
+  },
+  "เปิดโหมดโซน": {
+    "en": "Turn on zone mode",
+    "zh": "开启区域模式"
+  },
+  "เพิ่มโซนใหม่": {
+    "en": "Add a new zone",
+    "zh": "添加新区域"
+  },
+  "พรีวิวหน้า PDF แบบสด พร้อมลากสลับตำแหน่งการ์ดได้ทันที": {
+    "en": "Live preview of PDF pages, ready to drag and change card positions instantly.",
+    "zh": "PDF 页面的实时预览，可立即拖动和更改卡片位置。"
+  },
+  "พรีวิวนี้ใช้ layout เดียวกับไฟล์ PDF จริง จัดลำดับ ปรับขนาด แล้วบันทึกได้จากหน้านี้โดยตรง": {
+    "en": "This preview uses the same layout as the actual PDF file. Order, resize, and save directly from this page.",
+    "zh": "此预览使用与实际 PDF 文件相同的布局。直接从此页面订购、调整大小和保存。"
+  },
+  "การ์ด": {
+    "en": "card",
+    "zh": "卡片"
+  },
+  "ยังไม่มีรายการสำหรับสร้าง layout จากใบเสนอราคาอ้างอิง": {
+    "en": "There is no item yet for creating layouts from reference quotations.",
+    "zh": "目前还没有用于根据参考报价创建布局的项目。"
+  },
+  "รายการทั่วไป (ไม่แยกโซน)": {
+    "en": "General items (not separated into zones)",
+    "zh": "一般物品（不分区域）"
+  },
+  "ค่าแรง (%)": {
+    "en": "Labor cost (%)",
+    "zh": "人工成本(%)"
+  },
+  "ค่าแรง": {
+    "en": "wage",
+    "zh": "工资"
+  },
+  "รายการสินค้า": {
+    "en": "Product list",
+    "zh": "产品列表"
+  },
+  "หน่วย": {
+    "en": "unit",
+    "zh": "单元"
+  },
+  "ชื่ออังกฤษ": {
+    "en": "English name",
+    "zh": "英文名"
+  },
+  "ชื่อวิทยาศาสตร์": {
+    "en": "Scientific name",
+    "zh": "学名"
+  },
+  "ขนาด / ค่า": {
+    "en": "Size/value",
+    "zh": "尺寸/价值"
+  },
+  "จำนวน / พื้นที่": {
+    "en": "Quantity / Area",
+    "zh": "数量/面积"
+  },
+  "ค่าวัสดุ/หน่วย": {
+    "en": "Material cost/unit",
+    "zh": "材料成本/单位"
+  },
+  "ค่าแรง/หน่วย": {
+    "en": "Labor cost/unit",
+    "zh": "人工成本/单位"
+  },
+  "รูปแบบ": {
+    "en": "type",
+    "zh": "类型"
+  },
+  "H + ระยะปลูก": {
+    "en": "H + planting distance",
+    "zh": "H+种植距离"
+  },
+  "ภาชนะ (นิ้ว)": {
+    "en": "Container (inches)",
+    "zh": "集装箱（英寸）"
+  },
+  "กระถาง / ถุง": {
+    "en": "Pot/bag",
+    "zh": "锅/袋"
+  },
+  "กระถาง": {
+    "en": "pot",
+    "zh": "锅"
+  },
+  "ถุง": {
+    "en": "bag",
+    "zh": "包"
+  },
+  "ความสูง": {
+    "en": "height",
+    "zh": "高度"
+  },
+  "ระยะปลูก": {
+    "en": "Planting period",
+    "zh": "种植期"
+  },
+  "เลือกระยะปลูก": {
+    "en": "Choose planting distance",
+    "zh": "选择种植距离"
+  },
+  "พื้นที่/จำนวน": {
+    "en": "area/quantity",
+    "zh": "面积/数量"
+  },
+  "ค่าของ/หน่วย": {
+    "en": "value/unit",
+    "zh": "值/单位"
+  },
+  "รวม:": {
+    "en": "together:",
+    "zh": "一起："
+  },
+  "รายละเอียดรายการ": {
+    "en": "Item details",
+    "zh": "商品详情"
+  },
+  "เพิ่มรายการ": {
+    "en": "Add item",
+    "zh": "添加项目"
+  },
+  "เงื่อนไขและหมายเหตุ": {
+    "en": "Conditions and Notes",
+    "zh": "条件及注意事项"
+  },
+  "จัดการรายละเอียดเงื่อนไขท้ายเอกสาร": {
+    "en": "Manage details of conditions at the end of documents",
+    "zh": "管理文档末尾的条件详细信息"
+  },
+  "หมายเหตุเพิ่มเติม (สำหรับลูกค้า)": {
+    "en": "Additional Notes (for customers)",
+    "zh": "附加说明（针对客户）"
+  },
+  "สรุปยอดรวมเอกสาร": {
+    "en": "Summary of document totals",
+    "zh": "文件总数摘要"
+  },
+  "ราคาประเมินรวม": {
+    "en": "Total estimated price",
+    "zh": "预计总价"
+  },
+  "ค่าดำเนินการ": {
+    "en": "Processing fee",
+    "zh": "加工费"
+  },
+  "เปิดใช้": {
+    "en": "Enable",
+    "zh": "使能够"
+  },
+  "อัตราค่าดำเนินการ (%)": {
+    "en": "Processing rate (%)",
+    "zh": "处理率(%)"
+  },
+  "ค่าแรงรวม": {
+    "en": "Total labor cost",
+    "zh": "总人工成本"
+  },
+  "อัตราค่าแรงรวม (%)": {
+    "en": "Total labor rate (%)",
+    "zh": "总劳动力率(%)"
+  },
+  "ส่วนลด": {
+    "en": "discount",
+    "zh": "折扣"
+  },
+  "จำนวนเงิน": {
+    "en": "Amount of money",
+    "zh": "金额"
+  },
+  "เปอร์เซ็นต์": {
+    "en": "percent",
+    "zh": "百分比"
+  },
+  "อัตรา VAT (%)": {
+    "en": "VAT rate (%)",
+    "zh": "增值税税率（%）"
+  },
+  "หัก ณ ที่จ่าย": {
+    "en": "Withholding",
+    "zh": "预扣税"
+  },
+  "อัตราหัก ณ ที่จ่าย (%)": {
+    "en": "Withholding rate (%)",
+    "zh": "预扣税率（%）"
+  },
+  "ขึ้นหน้าใหม่ต่อ 1 หมวดหมู่": {
+    "en": "New page for 1 category",
+    "zh": "1 个类别的新页面"
+  },
+  "แสดงข้อความก่อนรวมสุทธิ": {
+    "en": "Show message before netting",
+    "zh": "联网前显示消息"
+  },
+  "ข้อความ": {
+    "en": "message",
+    "zh": "信息"
+  },
+  "หัก ณ ที่จ่าย (": {
+    "en": "Withholding (",
+    "zh": "预扣税（"
+  },
+  "ยอดสุทธิที่ต้องชำระ": {
+    "en": "Net amount to be paid",
+    "zh": "应付净额"
+  },
+  "กรุณาตรวจสอบข้อมูล (": {
+    "en": "Please check the information (",
+    "zh": "请检查信息（"
+  },
+  "รายการ)": {
+    "en": "list)",
+    "zh": "列表）"
+  },
+  "คลิกเพื่อไปที่ช่องนี้": {
+    "en": "Click to go to this box.",
+    "zh": "单击可转到此框。"
+  },
+  "พร้อมบันทึกเอกสาร": {
+    "en": "Ready to save documents",
+    "zh": "准备保存文档"
+  },
+  "คู่มือการใช้งานโบรกเกอร์": {
+    "en": "Broker User Guide",
+    "zh": "经纪商用户指南"
+  },
+  "คุณสามารถแยกโซนหน้างานเพื่อความชัดเจนในการประเมินราคา ระบบจะจัดกลุ่มรายการให้อัตโนมัติ": {
+    "en": "You can separate work zones for clarity in estimating prices. The system will automatically group items.",
+    "zh": "您可以分隔工作区域，以便清楚地估算价格。系统会自动对项目进行分组。"
+  },
+  "ชื่อลูกค้า": {
+    "en": "Customer name",
+    "zh": "客户名称"
+  },
+  "เลขผู้เสียภาษีหรือบัตรประชาชน": {
+    "en": "Taxpayer number or ID card",
+    "zh": "纳税人号码或身份证"
+  },
+  "ที่อยู่ลูกค้า": {
+    "en": "Customer address",
+    "zh": "客户地址"
+  },
+  "ชื่อผู้ลงนามฝ่ายผู้ว่าจ้าง": {
+    "en": "Name of the employer's signatory",
+    "zh": "雇主签字人姓名"
+  },
+  "ชื่อผู้รับจ้าง": {
+    "en": "Contractor's name",
+    "zh": "承包商名称"
+  },
+  "เลขทะเบียน/ภาษีผู้รับจ้าง": {
+    "en": "Registration number/Employer tax",
+    "zh": "注册号/雇主税"
+  },
+  "ที่อยู่ผู้รับจ้าง": {
+    "en": "Contractor's address",
+    "zh": "承包商地址"
+  },
+  "ชื่อผู้ลงนามฝ่ายผู้รับจ้าง": {
+    "en": "Name of the contractor's signatory",
+    "zh": "承包商签字人姓名"
+  },
+  "เลขที่โฉนด": {
+    "en": "Title deed number",
+    "zh": "地契号码"
+  },
+  "สถานที่โครงการ": {
+    "en": "Project location",
+    "zh": "项目地点"
+  },
+  "เลขที่ใบแจ้งหนี้": {
+    "en": "Invoice number",
+    "zh": "发票号码"
+  },
+  "ชื่อผู้ว่าจ้าง": {
+    "en": "Employer's name",
+    "zh": "雇主名称"
+  },
+  "แก้ไขข้อมูล": {
+    "en": "Edit information",
+    "zh": "编辑信息"
+  },
+  "ชื่องวด เช่น งวดที่ 1": {
+    "en": "Name of the period, such as period 1.",
+    "zh": "期间名称，例如期间 1。"
+  },
+  "เช่น ชำระก่อนเริ่มงาน, ชำระหลังส่งมอบงาน": {
+    "en": "For example, pay before starting work, pay after delivering work.",
+    "zh": "例如，上班前付款、交工后付款。"
+  },
+  "พิมพ์ชื่อหรือเลือกจากรายชื่อลูกค้า": {
+    "en": "Type a name or select from a list of customers.",
+    "zh": "输入名称或从客户列表中进行选择。"
+  },
+  "เว้นว่างเพื่อรันอัตโนมัติ": {
+    "en": "Leave blank to run automatically.",
+    "zh": "留空即可自动运行。"
+  },
+  "เช่น ปรับปรุงสวนบ้านคุณสมชาย": {
+    "en": "For example, improving the garden of Mr. Somchai's house.",
+    "zh": "例如，改善Somchai先生家的花园。"
+  },
+  "ระบุที่อยู่นหน้างาน...": {
+    "en": "Specify the address at the work site...",
+    "zh": "指定工作地点的地址..."
+  },
+  "เช่น 010xxxxxxxxx": {
+    "en": "For example: 010xxxxxxxxx",
+    "zh": "例如：010xxxxxxxxx"
+  },
+  "รีเซ็ตการ์ดนี้": {
+    "en": "Reset this card",
+    "zh": "重置此卡"
+  },
+  "เลือกพื้นที่รูป": {
+    "en": "Select image area",
+    "zh": "选择图像区域"
+  },
+  "ลากจากขอบล่างของรูปเพื่อยืดหรือหด": {
+    "en": "Drag from the bottom edge of the image to stretch or shrink it.",
+    "zh": "从图像的底部边缘拖动以拉伸或缩小图像。"
+  },
+  "รีเซ็ตขนาดรูป": {
+    "en": "Reset image size",
+    "zh": "重置图像尺寸"
+  },
+  "เลือกพื้นที่ข้อความ": {
+    "en": "Select the text area",
+    "zh": "选择文本区域"
+  },
+  "ลากจากขอบบนของข้อความเพื่อเลื่อนตำแหน่ง": {
+    "en": "Drag from the top edge of the text to move it.",
+    "zh": "从文本的顶部边​​缘拖动以移动它。"
+  },
+  "รีเซ็ตตำแหน่งข้อความ": {
+    "en": "Reset message position",
+    "zh": "重置消息位置"
+  },
+  "ลากจากขอบล่างของกรอบเพื่อยืดหรือหด": {
+    "en": "Drag from the bottom edge of the frame to stretch or shrink it.",
+    "zh": "从框架的底部边缘拖动以拉伸或收缩它。"
+  },
+  "รีเซ็ตขนาดกรอบ": {
+    "en": "Reset frame size",
+    "zh": "重置帧大小"
+  },
+  "คำอธิบาย...": {
+    "en": "Description...",
+    "zh": "描述..."
+  },
+  "ลบข้อความ": {
+    "en": "Delete message",
+    "zh": "删除留言"
+  },
+  "ลบข้อความรายการสินค้า": {
+    "en": "Delete product list text",
+    "zh": "删除产品列表文本"
+  },
+  "เช่น Syzygium campanulatum": {
+    "en": "such as Syzygium campanulatum",
+    "zh": "例如蒲桃"
+  },
+  "นิ้ว": {
+    "en": "finger",
+    "zh": "手指"
+  },
+  "สูง (ม.)": {
+    "en": "Height (m.)",
+    "zh": "高度（米）"
+  },
+  "เส้นผ่านศูนย์กลาง (นิ้ว)": {
+    "en": "Diameter (inches)",
+    "zh": "直径（英寸）"
+  },
+  "ความสูง เช่น 2-3": {
+    "en": "Height such as 2-3",
+    "zh": "高度如2-3"
+  },
+  "ระบุขนาด": {
+    "en": "Specify size",
+    "zh": "指定尺寸"
+  },
+  "เช่น ตัดแต่งพุ่มไม้, ใส่ปุ๋ย, กำจัดวัชพืช, เก็บกวาดเศษใบไม้": {
+    "en": "Such as trimming shrubs, fertilizing, weeding, and cleaning up leaves.",
+    "zh": "例如修剪灌木、施肥、除草和清理树叶。"
+  },
+  "พิมพ์เงื่อนไขที่นี่...": {
+    "en": "Type conditions here...",
+    "zh": "在此输入条件..."
+  },
+  "ระบุหมายเหตุพิเศษ...": {
+    "en": "Specify special notes...",
+    "zh": "指定特别注释..."
+  },
+  "เช่น รวมโซน 1+2": {
+    "en": "For example, include zones 1+2.",
+    "zh": "例如，包括区域 1+2。"
+  },
+  "รายการที่ต้องซื้อ": {
+    "en": "Items to buy",
+    "zh": "需要购买的物品"
+  },
+  "รวบรวมรายการวัตถุดิบและสินค้าทั้งหมดที่ยอดคงเหลือต่ำกว่าจุดสั่งซื้อที่กำหนดไว้ เพื่อดำเนินการเติมสต็อกให้พร้อมสำหรับการดำเนินงาน": {
+    "en": "Compile a list of all raw materials and products whose balance is below the designated ordering point. To replenish stock to be ready for operations.",
+    "zh": "编制一份余额低于指定订购点的所有原材料和产品的清单。补充库存，为运营做好准备。"
+  },
+  "สต็อกปกติครบถ้วน": {
+    "en": "Complete normal stock",
+    "zh": "正常库存齐全"
+  },
+  "ขณะนี้ไม่มีรายการใดที่มีระดับสต็อกต่ำกว่าจุดสั่งซื้อ ระบบตรวจสอบความเคลื่อนไหวล่าสุดเรียบร้อยแล้ว": {
+    "en": "There are currently no items with stock levels below the order point. The system has already checked the latest movement.",
+    "zh": "目前没有库存水平低于订购点的商品。系统已经查到了最新的动向。"
+  },
+  "รายการสินค้าเหล่านี้มียอดนับจริงต่ำกว่าระดับความปลอดภัย (Safety Stock)": {
+    "en": "These product items have actual counts below the safety level (Safety Stock).",
+    "zh": "这些产品的实际数量低于安全水平（安全库存）。"
+  },
+  "คุณไม่มีสิทธิ์เข้าถึงหน้านี้": {
+    "en": "You do not have permission to access this page.",
+    "zh": "您没有访问此页面的权限。"
+  },
+  "กลับรายการงาน": {
+    "en": "Return work list",
+    "zh": "返回工作清单"
+  },
+  "รีเฟรช": {
+    "en": "Refresh",
+    "zh": "刷新"
+  },
+  "สร้างเมื่อ": {
+    "en": "Created when",
+    "zh": "创建时间"
+  },
+  "เอกสารที่เกี่ยวข้อง": {
+    "en": "Related documents",
+    "zh": "相关文件"
+  },
+  "เปิดดู": {
+    "en": "Open it and see.",
+    "zh": "打开看看。"
+  },
+  "รายละเอียดบริการ": {
+    "en": "Service details",
+    "zh": "服务详情"
+  },
+  "หมวด:": {
+    "en": "group:",
+    "zh": "团体："
+  },
+  "ดูบริการ": {
+    "en": "View service",
+    "zh": "查看服务"
+  },
+  "แพ็กเกจราคา:": {
+    "en": "Price package:",
+    "zh": "套餐价格："
+  },
+  "พื้นที่": {
+    "en": "area",
+    "zh": "区域"
+  },
+  "ตร.ม.\n                        • ราคาฐาน": {
+    "en": "sq m.\n                        • Base price",
+    "zh": "平方米。\n                        • 基本价格"
+  },
+  "พื้นที่จริง:": {
+    "en": "Actual space:",
+    "zh": "实际空间："
+  },
+  "ไม่ระบุบริการ": {
+    "en": "Service not specified",
+    "zh": "未指定服务"
+  },
+  "ราคาฐาน": {
+    "en": "Base price",
+    "zh": "基价"
+  },
+  "ราคาคำนวณ": {
+    "en": "Calculate price",
+    "zh": "计算价格"
+  },
+  "ยอดรวม": {
+    "en": "Total",
+    "zh": "全部的"
+  },
+  "รายงานผลการทำงาน (": {
+    "en": "Work report (",
+    "zh": "工作报告（"
+  },
+  "รายงานหน้างาน": {
+    "en": "Work site report",
+    "zh": "工作现场报告"
+  },
+  "งานที่ทำ": {
+    "en": "Work done",
+    "zh": "工作完成"
+  },
+  "ปัญหาที่พบ": {
+    "en": "Problems encountered",
+    "zh": "遇到的问题"
+  },
+  "คำแนะนำ": {
+    "en": "advice",
+    "zh": "建议"
+  },
+  "รูปก่อนทำ (": {
+    "en": "Picture before making (",
+    "zh": "制作前的图（"
+  },
+  "รูปหลังทำ (": {
+    "en": "Picture after making (",
+    "zh": "制作完成后的图（"
+  },
+  "นัดถัดไป:": {
+    "en": "Next match:",
+    "zh": "下一场比赛："
+  },
+  "มอบหมายพนักงาน": {
+    "en": "Assign employees",
+    "zh": "分配员工"
+  },
+  "เพิ่มพนักงาน": {
+    "en": "Add employees",
+    "zh": "添加员工"
+  },
+  "ยังไม่มีพนักงานรับผิดชอบ": {
+    "en": "There is still no responsible employee.",
+    "zh": "仍然没有负责任的员工。"
+  },
+  "กด &ldquo;เพิ่มพนักงาน&rdquo; เพื่อมอบหมาย": {
+    "en": "Press &ldquo;add employee&rdquo; to assign",
+    "zh": "按“添加员工”分配"
+  },
+  "ลูกค้า": {
+    "en": "customer",
+    "zh": "顾客"
+  },
+  "รหัส:": {
+    "en": "code:",
+    "zh": "代码："
+  },
+  "ดูข้อมูลลูกค้า": {
+    "en": "View customer information",
+    "zh": "查看客户信息"
+  },
+  "บ้าน / สถานที่": {
+    "en": "Home/Place",
+    "zh": "首页/地点"
+  },
+  "กำหนดการ": {
+    "en": "Schedule",
+    "zh": "日程"
+  },
+  "วันที่นัดหมาย": {
+    "en": "Appointment date",
+    "zh": "预约日期"
+  },
+  "ยังไม่กำหนดวัน": {
+    "en": "Date not yet set",
+    "zh": "日期尚未确定"
+  },
+  "เสร็จสิ้นเมื่อ": {
+    "en": "finished when",
+    "zh": "完成时"
+  },
+  "แก้ไขล่าสุด": {
+    "en": "Last edited",
+    "zh": "最后编辑"
+  },
+  "ระยะเวลาโดยประมาณ": {
+    "en": "Estimated duration",
+    "zh": "预计持续时间"
+  },
+  "ออเดอร์นี้ยังเป็น &ldquo;รอดำเนินการ&rdquo; — การมอบหมายจะ": {
+    "en": "This order is also &ldquo;Pending&rdquo; — Assignment will",
+    "zh": "该订单也处于“待处理”状态— 作业将"
+  },
+  "ยืนยันออเดอร์": {
+    "en": "Confirm order",
+    "zh": "确认订单"
+  },
+  "ให้อัตโนมัติ": {
+    "en": "automatic",
+    "zh": "自动的"
+  },
+  "เลือกพนักงาน": {
+    "en": "Choose employees",
+    "zh": "选择员工"
+  },
+  "ไม่พบพนักงานในระบบ": {
+    "en": "No employees found in the system",
+    "zh": "系统中未找到员工"
+  },
+  "มอบหมายแล้ว": {
+    "en": "Assigned",
+    "zh": "已分配"
+  },
+  "หมายเหตุ (ไม่บังคับ)": {
+    "en": "Note (optional)",
+    "zh": "注意（可选）"
+  },
+  "ยกเลิก": {
+    "en": "cancel",
+    "zh": "取消"
+  },
+  "ลงรายงาน/แก้ไขรายงาน": {
+    "en": "Post report/edit report",
+    "zh": "发布报告/编辑报告"
+  },
+  "ยกเลิกการมอบหมาย": {
+    "en": "Cancel assignment",
+    "zh": "取消分配"
+  },
+  "รายละเอียดงาน, คำแนะนำพิเศษ...": {
+    "en": "Job details, special instructions...",
+    "zh": "工作细节、特别说明..."
+  },
+  "กลับหน้าคำสั่งงาน": {
+    "en": "Return to the work orders page.",
+    "zh": "返回工单页面。"
+  },
+  "-- เลือกลูกค้า --": {
+    "en": "-- Select customer --",
+    "zh": "-- 选择客户 --"
+  },
+  "บ้านของลูกค้า": {
+    "en": "customer's home",
+    "zh": "客户家"
+  },
+  "-- เลือกบ้าน --": {
+    "en": "-- Choose a house --",
+    "zh": "-- 选择房子 --"
+  },
+  "บริการ": {
+    "en": "serve",
+    "zh": "服务"
+  },
+  "-- เลือกบริการ --": {
+    "en": "-- Select service --",
+    "zh": "-- 选择服务 --"
+  },
+  "แพ็กเกจราคา": {
+    "en": "Price package",
+    "zh": "价格套餐"
+  },
+  "-- เลือกแพ็กเกจ --": {
+    "en": "-- Choose a package --",
+    "zh": "-- 选择套餐 --"
+  },
+  "รูปแบบบริการ": {
+    "en": "Service format",
+    "zh": "服务形式"
+  },
+  "รายครั้ง (One-time)": {
+    "en": "One-time",
+    "zh": "一度"
+  },
+  "รายเดือน (Monthly)": {
+    "en": "Monthly (Monthly)",
+    "zh": "每月（每月）"
+  },
+  "รายปี (Yearly)": {
+    "en": "Yearly (Yearly)",
+    "zh": "每年（每年）"
+  },
+  "จำนวนครั้งทั้งหมด": {
+    "en": "Total number of times",
+    "zh": "总次数"
+  },
+  "เวลาเริ่ม": {
+    "en": "Start time",
+    "zh": "开始时间"
+  },
+  "เวลาสิ้นสุด": {
+    "en": "end time",
+    "zh": "结束时间"
+  },
+  "ความเร่งด่วน": {
+    "en": "urgency",
+    "zh": "紧迫性"
+  },
+  "ปกติ": {
+    "en": "normal",
+    "zh": "普通的"
+  },
+  "ด่วน (+10%)": {
+    "en": "Urgent (+10%)",
+    "zh": "紧急（+10%）"
+  },
+  "เร่งด่วนมาก (+20%)": {
+    "en": "Very urgent (+20%)",
+    "zh": "非常紧急 (+20%)"
+  },
+  "บริการเสริม (ถ้ามี)": {
+    "en": "Additional services (if any)",
+    "zh": "附加服务（如有）"
+  },
+  "เพิ่มจำนวนแล้วระบบจะคำนวณราคาให้อัตโนมัติ": {
+    "en": "Add the quantity and the system will automatically calculate the price.",
+    "zh": "添加数量，系统会自动计算价格。"
+  },
+  "/หน่วย": {
+    "en": "/unit",
+    "zh": "/单元"
+  },
+  "หมายเหตุถึงทีม": {
+    "en": "Note to the team",
+    "zh": "团队注意事项"
+  },
+  "คำสั่งพิเศษ / การชำระเงิน": {
+    "en": "Special orders/payments",
+    "zh": "特殊订单/付款"
+  },
+  "ฐานราคา:": {
+    "en": "Base price:",
+    "zh": "基价："
+  },
+  "คำนวณตามพื้นที่:": {
+    "en": "Calculate by area:",
+    "zh": "按面积计算："
+  },
+  "ตัวคูณความเร่งด่วน:": {
+    "en": "Urgency Multiplier:",
+    "zh": "紧急程度乘数："
+  },
+  "ยอดรวมประมาณการ:": {
+    "en": "Estimated total:",
+    "zh": "预计总数："
+  },
+  "เว้นว่างเพื่อคำนวณตามพื้นที่": {
+    "en": "Leave blank to calculate by area.",
+    "zh": "留空以按面积计算。"
+  },
+  "เช่น พื้นที่มีสัตว์เลี้ยงในสวน ต้องแจ้งก่อนเข้าพื้นที่": {
+    "en": "For example, areas where there are pets in the garden. Must inform before entering the area.",
+    "zh": "例如，花园里有宠物的区域。进入该区域前必须告知。"
+  },
+  "ข้อมูลเสริมสำหรับเอกสารหรือการทำงาน": {
+    "en": "Supplementary information for documents or work",
+    "zh": "文件或工作的补充信息"
+  },
+  "สรุปรายงานรวมสำหรับลูกค้าคนเดียว": {
+    "en": "Summary report for a single customer",
+    "zh": "单个客户的汇总报告"
+  },
+  "เลือกลูกค้า": {
+    "en": "Choose a customer",
+    "zh": "选择客户"
+  },
+  "เปลี่ยนคน": {
+    "en": "change people",
+    "zh": "改变人"
+  },
+  "นัดหมายรวม": {
+    "en": "Combined appointments",
+    "zh": "合并预约"
+  },
+  "ใช้กับทุกบ้าน": {
+    "en": "Use with every home",
+    "zh": "适合每个家庭使用"
+  },
+  "กดเพื่อเชื่อมทุกหลัง": {
+    "en": "Press to connect every back.",
+    "zh": "按下即可连接每个背面。"
+  },
+  "เลือกบ้าน (": {
+    "en": "Choose a house (",
+    "zh": "选择房子（"
+  },
+  "ไม่พบข้อมูลบ้านที่ใช้งานอยู่": {
+    "en": "No active home information found.",
+    "zh": "未找到有效的家庭信息。"
+  },
+  "รายละเอียดและรูปภาพแยกตามบ้าน": {
+    "en": "Details and pictures separated by house",
+    "zh": "详细信息和图片以房屋分开"
+  },
+  "รูปภาพรวม (ก่อนทำ)": {
+    "en": "Overall picture (before)",
+    "zh": "整体图（之前）"
+  },
+  "รูปภาพรวม (หลังทำ)": {
+    "en": "Overall picture (after)",
+    "zh": "整体图（后）"
+  },
+  "ข้อมูลแยกตามโซน (Zones)": {
+    "en": "Information separated by zones (Zones)",
+    "zh": "按区域（Zone）分隔的信息"
+  },
+  "เพิ่มโซน": {
+    "en": "Add a zone",
+    "zh": "添加区域"
+  },
+  "ชื่อโซน": {
+    "en": "Zone name",
+    "zh": "区域名称"
+  },
+  "รายละเอียดงานในโซน": {
+    "en": "Details of work in the zone",
+    "zh": "区内工作详情"
+  },
+  "รูปภาพก่อนทำ": {
+    "en": "Picture before making",
+    "zh": "制作前的图片"
+  },
+  "รูปภาพหลังทำ": {
+    "en": "Picture after making",
+    "zh": "制作完成后的图片"
+  },
+  "ยังไม่มีข้อมูลโซน": {
+    "en": "No zone information yet.",
+    "zh": "还没有区域信息。"
+  },
+  "งานที่ทำ (รวม)": {
+    "en": "Work done (total)",
+    "zh": "已完成工作（总计）"
+  },
+  "นัดหมายครั้งถัดไป (เฉพาะหลังนี้)": {
+    "en": "Next appointment (only after this)",
+    "zh": "下一次预约（仅在此之后）"
+  },
+  "ล้าง": {
+    "en": "wash",
+    "zh": "洗"
+  },
+  "หากไม่ระบุ จะใช้ \"นัดหมายรวม\" จากด้านบน": {
+    "en": "If not specified, \"combined appointments\" from above will be used.",
+    "zh": "如果未指定，将使用上面的“组合预约”。"
+  },
+  "กำลังอัปโหลด...": {
+    "en": "Uploading...",
+    "zh": "正在上传..."
+  },
+  "พร้อมส่งรายงาน": {
+    "en": "Ready to send report",
+    "zh": "准备发送报告"
+  },
+  "ลูกค้าจะได้รับ LINE Carousel สรุปงานทุกหลังในกล่องเดียว": {
+    "en": "Customers will receive a LINE Carousel summarizing every job in one box.",
+    "zh": "客户将收到一个 LINE 轮播，其中总结了每项工作。"
+  },
+  "จำนวนหลัง": {
+    "en": "Number of back",
+    "zh": "回数"
+  },
+  "หลัง": {
+    "en": "behind",
+    "zh": "在后面"
+  },
+  "สถานะแจ้งเตือน": {
+    "en": "Notification status",
+    "zh": "通知状态"
+  },
+  "เปิด (LINE)": {
+    "en": "Open (LINE)",
+    "zh": "打开（线路）"
+  },
+  "พิมพ์ชื่อหรืออีเมลลูกค้า...": {
+    "en": "Type the customer's name or email...",
+    "zh": "输入客户的姓名或电子邮件..."
+  },
+  "เช่น หน้าบ้าน, รอบสระ...": {
+    "en": "Such as in front of the house, around the pool...",
+    "zh": "比如屋前、泳池周围……"
+  },
+  "ทำอะไรบ้าง...": {
+    "en": "What do you do?",
+    "zh": "你做什么工作？"
+  },
+  "รายละเอียดเพิ่มเติม...": {
+    "en": "More details...",
+    "zh": "更多详情..."
+  },
+  "ปัญหาอื่นๆ (เพิ่มเติม)...": {
+    "en": "Other problems (additional)...",
+    "zh": "其他问题（补充）..."
+  },
+  "คำแนะนำอื่นๆ (เพิ่มเติม)...": {
+    "en": "Other (additional) advice...",
+    "zh": "其他（附加）建议..."
+  },
+  "บันทึกรายงานสำเร็จ": {
+    "en": "Report saved successfully",
+    "zh": "报告保存成功"
+  },
+  "ระบบกำลังนำคุณกลับหน้าหลัก...": {
+    "en": "The system is taking you back to the home page...",
+    "zh": "系统正在带您返回首页..."
+  },
+  "ย้อนกลับ": {
+    "en": "retrospective",
+    "zh": "回顾性的"
+  },
+  "ลงรายงานรายตัว": {
+    "en": "Make an individual report",
+    "zh": "制作个人报告"
+  },
+  "สร้างรายงานการเข้าดูแลสวนสำหรับบ้าน 1 หลัง": {
+    "en": "Create a garden maintenance report for 1 house.",
+    "zh": "创建 1 所房屋的花园维护报告。"
+  },
+  "1. เลือกลูกค้า": {
+    "en": "1. Select customers",
+    "zh": "1. 选择客户"
+  },
+  "ไม่พบลูกค้าที่ค้นหา": {
+    "en": "The searched customer was not found.",
+    "zh": "未找到所搜索的客户。"
+  },
+  "2. เลือกบ้าน / แผนบริการ": {
+    "en": "2. Select home / service plan",
+    "zh": "2. 选择主页/服务计划"
+  },
+  "นัดหมาย:": {
+    "en": "make an appointment:",
+    "zh": "预约："
+  },
+  "ไม่มีแผนบริการที่ใช้งานอยู่": {
+    "en": "No active service plan",
+    "zh": "没有主动服务计划"
+  },
+  "3. รายละเอียดงาน": {
+    "en": "3. Job details",
+    "zh": "3. 职位详情"
+  },
+  "งานที่ดำเนินการ": {
+    "en": "Work performed",
+    "zh": "完成的工作"
+  },
+  "วันนัดครั้งถัดไป": {
+    "en": "next appointment date",
+    "zh": "下次预约日期"
+  },
+  "4. โซนที่ดูแลและรูปภาพ": {
+    "en": "4. Supervised zones and pictures",
+    "zh": "4. 监管区域及图片"
+  },
+  "รูปภาพก่อนทำ (": {
+    "en": "Picture before doing (",
+    "zh": "做之前的图（"
+  },
+  "รูปภาพหลังทำ (": {
+    "en": "Picture after making (",
+    "zh": "制作完成后的图（"
+  },
+  "ยังไม่มีข้อมูลโซนดูแล (สามารถเพิ่มรูปภาพและรายละเอียดแยกตามโซนได้)": {
+    "en": "There is no care zone information yet. (Can add pictures and details by zone)",
+    "zh": "目前还没有护理区信息。 （可以按区域添加图片和详细信息）"
+  },
+  "ระบบจะทำการส่ง LINE แจ้งเตือนไปยังลูกค้าทันทีเมื่อกดบันทึก": {
+    "en": "The system will send a LINE notification to the customer immediately when they press save.",
+    "zh": "当客户按下“保存”时，系统将立即向客户发送 LINE 通知。"
+  },
+  "ค้นหาชื่อหรืออีเมลลูกค้า...": {
+    "en": "Search for a customer's name or email...",
+    "zh": "搜索客户的姓名或电子邮件..."
+  },
+  "รายละเอียดงานเพิ่มเติม...": {
+    "en": "Additional job details...",
+    "zh": "其他职位详细信息..."
+  },
+  "เช่น หน้าบ้าน, สวนครัว...": {
+    "en": "Such as the front of the house, kitchen garden...",
+    "zh": "比如屋前、菜园……"
+  },
+  "ทำอะไรบ้างในโซนนี้...": {
+    "en": "What do you do in this zone?",
+    "zh": "你在这个区域做什么？"
+  },
+  "รายละเอียดพนักงาน ID:": {
+    "en": "Employee ID details:",
+    "zh": "员工 ID 详细信息："
+  },
+  "ข้อมูลส่วนตัว": {
+    "en": "personal information",
+    "zh": "个人信息"
+  },
+  "สมศักดิ์ ขยันยิ่ง": {
+    "en": "Somsak Yanying",
+    "zh": "颂萨克艳英"
+  },
+  "ประวัติการทำงาน": {
+    "en": "Work history",
+    "zh": "工作经历"
+  },
+  "ประวัติการทำงานและประสิทธิภาพจะแสดงที่นี่": {
+    "en": "Work history and performance will be displayed here.",
+    "zh": "工作历史和绩效将显示在这里。"
+  },
+  "รายละเอียดการลงเวลา เดือน": {
+    "en": "Monthly time stamp details",
+    "zh": "每月时间戳详细信息"
+  },
+  "กะทำงาน": {
+    "en": "work shift",
+    "zh": "轮班工作"
+  },
+  "มาสายรวม / ขาดงาน": {
+    "en": "Total lateness/absence from work",
+    "zh": "总迟到/缺勤"
+  },
+  "สาย": {
+    "en": "line",
+    "zh": "线"
+  },
+  "นาที / ขาด": {
+    "en": "minutes / absence",
+    "zh": "分钟/缺席"
+  },
+  "วัน": {
+    "en": "day",
+    "zh": "天"
+  },
+  "OT รวม (ที่อนุมัติแล้ว)": {
+    "en": "Total OT (Approved)",
+    "zh": "总加班时间（已批准）"
+  },
+  "นาที": {
+    "en": "minute",
+    "zh": "分钟"
+  },
+  "หักเงินรายเดือน (ลางาน/ขาดงาน)": {
+    "en": "Monthly deduction (Leave work/absence from work)",
+    "zh": "每月扣除（请假/旷工）"
+  },
+  "ยอดหักปัจจุบัน: ฿": {
+    "en": "Current deducted amount: ฿",
+    "zh": "当前扣除金额：฿"
+  },
+  "บันทึกหักเงิน": {
+    "en": "Record of deduction",
+    "zh": "扣除记录"
+  },
+  "เข้างาน": {
+    "en": "Attend work",
+    "zh": "参加工作"
+  },
+  "เลิกงาน": {
+    "en": "finish work",
+    "zh": "完成工作"
+  },
+  "สถานะ": {
+    "en": "status",
+    "zh": "地位"
+  },
+  "น.": {
+    "en": "n.",
+    "zh": "名词"
+  },
+  "คำนวณอัตโนมัติ:": {
+    "en": "Automatic calculation:",
+    "zh": "自动计算："
+  },
+  "อนุมัติแล้ว (": {
+    "en": "Approved (",
+    "zh": "得到正式认可的 （"
+  },
+  "นาที)": {
+    "en": "minute)",
+    "zh": "分钟）"
+  },
+  "ไม่อนุมัติ": {
+    "en": "Not approved",
+    "zh": "未获批准"
+  },
+  "อนุมัติ": {
+    "en": "approve",
+    "zh": "批准"
+  },
+  "ปฏิเสธ": {
+    "en": "refuse",
+    "zh": "拒绝"
+  },
+  "เหตุผล:": {
+    "en": "reason:",
+    "zh": "原因："
+  },
+  "รออนุมัติ OT": {
+    "en": "Waiting for OT approval",
+    "zh": "等待 OT 批准"
+  },
+  "รายงานการลงเวลาและเงินเดือน": {
+    "en": "Time and salary reports",
+    "zh": "时间和工资报告"
+  },
+  "ตรวจสอบการเข้างานและคำนวณรายได้ของพนักงานรายเดือน": {
+    "en": "Check attendance and calculate monthly employee income.",
+    "zh": "检查出勤情况并计算员工每月收入。"
+  },
+  "ส่งออก CSV": {
+    "en": "Export CSV",
+    "zh": "导出 CSV"
+  },
+  "พนักงานทั้งหมด": {
+    "en": "All employees",
+    "zh": "全体员工"
+  },
+  "คน": {
+    "en": "person",
+    "zh": "人"
+  },
+  "มาทำงานวันนี้": {
+    "en": "Come to work today",
+    "zh": "今天来上班"
+  },
+  "ยอดจ่ายทั้งหมด (ประมาณการ)": {
+    "en": "Total payment amount (estimated)",
+    "zh": "付款总额（预计）"
+  },
+  "OT รออนุมัติ (เดือนนี้)": {
+    "en": "OT waiting for approval (this month)",
+    "zh": "OT等待批准（本月）"
+  },
+  "พนักงาน": {
+    "en": "employee",
+    "zh": "员工"
+  },
+  "แผนก/กะ": {
+    "en": "Department/Shift",
+    "zh": "部门/班次"
+  },
+  "วันทำงาน": {
+    "en": "working day",
+    "zh": "工作日"
+  },
+  "สาย / OT": {
+    "en": "Wired/OT",
+    "zh": "有线/OT"
+  },
+  "ขาดงาน": {
+    "en": "Missing work",
+    "zh": "缺少工作"
+  },
+  "ค่าแรง/ฐาน": {
+    "en": "Wage/base",
+    "zh": "工资/基数"
+  },
+  "ยอดรวม (฿)": {
+    "en": "Total (฿)",
+    "zh": "总计 (฿)"
+  },
+  "ไม่พบข้อมูลพนักงาน": {
+    "en": "Employee information not found",
+    "zh": "未找到员工信息"
+  },
+  "สาย:": {
+    "en": "line:",
+    "zh": "线："
+  },
+  "มี OT รออนุมัติ": {
+    "en": "There is OT waiting for approval.",
+    "zh": "有 OT 等待批准。"
+  },
+  "OT ชม.ละ ฿": {
+    "en": "OT per hour ฿",
+    "zh": "每小时 OT ฿"
+  },
+  "ยอดเงินที่ต้องการหักเพิ่ม": {
+    "en": "Amount to be additionally deducted",
+    "zh": "需额外扣除的金额"
+  },
+  "อนุมัติพนักงานใหม่": {
+    "en": "Approve new employees",
+    "zh": "批准新员工"
+  },
+  "รายการที่รอตรวจ": {
+    "en": "Items waiting to be checked",
+    "zh": "等待检查的物品"
+  },
+  "ไม่มีรายการที่รอการอนุมัติ": {
+    "en": "There are no items pending approval.",
+    "zh": "没有待批准的项目。"
+  },
+  "ดูรูปขนาดเต็ม": {
+    "en": "View full size picture",
+    "zh": "查看全尺寸图片"
+  },
+  "ส่งเมื่อ:": {
+    "en": "Sent when:",
+    "zh": "发送时间："
+  },
+  "เลขบัตรประชาชน": {
+    "en": "ID card number",
+    "zh": "身份证号码"
+  },
+  "บัญชีธนาคาร": {
+    "en": "bank account",
+    "zh": "银行账户"
+  },
+  "อนุมัติการยืนยันตัวตน": {
+    "en": "Approve identity verification",
+    "zh": "批准身份验证"
+  },
+  "จำนวน 1": {
+    "en": "Quantity 1",
+    "zh": "数量 1"
+  },
+  "ขออภัย ไม่พบข้อมูลบ้านหลังนี้ หรือคุณไม่มีสิทธิ์เข้าถึงครับ": {
+    "en": "Sorry, no information for this house was found. Or you don't have access rights?",
+    "zh": "抱歉，没有找到该房子的信息。或者你没有访问权限？"
+  },
+  "กรุณาตรวจสอบลิงก์อีกครั้ง หรือลองเข้าสู่ระบบใหม่ด้วยบัญชีที่ถูกต้อง": {
+    "en": "Please check the link again. Or try logging in again with the correct account.",
+    "zh": "请再次检查链接。或者尝试使用正确的帐户重新登录。"
+  },
+  "ลองอีกครั้ง": {
+    "en": "try again",
+    "zh": "再试一次"
+  },
+  "นัดหมายถัดไป:": {
+    "en": "Next appointment:",
+    "zh": "下次预约："
+  },
+  "ผู้ที่ได้รับลิงก์สากลนี้จะสามารถเข้าถึงข้อมูลโครงการและบันทึกการดูแลสวนได้โดยไม่ต้องเข้าสู่ระบบ": {
+    "en": "Those who receive this universal link will be able to access project information and garden maintenance records without logging in.",
+    "zh": "收到此通用链接的人无需登录即可访问项目信息和花园维护记录。"
+  },
+  "รับการแจ้งเตือน": {
+    "en": "Receive notifications",
+    "zh": "接收通知"
+  },
+  "ลบผู้ใช้นี้": {
+    "en": "Delete this user",
+    "zh": "删除该用户"
+  },
+  "สถาปนิกในพื้นที่พร้อมดูแลโครงการของคุณแล้ว": {
+    "en": "Local architects are ready to take care of your project.",
+    "zh": "当地建筑师已准备好照顾您的项目。"
+  },
+  "พื้นที่นี้อาจจะยังไม่รองรับการให้บริการครับ": {
+    "en": "This area may not yet support service.",
+    "zh": "该区域可能尚不支持服务。"
+  },
+  "อัปโหลดรูปบ้าน": {
+    "en": "Upload a picture of the house",
+    "zh": "上传房子的照片"
+  },
+  "เผื่อมีรูปสวยๆ ให้ทีมงานดูเป็นไอเดียครับ": {
+    "en": "To have beautiful pictures Let the team look at it as an idea.",
+    "zh": "要有漂亮的图片 让团队将其视为一个想法。"
+  },
+  "เลือกเขต / แขวง (Zone Detection)": {
+    "en": "Select zone/subdistrict (Zone Detection)",
+    "zh": "选择区域/分区（区域检测）"
+  },
+  "ต้องการให้ทีมงานเข้าวัดพื้นที่": {
+    "en": "Want a team to measure the area",
+    "zh": "想要一个团队来测量面积"
+  },
+  "ทาง XYL STUDIO จะจัดส่งทีมงานเข้าไปประเมินและวัดพื้นที่หน้างานให้ครับ": {
+    "en": "XYL STUDIO will send a team to evaluate and measure the area at the work site.",
+    "zh": "XYL STUDIO 将派出一个团队来评估和测量工作现场的面积。"
+  },
+  "ชื่อผู้ติดต่อ (Coordinator Name)": {
+    "en": "Contact Name (Coordinator Name)",
+    "zh": "联系人姓名（协调员姓名）"
+  },
+  "เบอร์โทรศัพท์ (Line / Phone)": {
+    "en": "Telephone number (Line / Phone)",
+    "zh": "电话号码（线路/电话）"
+  },
+  "วันที่สะดวกให้ติดต่อ (Availability Window)": {
+    "en": "Convenient day to contact (Availability Window)",
+    "zh": "方便联系的日子（可用窗口）"
+  },
+  "ความต้องการพิเศษ (Special Request)": {
+    "en": "Special Request",
+    "zh": "特别要求"
+  },
+  "โครงการ \"": {
+    "en": "project \"",
+    "zh": "项目 ”"
+  },
+  "\" ถูกส่งเข้าสู่ระบบแล้ว": {
+    "en": "\" has been sent into the system.",
+    "zh": "”已发送至系统。"
+  },
+  "กำลังพากลับสู่หน้าแดชบอร์ด...": {
+    "en": "Taking you back to the dashboard...",
+    "zh": "带您回到仪表板..."
+  },
+  "วิลล่าริมน้ำ, สวนส่วนตัว...": {
+    "en": "Waterfront villa, private garden...",
+    "zh": "海滨别墅、私家花园……"
+  },
+  "เลขที่บ้าน, ถนน และจุดสังเกต...": {
+    "en": "House numbers, streets and landmarks...",
+    "zh": "门牌号码、街道和地标......"
+  },
+  "พิมพ์ชื่อของคุณ...": {
+    "en": "Type your name...",
+    "zh": "输入你的名字..."
+  },
+  "มีอะไรเพิ่มเติมบอกเราได้เลยครับ...": {
+    "en": "If there is anything more you can tell us...",
+    "zh": "如果还有什么可以告诉我们的..."
+  },
+  "เพิ่มสถานที่ใหม่": {
+    "en": "Add a new location",
+    "zh": "添加新位置"
+  },
+  "สถานที่": {
+    "en": "location",
+    "zh": "地点"
+  },
+  "ใหม่": {
+    "en": "new",
+    "zh": "新的"
+  },
+  "โปรดระบุรายละเอียดและข้อมูลเชิงพื้นที่สำหรับการเข้ารับบริการของเรา": {
+    "en": "Please provide details and spatial information for receiving our services.",
+    "zh": "请提供详细信息和空间信息以接受我们的服务。"
+  },
+  "01. ข้อมูลเบื้องต้น": {
+    "en": "01. Basic information",
+    "zh": "01. 基本信息"
+  },
+  "02. ที่ตั้ง": {
+    "en": "02. Location",
+    "zh": "02. 地点"
+  },
+  "03. ขนาดพื้นที่": {
+    "en": "03. Area size",
+    "zh": "03. 面积大小"
+  },
+  "04. การติดต่อ": {
+    "en": "04. Contact",
+    "zh": "04. 联系方式"
+  },
+  "สถานที่ใหม่": {
+    "en": "new place",
+    "zh": "新地方"
+  },
+  "โปรดระบุรายละเอียดสถานที่ของคุณ": {
+    "en": "Please provide details of your location.",
+    "zh": "请提供您所在位置的详细信息。"
+  },
+  "ข้อมูลเบื้องต้น": {
+    "en": "Basic information",
+    "zh": "基本信息"
+  },
+  "ชื่อสถานที่ *": {
+    "en": "Place name *",
+    "zh": "地名 *"
+  },
+  "ประเภทสถานที่": {
+    "en": "Location type",
+    "zh": "位置类型"
+  },
+  "รูปภาพสถานที่": {
+    "en": "Place pictures",
+    "zh": "放置图片"
+  },
+  "แตะเพื่อเลือกรูปภาพจากอุปกรณ์": {
+    "en": "Tap to select a photo from your device.",
+    "zh": "点击以从您的设备中选择一张照片。"
+  },
+  "ที่ตั้ง": {
+    "en": "Location",
+    "zh": "地点"
+  },
+  "รหัสไปรษณีย์ *": {
+    "en": "zip code *",
+    "zh": "邮政编码 *"
+  },
+  "กำลังตรวจสอบพื้นที่ให้บริการ...": {
+    "en": "Checking service area...",
+    "zh": "正在检查服务区域..."
+  },
+  "✓ สาขาที่ให้บริการ:": {
+    "en": "✓ Service branches:",
+    "zh": "✓ 服务网点："
+  },
+  "ตำบล / แขวง": {
+    "en": "Subdistrict / Subdistrict",
+    "zh": "街道/街道"
+  },
+  "อำเภอ / เขต": {
+    "en": "District / District",
+    "zh": "区/区"
+  },
+  "จังหวัด": {
+    "en": "province",
+    "zh": "省"
+  },
+  "รายละเอียดที่อยู่ *": {
+    "en": "Address details *",
+    "zh": "地址详情 *"
+  },
+  "ขนาดพื้นที่": {
+    "en": "Area size",
+    "zh": "面积大小"
+  },
+  "ขนาดพื้นที่รวม": {
+    "en": "Total area size",
+    "zh": "总面积"
+  },
+  "หรือ": {
+    "en": "or",
+    "zh": "或者"
+  },
+  "ขอบริการประเมินพื้นที่": {
+    "en": "Request area assessment service",
+    "zh": "请求区域评估服务"
+  },
+  "ทีมผู้เชี่ยวชาญจะเข้าประเมินและวัดพื้นที่จริง": {
+    "en": "A team of experts will assess and measure the actual area.",
+    "zh": "专家团队将评估和测量实际面积。"
+  },
+  "การติดต่อ": {
+    "en": "Contact",
+    "zh": "接触"
+  },
+  "ชื่อผู้ติดต่อ *": {
+    "en": "Contact name *",
+    "zh": "联系人姓名 *"
+  },
+  "เบอร์โทรศัพท์ *": {
+    "en": "telephone number *",
+    "zh": "电话号码 *"
+  },
+  "วันที่สะดวก *": {
+    "en": "Convenient date *",
+    "zh": "方便的日期*"
+  },
+  "ช่วงเวลาที่สะดวก *": {
+    "en": "Convenient time *",
+    "zh": "方便的时间*"
+  },
+  "กำลังดำเนินการ": {
+    "en": "in progress",
+    "zh": "进行中"
+  },
+  "บันทึกข้อมูลสถานที่": {
+    "en": "Save location information",
+    "zh": "保存位置信息"
+  },
+  "เช่น บ้านวิภาวดี, คาเฟ่สาขา 2": {
+    "en": "such as Baan Vibhavadi, Cafe Branch 2",
+    "zh": "例如 Baan Vibhavadi, Cafe Branch 2"
+  },
+  "บ้านเลขที่, อาคาร, ชั้น, ถนน...": {
+    "en": "House number, building, floor, street...",
+    "zh": "门牌号、建筑物、楼层、街道..."
+  },
+  "ชื่อ - นามสกุล": {
+    "en": "Name - Surname",
+    "zh": "姓名 - 姓氏"
+  },
+  "กลับไปหน้าบ้าน": {
+    "en": "Return to the home page.",
+    "zh": "返回主页。"
+  },
+  "คำขอการวัดพื้นที่": {
+    "en": "Area measurement request",
+    "zh": "面积测量请求"
+  },
+  "ติดตามสถานะคำขอการวัดพื้นที่ของคุณ": {
+    "en": "Track the status of your area measurement request.",
+    "zh": "跟踪您的面积测量请求的状态。"
+  },
+  "ยังไม่มีคำขอการวัดพื้นที่": {
+    "en": "No area measurement requests yet.",
+    "zh": "尚无面积测量请求。"
+  },
+  "เมื่อคุณร้องขอให้ทีมงานมาวัดพื้นที่ จะแสดงรายการที่นี่": {
+    "en": "When you request a team to come and measure the area will be listed here",
+    "zh": "当您请求团队前来测量时，此处将列出该面积"
+  },
+  "วันที่ต้องการ:": {
+    "en": "Required date:",
+    "zh": "所需日期："
+  },
+  "เวลา:": {
+    "en": "time:",
+    "zh": "时间："
+  },
+  "ผู้รับผิดชอบ:": {
+    "en": "responsible person:",
+    "zh": "负责人："
+  },
+  "ผลการวัดพื้นที่": {
+    "en": "Area measurement results",
+    "zh": "面积测量结果"
+  },
+  "ตารางเมตร": {
+    "en": "square meter",
+    "zh": "平方米"
+  },
+  "หมายเหตุ:": {
+    "en": "note:",
+    "zh": "笔记："
+  },
+  "ส่งคำขอ:": {
+    "en": "Submit a request:",
+    "zh": "提交请求："
+  },
+  "มอบหมายงาน:": {
+    "en": "Assign work:",
+    "zh": "分配工作："
+  },
+  "เสร็จสิ้น:": {
+    "en": "finish:",
+    "zh": "结束："
+  },
+  "กำลังกรองเฉพาะบ้าน:": {
+    "en": "Filtering for specific homes:",
+    "zh": "过滤特定房屋："
+  },
+  "กำลังโหลดรายละเอียดสินค้า...": {
+    "en": "Loading product details...",
+    "zh": "正在加载产品详细信息..."
+  },
+  "ไม่พบข้อมูลสินค้า": {
+    "en": "Product information not found",
+    "zh": "未找到产品信息"
+  },
+  "เลือกต้นไม้จากคอลเลกชันที่คัดมาแล้ว พร้อมคำแนะนำการดูแลและรายละเอียดการปลูกในภาษาดีไซน์เดียวกับ customer portal": {
+    "en": "Choose a plant from the curated collection. Complete with care instructions and planting details in the same design language as the customer portal.",
+    "zh": "从精选的植物收藏中选择一种植物。包含护理说明和种植详细信息，采用与客户门户相同的设计语言。"
+  },
+  "ขนาด:": {
+    "en": "size:",
+    "zh": "尺寸："
+  },
+  "สต็อก": {
+    "en": "stock",
+    "zh": "库存"
+  },
+  "รายละเอียดการดูแล": {
+    "en": "Care details",
+    "zh": "护理细节"
+  },
+  "แดด": {
+    "en": "sunshine",
+    "zh": "阳光"
+  },
+  "น้ำ": {
+    "en": "water",
+    "zh": "水"
+  },
+  "ดิน": {
+    "en": "earth",
+    "zh": "地球"
+  },
+  "เคล็ดลับ:": {
+    "en": "Tips:",
+    "zh": "尖端："
+  },
+  "ไปชำระเงิน": {
+    "en": "go pay",
+    "zh": "去付钱"
+  },
+  "กลับ": {
+    "en": "go back",
+    "zh": "回去"
+  },
+  "กำลังพาไปยังปฏิทินของบ้าน...": {
+    "en": "Taking you to the home calendar...",
+    "zh": "带您进入家庭日历..."
+  },
+  "กลับหน้าเดิม": {
+    "en": "Return to the previous page.",
+    "zh": "返回上一页。"
+  },
+  "บัญชีได้รับการยืนยันแล้ว": {
+    "en": "The account is verified.",
+    "zh": "该帐户已验证。"
+  },
+  "คุณสามารถเริ่มใช้งานระบบ POS และเช็คอินเข้างานได้ตามปกติ": {
+    "en": "You can start using the POS system and check in as normal.",
+    "zh": "您可以开始使用 POS 系统并正常办理登机手续。"
+  },
+  "ยืนยันตัวตนพนักงาน": {
+    "en": "Verify employee identity",
+    "zh": "验证员工身份"
+  },
+  "กรุณากรอกข้อมูลจริงเพื่อใช้ในการยืนยันตัวตนและโอนเงินจ่ายค่าตอบแทน": {
+    "en": "Please fill in real information for use in verifying your identity and transferring compensation.",
+    "zh": "请填写真实信息，用于验证您的身份和转移报酬。"
+  },
+  "รูปถ่ายบัตรประชาชน (ถือคู่ใบหน้าเพื่อความรวดเร็ว)": {
+    "en": "ID card photo (Hold a pair of faces for speed)",
+    "zh": "身份证照片（抓拍两张脸速度）"
+  },
+  "คลิกเพื่ออัปโหลดรูปภาพ": {
+    "en": "Click to upload photo.",
+    "zh": "点击上传照片。"
+  },
+  "ข้อมูลบัญชีธนาคาร": {
+    "en": "Bank account information",
+    "zh": "银行账户信息"
+  },
+  "ออมสิน": {
+    "en": "saving",
+    "zh": "保存"
+  },
+  "ทหารไทยธนชาต": {
+    "en": "Thanachart Thai soldiers",
+    "zh": "塔那查泰国士兵"
+  },
+  "ยินดีด้วย รับแต้มสำเร็จ!": {
+    "en": "Congratulations, points earned!",
+    "zh": "恭喜您，积分获得！"
+  },
+  "กำลังปิดหน้าต่างนี้อัตโนมัติ...": {
+    "en": "Closing this window automatically...",
+    "zh": "自动关闭该窗口..."
+  },
+  "กำลังเข้าสู่ระบบติดตามออเดอร์...": {
+    "en": "Logging in to track orders...",
+    "zh": "正在登录以跟踪订单..."
+  },
+  "จัดการผู้ดูแลบ้าน (Collaborators)": {
+    "en": "Manage housekeeper (Collaborators)",
+    "zh": "管理管家（合作者）"
+  },
+  "บ้าน:": {
+    "en": "house:",
+    "zh": "房子："
+  },
+  "รายชื่อผู้มีสิทธิ์เข้าถึง": {
+    "en": "List of people with access rights",
+    "zh": "具有访问权限的人员列表"
+  },
+  "เจ้าของหลัก (Owner)": {
+    "en": "Main owner (Owner)",
+    "zh": "主要所有者（所有者）"
+  },
+  "เป็นเจ้าของบ้านที่สร้างบ้านนี้ขึ้นมา ไม่สามารถลบได้": {
+    "en": "It is the owner of the house that built this house. cannot be deleted",
+    "zh": "建造这所房子的是这所房子的主人。无法删除"
+  },
+  "เจ้าของ": {
+    "en": "owner",
+    "zh": "所有者"
+  },
+  "ยังไม่มีผู้ดูแลร่วม": {
+    "en": "There is no co-administrator yet.",
+    "zh": "目前还没有共同管理员。"
+  },
+  "ดูได้อย่างเดียว (Viewer)": {
+    "en": "Can only be viewed (Viewer)",
+    "zh": "只能查看（查看者）"
+  },
+  "แก้ไข/สั่งงานได้ (Editor)": {
+    "en": "Can edit/order work (Editor)",
+    "zh": "可以编辑/订购作品（编辑）"
+  },
+  "เพิ่มผู้ดูแล": {
+    "en": "Add a moderator",
+    "zh": "添加主持人"
+  },
+  "ระดับสิทธิ์": {
+    "en": "Permission level",
+    "zh": "权限级别"
+  },
+  "ดูข้อมูลบ้านและการแจ้งซ่อมได้ แต่ไม่สามารถเพิ่ม/แก้ไขได้": {
+    "en": "View home information and report repairs. But cannot add/edit",
+    "zh": "查看房屋信息并报告维修情况。但无法添加/编辑"
+  },
+  "จัดการข้อมูลบ้านและสั่งงานซ่อมได้เสมือนเจ้าของ": {
+    "en": "Manage home information and order repair work like the owner.",
+    "zh": "像业主一样管理家庭信息并订购维修工作。"
+  },
+  "ลบสิทธิ์": {
+    "en": "Delete permissions",
+    "zh": "删除权限"
+  },
+  "กลับหน้ารายงานแอดมิน": {
+    "en": "Return to the admin report page.",
+    "zh": "返回管理报告页面。"
+  },
+  "ลงรายละเอียดรายงานหน้างาน": {
+    "en": "Enter details of the work site report.",
+    "zh": "输入工作现场报告的详细信息。"
+  },
+  "ออเดอร์: #": {
+    "en": "Order: #",
+    "zh": "命令： ＃"
+  },
+  "ครั้งที่": {
+    "en": "The time",
+    "zh": "时间"
+  },
+  "ข้อสังเกตจากการเข้าบริการครั้งก่อน (": {
+    "en": "Observations from previous service visits (",
+    "zh": "之前服务访问的观察结果（"
+  },
+  "สิ่งที่ทำไปแล้ว": {
+    "en": "Things that have been done",
+    "zh": "已经做过的事情"
+  },
+  "ปัญหาที่ต้องติดตาม": {
+    "en": "Problems that need to be followed up",
+    "zh": "需要跟进的问题"
+  },
+  "ข้อมูลลูกค้าและสถานที่": {
+    "en": "Customer and location information",
+    "zh": "客户和位置信息"
+  },
+  "รายละเอียดรายงานหน้างาน": {
+    "en": "Work site report details",
+    "zh": "工作现场报告详情"
+  },
+  "งานที่ดำเนินการ (Checklist)": {
+    "en": "Work performed (Checklist)",
+    "zh": "已完成的工作（清单）"
+  },
+  "คำแนะนำจากแอดมิน": {
+    "en": "Advice from admin",
+    "zh": "管理员的建议"
+  },
+  "โซนดูแล (Zones)": {
+    "en": "Care zones (Zones)",
+    "zh": "护理区（区）"
+  },
+  "ยังไม่ได้เพิ่มโซนดูแล": {
+    "en": "Haven't added a care zone yet.",
+    "zh": "还没有添加护理区。"
+  },
+  "รายละเอียดงานในโซนนี้": {
+    "en": "Details of work in this zone",
+    "zh": "本区工作详情"
+  },
+  "รูปภาพก่อนดำเนินงาน (Before) (": {
+    "en": "Picture before operation (Before) (",
+    "zh": "操作前的图片（Before）（"
+  },
+  "เพิ่มรูป": {
+    "en": "Add a picture",
+    "zh": "添加图片"
+  },
+  "รูปภาพหลังดำเนินงาน (After) (": {
+    "en": "Picture after operation (After) (",
+    "zh": "术后照片（术后）（"
+  },
+  "นัดหมายครั้งถัดไป": {
+    "en": "Next appointment",
+    "zh": "下次预约"
+  },
+  "เริ่มเวลา": {
+    "en": "start time",
+    "zh": "开始时间"
+  },
+  "สิ้นสุดเวลา": {
+    "en": "end of time",
+    "zh": "时间结束"
+  },
+  "หมายเหตุภายใน (แอดมินเห็นเท่านั้น)": {
+    "en": "Internal Notes (Admin sees only)",
+    "zh": "内部注释（仅限管理员查看）"
+  },
+  "ส่งรายงานเรียบร้อยแล้ว": {
+    "en": "The report has been sent.",
+    "zh": "报告已发送。"
+  },
+  "ระบบกำลังนำคุณกลับไปยังหน้าข้อมูลลูกค้า...": {
+    "en": "You are being redirected back to the customer information page...",
+    "zh": "您将被重定向回客户信息页面..."
+  },
+  "รายละเอียดปัญหาเพิ่มเติม...": {
+    "en": "More problem details...",
+    "zh": "更多问题详情..."
+  },
+  "คำแนะนำเพิ่มเติม...": {
+    "en": "Additional advice...",
+    "zh": "附加建议..."
+  },
+  "เช่น สวนหน้าบ้าน, ระเบียงชั้น 2...": {
+    "en": "Such as the front garden, 2nd floor balcony...",
+    "zh": "比如前花园、二楼阳台……"
+  },
+  "พนักงานทำอะไรในโซนนี้บ้าง...": {
+    "en": "What do employees do in this zone?",
+    "zh": "员工在这个区域做什么？"
+  },
+  "รายละเอียดการนัดหมาย...": {
+    "en": "Appointment details...",
+    "zh": "预约详情..."
+  },
+  "โน้ตเพิ่มเติมสำหรับทีมงาน...": {
+    "en": "Additional notes for the team...",
+    "zh": "团队的附加说明..."
+  },
+  "เพิ่มบ้านใหม่ให้ลูกค้า": {
+    "en": "Add new homes for customers",
+    "zh": "为客户增添新家"
+  },
+  "สำหรับบัญชี:": {
+    "en": "For accounts:",
+    "zh": "对于帐户："
+  },
+  "ชื่อบ้าน/โครงการ *": {
+    "en": "Name of house/project *",
+    "zh": "房屋/项目名称 *"
+  },
+  "บ้านพักอาศัย": {
+    "en": "Residential house",
+    "zh": "住宅"
+  },
+  "โรงแรม/รีสอร์ท": {
+    "en": "Hotel/Resort",
+    "zh": "酒店/度假村"
+  },
+  "พาณิชย์/คาเฟ่": {
+    "en": "Commercial/Cafe",
+    "zh": "商业/咖啡厅"
+  },
+  "โครงการอาคาร": {
+    "en": "Building project",
+    "zh": "建设工程"
+  },
+  "รูปภาพบ้าน": {
+    "en": "house picture",
+    "zh": "房子图片"
+  },
+  "ไฟล์ที่เลือก:": {
+    "en": "Selected files:",
+    "zh": "选定的文件："
+  },
+  "ชื่อผู้ติดต่อ": {
+    "en": "Contact name",
+    "zh": "联系人姓名"
+  },
+  "เบอร์โทรติดต่อ": {
+    "en": "Contact phone number",
+    "zh": "联系电话"
+  },
+  "ข้อมูลที่ตั้ง": {
+    "en": "Location information",
+    "zh": "位置信息"
+  },
+  "พื้นที่รับผิดชอบ:": {
+    "en": "Area of ​​responsibility:",
+    "zh": "职责范围："
+  },
+  "ขนาดพื้นที่ (ตร.ม.)": {
+    "en": "Area size (sq m)",
+    "zh": "面积（平方米）"
+  },
+  "ที่อยู่แบบเต็ม": {
+    "en": "Full address",
+    "zh": "完整地址"
+  },
+  "ปักหมุดแผนที่": {
+    "en": "Map pin",
+    "zh": "地图别针"
+  },
+  "เวลาให้บริการ": {
+    "en": "Service time",
+    "zh": "服务时间"
+  },
+  "วันที่สะดวก": {
+    "en": "Convenient date",
+    "zh": "方便的约会"
+  },
+  "ช่วงเวลา": {
+    "en": "period",
+    "zh": "时期"
+  },
+  "09:00 - 18:00 (ทั้งวัน)": {
+    "en": "09:00 - 18:00 (all day)",
+    "zh": "09:00 - 18:00（全天）"
+  },
+  "09:00 - 12:00 (เช้า)": {
+    "en": "09:00 - 12:00 (morning)",
+    "zh": "09:00 - 12:00（上午）"
+  },
+  "13:00 - 16:00 (บ่าย)": {
+    "en": "13:00 - 16:00 (afternoon)",
+    "zh": "13:00 - 16:00（下午）"
+  },
+  "16:00 - 18:00 (เย็น)": {
+    "en": "16:00 - 18:00 (evening)",
+    "zh": "16:00 - 18:00（晚上）"
+  },
+  "บันทึกข้อมูลบ้าน": {
+    "en": "Record home information",
+    "zh": "记录家庭信息"
+  },
+  "เช่น บ้านเดี่ยวหลังมุม, วิลล่าพัทยา...": {
+    "en": "Such as corner detached house, Pattaya villa...",
+    "zh": "比如转角独立屋、芭堤雅别墅……"
+  },
+  "อัปเดตสำเร็จ": {
+    "en": "Updated successfully",
+    "zh": "更新成功"
+  },
+  "ได้รับการอัปเดตข้อมูลเรียบร้อยแล้ว": {
+    "en": "Information has been updated successfully.",
+    "zh": "信息已更新成功。"
+  },
+  "กลับไปยังหน้าข้อมูลสถานที่": {
+    "en": "Return to the location information page.",
+    "zh": "返回位置信息页面。"
+  },
+  "แก้ไขข้อมูลสถานที่": {
+    "en": "Edit location information",
+    "zh": "编辑位置信息"
+  },
+  "แก้ไข": {
+    "en": "correct",
+    "zh": "正确的"
+  },
+  "ข้อมูล": {
+    "en": "information",
+    "zh": "信息"
+  },
+  "ปรับปรุงรายละเอียดข้อมูลจำเพาะทางสถาปัตยกรรมและพื้นที่": {
+    "en": "Improved architectural and spatial specification details.",
+    "zh": "改进了建筑和空间规范细节。"
+  },
+  "01. ข้อมูลสถานที่": {
+    "en": "01. Location information",
+    "zh": "01.位置信息"
+  },
+  "02. รูปภาพหน้าปก": {
+    "en": "02. Cover photo",
+    "zh": "02.封面照片"
+  },
+  "ปรับปรุงรายละเอียดและข้อมูลเชิงพื้นที่": {
+    "en": "Improved details and spatial information",
+    "zh": "改进的细节和空间信息"
+  },
+  "ข้อมูลสถานที่": {
+    "en": "Location information",
+    "zh": "位置信息"
+  },
+  "ขนาดพื้นที่รวม (SQ.M.)": {
+    "en": "Total area size (SQ.M.)",
+    "zh": "总面积（平方米）"
+  },
+  "รหัสสาขาผู้ดูแล": {
+    "en": "Administrator branch code",
+    "zh": "管理员分支代码"
+  },
+  "สถานที่ตั้งโครงการ *": {
+    "en": "Project location *",
+    "zh": "项目地点 *"
+  },
+  "✓ พิกัดพร้อมใช้งาน (": {
+    "en": "✓ Coordinates available (",
+    "zh": "✓ 可用坐标（"
+  },
+  "รูปภาพหน้าปก": {
+    "en": "Cover photo",
+    "zh": "封面照片"
+  },
+  "ระบบจะทำการอัปโหลดรูปให้ทันที": {
+    "en": "The system will upload the picture immediately.",
+    "zh": "系统会立即上传图片。"
+  },
+  "กำลังดึงข้อมูลสถานที่...": {
+    "en": "Retrieving location information...",
+    "zh": "正在检索位置信息..."
+  },
+  "ระบุที่ตั้งโดยสังเขป...": {
+    "en": "Briefly specify the location...",
+    "zh": "简单说明一下地点..."
+  }
+}

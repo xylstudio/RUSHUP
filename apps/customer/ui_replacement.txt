@@ -1,0 +1,675 @@
+  return (
+    <>
+      <main className="flex-1 overflow-y-auto bg-[#FAFAFA] border-none custom-scrollbar text-[#1A1A18]">
+          {loading ? (
+             <div className="h-full flex items-center justify-center opacity-10">
+                 <Loader2 className="animate-spin" size={64} />
+             </div>
+          ) : (
+            <div className="max-w-6xl mx-auto py-10 sm:py-16 px-4 sm:px-8 space-y-8 pb-40">
+                
+                {/* 🧧 HEADER & CRITICAL STATUS */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-4">
+                    <div className="space-y-2">
+                        <h1 className="text-3xl sm:text-4xl font-black tracking-tight">ตั้งค่าร้าน <span className="text-gray-400 font-light">| Settings</span></h1>
+                        <p className="text-[13px] font-bold text-gray-500">จัดการข้อมูลร้านค้า ใบเสร็จ และอุปกรณ์สำหรับสาขา {profile?.branch_code}</p>
+                    </div>
+                    
+                    <div className="flex flex-col items-start md:items-end gap-3 bg-white p-5 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                        <div className="flex items-center gap-4">
+                            <div className="text-right hidden sm:block">
+                                <h4 className="text-[12px] font-black uppercase tracking-tight">System Status</h4>
+                                <p className={`text-[10px] font-bold uppercase tracking-widest ${settings.status === 'open' ? 'text-emerald-500' : 'text-red-500'}`}>
+                                    {settings.status === 'open' ? 'ร้านเปิดให้บริการ' : 'ร้านปิดให้บริการ'}
+                                </p>
+                            </div>
+                            <button 
+                                onClick={() => {
+                                    const newStatus = settings.status === 'open' ? 'closed' : 'open';
+                                    setSettings({ ...settings, status: newStatus, is_open: newStatus === 'open' });
+                                }}
+                                className={`relative w-20 h-10 rounded-full transition-colors duration-300 shadow-inner ${settings.status === 'open' ? 'bg-emerald-500' : 'bg-red-500'}`}
+                            >
+                                <div className={`absolute top-1 w-8 h-8 rounded-full bg-white transition-all duration-300 shadow-md flex items-center justify-center ${settings.status === 'open' ? 'left-11' : 'left-1'}`}>
+                                    <div className={`w-2 h-2 rounded-full ${settings.status === 'open' ? 'bg-emerald-500' : 'bg-red-500'}`}></div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex flex-col lg:flex-row gap-8">
+                    {/* SIDEBAR TABS */}
+                    <div className="w-full lg:w-64 flex-shrink-0 space-y-3">
+                        {[
+                            { id: 'general', icon: Info, label: 'ข้อมูลร้านค้า', desc: 'ที่อยู่, ข้อความประกาศ' },
+                            { id: 'receipt', icon: Printer, label: 'ตั้งค่าใบเสร็จ', desc: 'หัวบิล, โลโก้, ท้ายบิล' },
+                            { id: 'kitchen', icon: MenuIcon, label: 'ห้องครัว', desc: 'ฟอนต์, ออเดอร์' },
+                            { id: 'hardware', icon: Settings, label: 'เครื่องปริ้น', desc: 'จัดการอุปกรณ์เสริม' },
+                            { id: 'advanced', icon: Star, label: 'ระบบจ่ายเงิน & สมาชิก', desc: 'QR, พอยท์สะสม' },
+                            { id: 'permissions', icon: ShieldCheck, label: 'สิทธิ์การใช้งาน', desc: 'ผู้จัดการ, พนักงาน' }
+                        ].map(tab => {
+                            const Icon = tab.icon;
+                            const isActive = activeTab === tab.id;
+                            return (
+                                <button 
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all text-left ${isActive ? 'bg-black text-white shadow-xl shadow-black/10 scale-[1.02]' : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-100 hover:border-gray-200'}`}
+                                >
+                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isActive ? 'bg-white/10' : 'bg-gray-100'}`}>
+                                        <Icon size={18} className={isActive ? 'text-white' : 'text-gray-500'} />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="font-black text-[13px] leading-tight truncate">{tab.label}</div>
+                                        <div className={`text-[10px] font-bold tracking-tight mt-0.5 truncate ${isActive ? 'text-white/60' : 'text-gray-400'}`}>{tab.desc}</div>
+                                    </div>
+                                    {isActive && <ChevronRight size={16} className="opacity-50 flex-shrink-0" />}
+                                </button>
+                            );
+                        })}
+                    </div>
+
+                    {/* MAIN CONTENT AREA */}
+                    <div className="flex-1 min-w-0 pb-20">
+                        
+                        {/* TAB: GENERAL */}
+                        {activeTab === 'general' && (
+                            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                                    <h3 className="text-xl font-black mb-2 flex items-center gap-3">
+                                        <Info className="text-blue-500" size={24} /> ข้อมูลร้านทั่วไป
+                                    </h3>
+                                    <p className="text-[12px] text-gray-500 font-bold mb-8">ข้อมูลสำหรับการแสดงผลและการติดต่อ</p>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <div className="space-y-3">
+                                            <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">ชื่อร้าน (Shop Name)</label>
+                                            <input 
+                                                type="text" 
+                                                value={settings.name || ''}
+                                                onChange={e => setSettings({...settings, name: e.target.value})}
+                                                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-4 px-5 text-[14px] font-bold outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all" 
+                                            />
+                                        </div>
+                                        <div className="space-y-3">
+                                            <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">ชื่อสาขา (Branch)</label>
+                                            <input 
+                                                type="text" 
+                                                value={settings.branch_name || ''}
+                                                onChange={e => setSettings({...settings, branch_name: e.target.value})}
+                                                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-4 px-5 text-[14px] font-bold outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all" 
+                                            />
+                                        </div>
+                                        <div className="space-y-3">
+                                            <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">เลขผู้เสียภาษี (Tax ID)</label>
+                                            <input 
+                                                type="text" 
+                                                value={settings.tax_id || ''}
+                                                onChange={e => setSettings({...settings, tax_id: e.target.value})}
+                                                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-4 px-5 text-[14px] font-bold outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all" 
+                                            />
+                                        </div>
+                                        <div className="space-y-3">
+                                            <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">เบอร์โทร (Phone)</label>
+                                            <input 
+                                                type="text" 
+                                                value={settings.phone || ''}
+                                                onChange={e => setSettings({...settings, phone: e.target.value})}
+                                                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-4 px-5 text-[14px] font-bold outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all" 
+                                            />
+                                        </div>
+                                        <div className="space-y-3 md:col-span-2">
+                                            <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">ที่อยู่ (Address)</label>
+                                            <textarea 
+                                                value={settings.address || ''}
+                                                onChange={e => setSettings({...settings, address: e.target.value})}
+                                                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-4 px-5 text-[14px] font-bold outline-none focus:ring-2 focus:ring-black focus:border-transparent min-h-[100px] resize-none transition-all"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                                    <h3 className="text-xl font-black mb-2 flex items-center gap-3">
+                                        <Bell className="text-orange-500" size={24} /> ประกาศและข้อความหน้าร้าน
+                                    </h3>
+                                    <p className="text-[12px] text-gray-500 font-bold mb-6">ข้อความที่จะแสดงในหน้าระบบสั่งอาหาร LINE LIFF</p>
+                                    <textarea 
+                                        value={settings.status_message}
+                                        onChange={e => setSettings({...settings, status_message: e.target.value})}
+                                        className="w-full bg-gray-50 border border-gray-200 rounded-xl py-4 px-5 text-[14px] font-bold outline-none focus:ring-2 focus:ring-black min-h-[120px] resize-none transition-all"
+                                    />
+                                </div>
+                            </div>
+                        )}
+
+                        {/* TAB: RECEIPT */}
+                        {activeTab === 'receipt' && (
+                            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                                    <h3 className="text-xl font-black mb-2 flex items-center gap-3">
+                                        <Printer className="text-purple-500" size={24} /> ตั้งค่ารูปแบบใบเสร็จ
+                                    </h3>
+                                    <p className="text-[12px] text-gray-500 font-bold mb-8">ข้อความและรายละเอียดที่จะปรากฏบนใบเสร็จที่พิมพ์ให้ลูกค้า</p>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <div className="space-y-3 md:col-span-2">
+                                            <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">ข้อความหัวใบเสร็จ (Header)</label>
+                                            <textarea 
+                                                value={settings.receipt_header || ''}
+                                                onChange={e => setSettings({...settings, receipt_header: e.target.value})}
+                                                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-4 px-5 text-[14px] font-bold outline-none focus:ring-2 focus:ring-black min-h-[100px] resize-none transition-all"
+                                                placeholder="ยินดีต้อนรับ / Welcome"
+                                            />
+                                        </div>
+                                        <div className="space-y-3 md:col-span-2">
+                                            <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">ข้อความท้ายใบเสร็จ (Footer)</label>
+                                            <textarea 
+                                                value={settings.receipt_footer || ''}
+                                                onChange={e => setSettings({...settings, receipt_footer: e.target.value})}
+                                                className="w-full bg-gray-50 border border-gray-200 rounded-xl py-4 px-5 text-[14px] font-bold outline-none focus:ring-2 focus:ring-black min-h-[100px] resize-none transition-all"
+                                                placeholder="Thank you for your visit!"
+                                            />
+                                        </div>
+                                        
+                                        <div className="flex items-center justify-between bg-gray-50 p-5 rounded-xl border border-gray-100">
+                                            <div>
+                                                <label className="text-[13px] font-black text-gray-900 block mb-1">แสดงโลโก้ร้าน (Show Logo)</label>
+                                                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">พิมพ์โลโก้ด้านบนใบเสร็จ</p>
+                                            </div>
+                                            <button 
+                                                onClick={() => setSettings({...settings, receipt_show_logo: settings.receipt_show_logo === false ? true : false})}
+                                                className={`relative w-14 h-8 rounded-full transition-colors ${settings.receipt_show_logo !== false ? 'bg-black' : 'bg-gray-300'}`}
+                                            >
+                                                <div className={`absolute top-1 w-6 h-6 rounded-full bg-white transition-all ${settings.receipt_show_logo !== false ? 'left-7' : 'left-1'}`} />
+                                            </button>
+                                        </div>
+
+                                        <div className="space-y-3">
+                                            <label className="text-[11px] font-black uppercase tracking-widest text-gray-400 block mb-2">ขนาดตัวอักษรใบเสร็จ (Font Size)</label>
+                                            <div className="flex p-1 bg-gray-100 rounded-xl">
+                                                <button onClick={() => setSettings({...settings, receipt_font_size: 'normal'})} className={`flex-1 py-3 text-sm font-black rounded-lg transition-all ${(!settings.receipt_font_size || settings.receipt_font_size === 'normal') ? 'bg-white shadow-sm text-black' : 'text-gray-500'}`}>ขนาดปกติ</button>
+                                                <button onClick={() => setSettings({...settings, receipt_font_size: 'large'})} className={`flex-1 py-3 text-sm font-black rounded-lg transition-all ${settings.receipt_font_size === 'large' ? 'bg-white shadow-sm text-black' : 'text-gray-500'}`}>ขนาดใหญ่</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* TAB: KITCHEN */}
+                        {activeTab === 'kitchen' && (
+                            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                                    <h3 className="text-xl font-black mb-2 flex items-center gap-3">
+                                        <MenuIcon className="text-orange-500" size={24} /> ตั้งค่าบิลส่งครัว
+                                    </h3>
+                                    <p className="text-[12px] text-gray-500 font-bold mb-8">รูปแบบตัวอักษรและการแสดงผลสำหรับบิลที่พิมพ์เข้าห้องครัว</p>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <div className="space-y-3 md:col-span-2">
+                                            <label className="text-[11px] font-black uppercase tracking-widest text-gray-400 block mb-2">ขนาดตัวอักษรรายการอาหาร (Font Size)</label>
+                                            <div className="flex flex-wrap sm:flex-nowrap p-1 bg-gray-100 rounded-xl">
+                                                <button onClick={() => setSettings({...settings, kitchen_font_size: 'normal'})} className={`flex-1 min-w-[100px] py-3 text-sm font-black rounded-lg transition-all ${(!settings.kitchen_font_size || settings.kitchen_font_size === 'normal') ? 'bg-white shadow-sm text-black' : 'text-gray-500'}`}>ปกติ</button>
+                                                <button onClick={() => setSettings({...settings, kitchen_font_size: 'large'})} className={`flex-1 min-w-[100px] py-3 text-sm font-black rounded-lg transition-all ${settings.kitchen_font_size === 'large' ? 'bg-white shadow-sm text-black' : 'text-gray-500'}`}>ใหญ่</button>
+                                                <button onClick={() => setSettings({...settings, kitchen_font_size: 'huge'})} className={`flex-1 min-w-[100px] py-3 text-sm font-black rounded-lg transition-all ${settings.kitchen_font_size === 'huge' ? 'bg-white shadow-sm text-black' : 'text-gray-500'}`}>ใหญ่มาก (Huge)</button>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-center justify-between bg-gray-50 p-5 rounded-xl border border-gray-100 md:col-span-2">
+                                            <div>
+                                                <label className="text-[13px] font-black text-gray-900 block mb-1">แสดงประเภทออเดอร์ (Order Type)</label>
+                                                <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">เช่น ทานที่ร้าน, สั่งกลับบ้าน, เดลิเวอรี่</p>
+                                            </div>
+                                            <button 
+                                                onClick={() => setSettings({...settings, kitchen_show_type: settings.kitchen_show_type === false ? true : false})}
+                                                className={`relative w-14 h-8 rounded-full transition-colors ${settings.kitchen_show_type !== false ? 'bg-black' : 'bg-gray-300'}`}
+                                            >
+                                                <div className={`absolute top-1 w-6 h-6 rounded-full bg-white transition-all ${settings.kitchen_show_type !== false ? 'left-7' : 'left-1'}`} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* TAB: ADVANCED */}
+                        {activeTab === 'advanced' && (
+                            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                                    <h3 className="text-xl font-black mb-2 flex items-center gap-3">
+                                        <Star className="text-yellow-500" size={24} /> ระบบสมาชิก & สะสมแต้ม
+                                    </h3>
+                                    <p className="text-[12px] text-gray-500 font-bold mb-8">ตั้งค่าอัตราส่วนการสะสมและแลกแต้มของสมาชิกร้าน</p>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <div className="space-y-3">
+                                            <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">เงินกี่บาท ได้ 1 พอยท์ (Earn Rate)</label>
+                                            <div className="relative">
+                                                <input 
+                                                    type="number" 
+                                                    value={settings.loyalty_earn_rate || 100}
+                                                    onChange={e => setSettings({...settings, loyalty_earn_rate: parseInt(e.target.value) || 0})}
+                                                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-4 px-5 text-[14px] font-bold outline-none focus:ring-2 focus:ring-black pr-16" 
+                                                />
+                                                <span className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 font-black">บาท</span>
+                                            </div>
+                                        </div>
+                                        <div className="space-y-3">
+                                            <label className="text-[11px] font-black uppercase tracking-widest text-gray-400">1 พอยท์ ลดได้กี่บาท (Value)</label>
+                                            <div className="relative">
+                                                <input 
+                                                    type="number" 
+                                                    value={settings.loyalty_points_per_thb || 10}
+                                                    onChange={e => setSettings({...settings, loyalty_points_per_thb: parseInt(e.target.value) || 0})}
+                                                    className="w-full bg-gray-50 border border-gray-200 rounded-xl py-4 px-5 text-[14px] font-bold outline-none focus:ring-2 focus:ring-black pr-16" 
+                                                />
+                                                <span className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 font-black">บาท</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                                    <h3 className="text-xl font-black mb-2 flex items-center gap-3">
+                                        <ShieldCheck className="text-blue-500" size={24} /> ระบบสั่งอาหารผ่าน QR (QR Payment)
+                                    </h3>
+                                    
+                                    <div className="flex items-center justify-between bg-gray-50 p-5 rounded-xl border border-gray-100 mt-6">
+                                        <div>
+                                            <label className="text-[13px] font-black text-gray-900 block mb-1">อนุญาตให้ลูกค้าจ่ายเงินที่โต๊ะผ่านมือถือ</label>
+                                            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">เมื่อปิด ลูกค้าจะต้องมาจ่ายที่เคาน์เตอร์</p>
+                                        </div>
+                                        <button 
+                                            onClick={async () => {
+                                                const h = settings.opening_hours || {};
+                                                const isAllowed = h.allow_qr_payment !== false;
+                                                const newSettings = {...settings, opening_hours: { ...h, allow_qr_payment: !isAllowed }};
+                                                setSettings(newSettings);
+                                                const targetId = settings.id || '00000000-0000-0000-0000-000000000001';
+                                                await supabase.from('pos_shop_settings').update({ opening_hours: newSettings.opening_hours }).eq('id', targetId);
+                                            }}
+                                            className={`relative w-14 h-8 rounded-full transition-colors ${settings.opening_hours?.allow_qr_payment !== false ? 'bg-black' : 'bg-gray-300'}`}
+                                        >
+                                            <div className={`absolute top-1 w-6 h-6 rounded-full bg-white transition-all ${settings.opening_hours?.allow_qr_payment !== false ? 'left-7' : 'left-1'}`} />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* TAB: PERMISSIONS */}
+                        {activeTab === 'permissions' && (
+                            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                                    <h3 className="text-xl font-black mb-2 flex items-center gap-3">
+                                        <ShieldCheck className="text-red-500" size={24} /> สิทธิ์การเข้าถึง (Role Permissions)
+                                    </h3>
+                                    <p className="text-[12px] text-gray-500 font-bold mb-8">อนุญาตให้พนักงานแต่ละระดับสามารถเข้าถึงหน้าต่างต่างๆ ในแอป POS ได้</p>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                        {['manager', 'staff'].map((role) => (
+                                            <div key={role} className="space-y-4">
+                                                <h4 className="text-[13px] font-black uppercase tracking-[0.2em] mb-4 pb-3 border-b border-gray-100 flex items-center gap-2">
+                                                    {role === 'manager' ? <Star size={16} className="text-yellow-500" /> : <Info size={16} className="text-blue-500" />}
+                                                    {role === 'manager' ? 'ผู้จัดการ (Manager)' : 'พนักงาน (Staff)'}
+                                                </h4>
+                                                <div className="space-y-3">
+                                                    {permissionOptions.map((opt) => {
+                                                        const isChecked = (settings.role_permissions?.[role] || []).includes(opt.id)
+                                                        return (
+                                                            <div key={opt.id} className="flex items-start gap-4 p-3 rounded-xl hover:bg-gray-50 transition-all border border-transparent hover:border-gray-100 group cursor-pointer"
+                                                                 onClick={() => {
+                                                                     const current = settings.role_permissions?.[role] || []
+                                                                     const next = isChecked ? current.filter((c: string) => c !== opt.id) : [...current, opt.id]
+                                                                     setSettings({
+                                                                         ...settings,
+                                                                         role_permissions: { ...settings.role_permissions, [role]: next }
+                                                                     })
+                                                                 }}
+                                                            >
+                                                                <button 
+                                                                    className={`w-6 h-6 rounded-md flex items-center justify-center transition-all flex-shrink-0 mt-0.5 ${isChecked ? 'bg-black text-white' : 'bg-gray-100 border border-gray-200'}`}
+                                                                >
+                                                                    {isChecked && <div className="w-2.5 h-2.5 rounded-sm bg-white" />}
+                                                                </button>
+                                                                <div>
+                                                                    <div className={`text-[12px] font-black uppercase tracking-tight transition-all ${isChecked ? 'text-black' : 'text-gray-500'}`}>{opt.label}</div>
+                                                                    <div className="text-[10px] text-gray-400 font-bold leading-tight mt-1 group-hover:text-gray-500">{opt.desc}</div>
+                                                                </div>
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* TAB: HARDWARE & PRINTERS */}
+                        {activeTab === 'hardware' && (
+                            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                
+                                {/* PRINT PREVIEWS (MOVED TOP) */}
+                                <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                                    <h3 className="text-xl font-black mb-2 flex items-center gap-3">
+                                        <ImageIcon className="text-indigo-500" size={24} /> ตัวอย่างบิล (Print Preview)
+                                    </h3>
+                                    <p className="text-[12px] text-gray-500 font-bold mb-8">คลิกปุ่มทดสอบพิมพ์ เพื่อลองปริ้นใบเสร็จจริงกับเครื่องปริ้นที่ตั้งค่าไว้</p>
+                                    
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                                        {/* Receipt Preview */}
+                                        <div className="bg-[#111111] p-6 sm:p-8 flex flex-col items-center overflow-hidden rounded-xl shadow-xl relative group border border-black">
+                                            <div className="text-[10px] font-black text-white/50 mb-6 uppercase tracking-[0.2em] flex items-center gap-2">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></div>
+                                                ใบเสร็จรับเงิน (Receipt)
+                                            </div>
+                                            <div id="receipt-preview-capture" className="bg-[#FDFDFB] shadow-2xl p-6 sm:p-8 w-full max-w-[300px] font-mono text-[12px] text-center text-black relative" style={{ fontFamily: '"Courier New", Courier, monospace' }}>
+                                                {/* Paper edge */}
+                                                <div className="absolute -top-1 inset-x-0 h-2 bg-repeat-x flex" style={{ backgroundImage: 'radial-gradient(circle at 4px 0px, transparent 4px, #FDFDFB 5px)', backgroundSize: '10px 10px' }}></div>
+                                                
+                                                {settings.receipt_show_logo !== false && (
+                                                    <div className="flex justify-center mb-6 mt-2">
+                                                        <div className="w-14 h-14 bg-black rounded-full flex items-center justify-center text-white text-[9px] font-sans font-black tracking-widest shadow-inner">LOGO</div>
+                                                    </div>
+                                                )}
+                                                {settings.receipt_header && (
+                                                    <div className="mb-6 whitespace-pre-wrap font-bold leading-tight">{settings.receipt_header}</div>
+                                                )}
+                                                <div className={`font-black uppercase tracking-tight mb-3 ${settings.receipt_font_size === 'large' ? 'text-[20px]' : 'text-[16px]'}`}>{settings.name || 'XYL STUDIO'}</div>
+                                                {settings.branch_name && <div className="text-[10px] font-bold mb-1">สาขา: {settings.branch_name}</div>}
+                                                {settings.tax_id && <div className="text-[10px] font-bold mb-1">TAX ID: {settings.tax_id}</div>}
+                                                {settings.phone && <div className="text-[10px] font-bold mb-6">โทร: {settings.phone}</div>}
+                                                
+                                                <div className="border-t-[1.5px] border-dashed border-black/30 my-4"></div>
+                                                
+                                                <div className="text-left font-bold space-y-2">
+                                                    <div className="flex justify-between text-[10px]"><span>วันที่: {new Date().toLocaleDateString('th-TH')}</span><span>คิว: 01</span></div>
+                                                    <div className="text-[10px]">พนักงาน: Demo Staff</div>
+                                                </div>
+                                                
+                                                <div className="border-t-[1.5px] border-dashed border-black/30 my-4"></div>
+                                                
+                                                <div className="space-y-3 text-left font-bold">
+                                                    <div className="flex justify-between items-start">
+                                                        <div><span className="mr-2">1x</span> กาแฟลาเต้ (เย็น)</div>
+                                                        <div>120.00</div>
+                                                    </div>
+                                                    <div className="pl-6 text-[10px] text-gray-500 font-medium space-y-1">
+                                                        <div>- หวานน้อย 50%</div>
+                                                        <div>- เปลี่ยนนมโอ๊ต (+20)</div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div className="border-t-[1.5px] border-dashed border-black/30 my-4"></div>
+                                                
+                                                <div className="space-y-2 text-[10px] font-bold">
+                                                    <div className="flex justify-between"><span>ภาษี (VAT 7%)</span><span>8.40</span></div>
+                                                    <div className="flex justify-between text-[14px] font-black mt-2"><span>ยอดรวม (Total)</span><span>140.00</span></div>
+                                                    <div className="flex justify-between text-gray-500 mt-2"><span>รับเงิน (CASH)</span><span>500.00</span></div>
+                                                    <div className="flex justify-between text-gray-500"><span>เงินทอน</span><span>360.00</span></div>
+                                                </div>
+                                                
+                                                <div className="border-t-[1.5px] border-dashed border-black/30 my-4"></div>
+                                                
+                                                {settings.receipt_footer ? (
+                                                    <div className="mt-6 whitespace-pre-wrap font-bold leading-tight text-[10px]">{settings.receipt_footer}</div>
+                                                ) : (
+                                                    <div className="mt-6 font-bold leading-tight text-[10px]">Thank you<br/>Powered by XYL STUDIO</div>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {/* Kitchen Preview */}
+                                        <div className="bg-[#111111] p-6 sm:p-8 flex flex-col items-center overflow-hidden rounded-xl shadow-xl relative group border border-black">
+                                            <div className="text-[10px] font-black text-white/50 mb-6 uppercase tracking-[0.2em] flex items-center gap-2">
+                                                <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></div>
+                                                ใบออเดอร์ (Kitchen)
+                                            </div>
+                                            <div id="kitchen-preview-capture" className="bg-[#FDFDFB] shadow-2xl p-6 sm:p-8 w-full max-w-[300px] font-mono text-left text-black relative" style={{ fontFamily: '"Courier New", Courier, monospace' }}>
+                                                <div className="absolute -top-1 inset-x-0 h-2 bg-repeat-x flex" style={{ backgroundImage: 'radial-gradient(circle at 4px 0px, transparent 4px, #FDFDFB 5px)', backgroundSize: '10px 10px' }}></div>
+                                                
+                                                <div className="text-center font-black text-[20px] mb-3 border-b-[3px] border-black pb-3 mt-2">
+                                                    ใบสั่งอาหาร
+                                                </div>
+                                                
+                                                {settings.kitchen_show_type !== false && (
+                                                    <div className="text-center font-black text-[16px] mb-4 bg-black text-white py-1">
+                                                        ทานที่ร้าน (Dine-In)
+                                                    </div>
+                                                )}
+
+                                                <div className="font-bold space-y-1 mb-4 text-[11px]">
+                                                    <div className="flex justify-between"><span>โต๊ะ: T-01</span><span>เวลา: 12:30</span></div>
+                                                    <div>คิว: 01</div>
+                                                </div>
+                                                
+                                                <div className="border-t-[2px] border-dashed border-black/40 my-3"></div>
+                                                
+                                                <div className={`font-black space-y-3 ${settings.kitchen_font_size === 'huge' ? 'text-[24px]' : settings.kitchen_font_size === 'large' ? 'text-[18px]' : 'text-[14px]'}`}>
+                                                    <div className="flex gap-3 items-start">
+                                                        <span className="border border-black px-1 leading-none rounded-sm bg-gray-100">1x</span>
+                                                        <span className="leading-tight">ผัดไทยกุ้งสด</span>
+                                                    </div>
+                                                    <div className="pl-9 text-[12px] text-gray-600 font-bold space-y-1">
+                                                        <div>- ไม่ใส่ถั่วงอก</div>
+                                                        <div>- เผ็ดน้อย</div>
+                                                    </div>
+                                                </div>
+                                                <div className="border-t-[2px] border-dashed border-black/40 my-4"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
+                                    <div className="flex items-center justify-between mb-8 pb-6 border-b border-gray-100">
+                                        <div>
+                                            <h3 className="text-xl font-black flex items-center gap-3">
+                                                <Settings className="text-gray-900" size={24} /> อุปกรณ์ปริ้นเตอร์ (Printers)
+                                            </h3>
+                                            <p className="text-[12px] text-gray-500 font-bold mt-2">จัดการการเชื่อมต่อเครื่องพิมพ์ใบเสร็จผ่านระบบเครือข่าย (TCP/IP)</p>
+                                        </div>
+                                        <button 
+                                            onClick={() => {
+                                                const p = [...(settings.printers || [])];
+                                                p.push({ ip: '', type: 'receipt', name: 'Printer ' + (p.length + 1), encoding: 'ku42', categories: ['all'] });
+                                                setSettings({...settings, printers: p});
+                                            }}
+                                            className="bg-black hover:bg-gray-800 text-white px-5 py-3 rounded-xl font-black text-[12px] uppercase tracking-wider flex items-center gap-2 transition-all shadow-md"
+                                        >
+                                            <Plus size={16} /> Add Printer
+                                        </button>
+                                    </div>
+
+                                    {(settings.printers || []).map((printer: any, index: number) => (
+                                        <div key={index} className="mb-8 p-6 sm:p-8 bg-gray-50 border border-gray-200 rounded-2xl relative overflow-hidden group">
+                                            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-black/5 to-transparent rounded-bl-full pointer-events-none"></div>
+                                            
+                                            <div className="flex flex-col sm:flex-row gap-6 sm:items-center justify-between mb-8 relative z-10">
+                                                <div className="flex-1 w-full">
+                                                    <input 
+                                                        type="text" 
+                                                        value={printer.name}
+                                                        onChange={e => {
+                                                            const p = [...(settings.printers || [])];
+                                                            p[index].name = e.target.value;
+                                                            setSettings({...settings, printers: p});
+                                                        }}
+                                                        className="bg-transparent border-none text-xl sm:text-2xl font-black outline-none placeholder:text-gray-300 w-full"
+                                                        placeholder="Printer Name"
+                                                    />
+                                                </div>
+                                                <button 
+                                                    onClick={() => {
+                                                        const p = [...(settings.printers || [])].filter((_, i) => i !== index);
+                                                        setSettings({...settings, printers: p});
+                                                    }}
+                                                    className="w-10 h-10 bg-white border border-gray-200 hover:border-red-500 hover:text-red-500 flex items-center justify-center rounded-xl transition-all shadow-sm flex-shrink-0"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+                                                <div className="space-y-3">
+                                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 flex items-center gap-2"><MapPin size={12}/> IP Address</label>
+                                                    <input 
+                                                        type="text" 
+                                                        value={printer.ip}
+                                                        onChange={e => {
+                                                            const p = [...(settings.printers || [])];
+                                                            p[index].ip = e.target.value;
+                                                            setSettings({...settings, printers: p});
+                                                        }}
+                                                        className="w-full bg-white border border-gray-200 rounded-xl py-3.5 px-4 text-[13px] font-bold outline-none focus:ring-2 focus:ring-black transition-all" 
+                                                        placeholder="192.168.1.100"
+                                                    />
+                                                </div>
+                                                <div className="space-y-3">
+                                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 flex items-center gap-2"><Printer size={12}/> Printer Model</label>
+                                                    <select 
+                                                        value={printer.model || 'xprinter-xp-n160ii'}
+                                                        onChange={e => {
+                                                            const p = [...(settings.printers || [])];
+                                                            p[index].model = e.target.value;
+                                                            setSettings({...settings, printers: p});
+                                                        }}
+                                                        className="w-full bg-white border border-gray-200 rounded-xl py-3.5 px-4 text-[13px] font-bold outline-none focus:ring-2 focus:ring-black transition-all appearance-none" 
+                                                    >
+                                                        <option value="xprinter-xp-n160ii">Xprinter XP-N160II / XP-C300H</option>
+                                                        <option value="epson-tm-t82x">Epson TM-T82X</option>
+                                                        <option value="generic">Generic ESC/POS</option>
+                                                    </select>
+                                                </div>
+                                                <div className="space-y-3">
+                                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-500 flex items-center gap-2"><Settings size={12}/> การเข้ารหัสภาษาไทย</label>
+                                                    <select 
+                                                        value={printer.encoding || 'ku42'}
+                                                        onChange={e => {
+                                                            const p = [...(settings.printers || [])];
+                                                            p[index].encoding = e.target.value;
+                                                            setSettings({...settings, printers: p});
+                                                        }}
+                                                        className="w-full bg-white border border-gray-200 rounded-xl py-3.5 px-4 text-[13px] font-bold outline-none focus:ring-2 focus:ring-black transition-all appearance-none" 
+                                                    >
+                                                        <option value="graphic">โหมดรูปภาพ (Graphic Mode) - สระไม่ลอย 100%</option>
+                                                        <option value="ku42">ภาษาไทย Xprinter (KU42 / CP27)</option>
+                                                        <option value="tis620">ภาษาไทย มาตรฐาน (TIS-620 / CP26)</option>
+                                                        <option value="cp874">ภาษาไทย Windows (CP874)</option>
+                                                    </select>
+                                                </div>
+
+                                                <div className="md:col-span-2 lg:col-span-3 space-y-3 mt-2">
+                                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">หน้าที่ของเครื่องพิมพ์นี้ (Role)</label>
+                                                    <div className="flex flex-wrap gap-3">
+                                                        {[
+                                                            { id: 'receipt', label: 'ใบเสร็จ' },
+                                                            { id: 'kitchen', label: 'ใบสั่งอาหาร' },
+                                                            { id: 'both', label: 'ทั้งใบเสร็จและห้องครัว' }
+                                                        ].map(role => (
+                                                            <button 
+                                                                key={role.id}
+                                                                onClick={() => {
+                                                                    const p = [...(settings.printers || [])];
+                                                                    p[index].type = role.id;
+                                                                    setSettings({...settings, printers: p});
+                                                                }}
+                                                                className={`px-5 py-2.5 rounded-full text-[12px] font-black transition-all ${printer.type === role.id ? 'bg-black text-white shadow-md' : 'bg-white border border-gray-200 text-gray-600 hover:border-gray-400'}`}
+                                                            >
+                                                                {role.label}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                {/* Kitchen Categories Logic */}
+                                                {(printer.type === 'kitchen' || printer.type === 'both') && (
+                                                    <div className="md:col-span-2 lg:col-span-3 mt-4 pt-6 border-t border-gray-200 space-y-4">
+                                                        <label className="text-[10px] font-black uppercase tracking-widest text-gray-500">พิมพ์เฉพาะหมวดหมู่อาหาร (สำหรับครัวแยก)</label>
+                                                        <div className="flex flex-wrap gap-3">
+                                                            <button 
+                                                                onClick={() => {
+                                                                    const p = [...(settings.printers || [])];
+                                                                    p[index].categories = ['all'];
+                                                                    setSettings({...settings, printers: p});
+                                                                }}
+                                                                className={`px-4 py-2 text-[11px] font-black rounded-lg border transition-all ${printer.categories?.includes('all') ? 'bg-indigo-500 text-white border-indigo-500' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
+                                                            >
+                                                                พิมพ์ทุกหมวดหมู่
+                                                            </button>
+                                                            {categories.map((c: any) => {
+                                                                const isSelected = !printer.categories?.includes('all') && printer.categories?.includes(c.id);
+                                                                return (
+                                                                    <button 
+                                                                        key={c.id}
+                                                                        onClick={() => {
+                                                                            const p = [...(settings.printers || [])];
+                                                                            let cats = p[index].categories || [];
+                                                                            if (cats.includes('all')) cats = [];
+                                                                            if (cats.includes(c.id)) {
+                                                                                cats = cats.filter((id: string) => id !== c.id);
+                                                                            } else {
+                                                                                cats.push(c.id);
+                                                                            }
+                                                                            if (cats.length === 0) cats = ['all'];
+                                                                            p[index].categories = cats;
+                                                                            setSettings({...settings, printers: p});
+                                                                        }}
+                                                                        className={`px-4 py-2 text-[11px] font-black rounded-lg border transition-all ${isSelected ? 'bg-black text-white border-black' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'}`}
+                                                                    >
+                                                                        {c.name}
+                                                                    </button>
+                                                                )
+                                                            })}
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                
+                                                {/* Test Buttons */}
+                                                <div className="md:col-span-2 lg:col-span-3 mt-4 pt-6 border-t border-gray-200 flex justify-end gap-3">
+                                                    <button 
+                                                        onClick={() => handleTestPrint(index)}
+                                                        className="px-6 py-3 bg-white border border-gray-300 hover:border-black text-black font-black text-[12px] uppercase tracking-wider rounded-xl transition-all flex items-center gap-2"
+                                                    >
+                                                        <Printer size={14} /> ทดสอบพิมพ์ใบเสร็จ (Test Print)
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                    
+                                    {(!settings.printers || settings.printers.length === 0) && (
+                                        <div className="py-12 border-2 border-dashed border-gray-200 rounded-3xl flex flex-col items-center justify-center text-gray-400 bg-gray-50/50">
+                                            <Printer size={48} className="mb-4 opacity-50" />
+                                            <p className="font-bold text-sm">ยังไม่มีเครื่องปริ้นเตอร์</p>
+                                            <p className="text-[11px] mt-1 font-medium">กดปุ่ม Add Printer ด้านบนเพื่อเพิ่มอุปกรณ์</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {/* BOTTOM SAVE BUTTON */}
+                <div className="fixed bottom-0 left-0 right-0 p-6 sm:p-8 bg-white/90 backdrop-blur-md border-t border-gray-100 flex justify-end z-50">
+                    <button 
+                        onClick={handleSave} 
+                        disabled={isSaving}
+                        className="w-full sm:w-64 h-16 bg-black text-white rounded-2xl flex items-center justify-center gap-3 font-black text-sm uppercase tracking-widest hover:bg-gray-900 transition-all shadow-[0_8px_30px_rgb(0,0,0,0.12)] disabled:opacity-50"
+                    >
+                        {isSaving ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
+                        {isSaving ? 'SAVING...' : 'SAVE SETTINGS'}
+                    </button>
+                </div>
+
+            </div>
+          )}
+      </main>
+    </>
+  )
+}

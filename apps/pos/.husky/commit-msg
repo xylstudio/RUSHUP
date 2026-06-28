@@ -1,0 +1,35 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Check commit message format
+# Format: type(scope): subject
+# Example: feat(auth): add login page
+# Example: fix(api): handle error in payment route
+
+commit_msg=$(cat "$1")
+
+# Regex pattern for conventional commits
+pattern="^(feat|fix|docs|style|refactor|perf|test|chore|ci|build|revert)(\(.+\))?: .{1,100}"
+
+if ! echo "$commit_msg" | grep -Eq "$pattern"; then
+    echo "❌ Invalid commit message format!"
+    echo ""
+    echo "Expected format: type(scope): subject"
+    echo ""
+    echo "Types:"
+    echo "  - feat: A new feature"
+    echo "  - fix: A bug fix"
+    echo "  - docs: Documentation changes"
+    echo "  - style: Code style changes (formatting, etc.)"
+    echo "  - refactor: Code refactoring"
+    echo "  - perf: Performance improvements"
+    echo "  - test: Adding or updating tests"
+    echo "  - chore: Maintenance tasks"
+    echo "  - ci: CI/CD changes"
+    echo "  - build: Build system changes"
+    echo "  - revert: Revert a previous commit"
+    echo ""
+    echo "Example: feat(auth): add login page"
+    echo "Example: fix(api): handle error in payment route"
+    exit 1
+fi

@@ -1,0 +1,72 @@
+/* Xylem Custom Driver.js Theme */
+.xyl-tour-popover {
+  border-radius: 0 !important;
+  background-color: #ffffff !important;
+  color: #1a1a1a !important;
+  box-shadow: 8px 8px 0px 0px rgba(26,26,26,1) !important;
+  border: 1px solid #1a1a1a !important;
+  padding: 24px !important;
+  font-family: inherit !important;
+  max-width: 320px !important;
+}
+
+.xyl-tour-popover .driver-popover-title {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 12px !important;
+  color: #1a1a1a !important;
+}
+
+.xyl-tour-popover .driver-popover-description {
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  color: #737373 !important;
+  font-weight: 300 !important;
+}
+
+.xyl-tour-popover .driver-popover-footer {
+  margin-top: 24px !important;
+}
+
+.xyl-tour-popover .driver-popover-footer button {
+  border-radius: 0 !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+  font-size: 10px !important;
+  letter-spacing: 0.2em !important;
+  padding: 8px 16px !important;
+  text-shadow: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.xyl-tour-popover .driver-popover-next-btn {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 1px solid #1a1a1a !important;
+}
+
+.xyl-tour-popover .driver-popover-next-btn:hover {
+  background-color: #000000 !important;
+}
+
+.xyl-tour-popover .driver-popover-prev-btn {
+  background-color: transparent !important;
+  color: #737373 !important;
+  border: 1px solid transparent !important;
+}
+
+.xyl-tour-popover .driver-popover-prev-btn:hover {
+  color: #1a1a1a !important;
+}
+
+.xyl-tour-popover .driver-popover-close-btn {
+  color: #a3a3a3 !important;
+  top: 12px !important;
+  right: 12px !important;
+}
+
+.xyl-tour-popover .driver-popover-close-btn:hover {
+  color: #1a1a1a !important;
+}

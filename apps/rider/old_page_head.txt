@@ -1,0 +1,116 @@
+Created At: 2026-05-29T08:51:04Z
+Completed At: 2026-05-29T08:51:04Z
+File Path: `file:///Users/chenchirawongpothisan/Desktop/xylproject-pr-copilot-swe-agent-3/xylem-landscape/app/dashboard/customer/orders/%5BorderId%5D/page.tsx`
+Total Lines: 778
+Total Bytes: 43665
+Showing lines 1 to 778
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: "use client";
+2: import React, { useEffect, useState, useMemo, Suspense } from "react";
+3: import { useSearchParams, useRouter } from "next/navigation";
+4: import Link from "next/link";
+5: import { motion, AnimatePresence } from "framer-motion";
+6: import { 
+7:   X, 
+8:   ArrowLeft, 
+9:   ArrowRight, 
+10:   Activity, 
+11:   Home, 
+12:   Plus, 
+13:   Leaf, 
+14:   Calendar, 
+15:   Star,
+16:   AlertCircle,
+17:   Clock,
+18:   CheckCircle,
+19:   Phone,
+20:   MessageSquare,
+21:   CloudSun,
+22:   Sparkles
+23: } from "lucide-react";
+24: import { getCustomerServiceFlow } from '@/lib/serviceFlow'
+25: import { 
+26:   buildCustomerReportSummary, 
+27:   CustomerReportItem, 
+28:   CustomerReportPlanItem, 
+29:   CustomerReportSummary, 
+30:   formatCustomerReportDate,
+31:   getCustomerReportSummaryText,
+32: } from '@/lib/customerReports'
+33: import { formatDateTimeByLocale } from '@/lib/localeFormat'
+34: import { useI18n } from '@/lib/I18nContext'
+35: import { 
+36:   OrderWithDetails,
+37:   supabase
+38: } from "@/lib/supabaseClient";
+39: import { useAuth } from "@/lib/AuthContext";
+40: import XYLLoader from '@/components/loaders/XYLLoader'
+41: 
+42: type FeedbackNotice = {
+43:   type: 'success' | 'error'
+44:   message: string
+45: }
+46: 
+47: type OrderPaymentRecord = {
+48:   id: string
+49:   provider?: string | null
+50:   provider_charge_id?: string | null
+51:   amount?: number | null
+52:   currency?: string | null
+53:   status?: string | null
+54:   created_at?: string | null
+55:   paid_at?: string | null
+56:
+<truncated 43963 bytes>
+4em] text-white transition-opacity hover:opacity-90"
+730:                   >
+731:                     {copy.openReportCenter}
+732:                     <ArrowRight size={14} />
+733:                   </Link>
+734:                   {latestOrderReport ? (
+735:                     <Link
+736:                       href={latestReportCenterHref}
+737:                       className="inline-flex items-center justify-center gap-3 border border-[#111111] px-5 py-4 text-[10px] font-black uppercase tracking-[0.24em] text-[#111111] transition-colors hover:bg-[#111111] hover:text-white"
+738:                     >
+739:                       {copy.openLatestReport}
+740:                       <ArrowRight size={14} />
+741:                     </Link>
+742:                   ) : null}
+743:                 </div>
+744:               </div>
+745:            </div>
+746:         </section>
+747: 
+748:         <footer className="px-6 py-20 border-t border-[#EFEFEF] text-center">
+749:             <Link 
+750:               href="/dashboard/customer" 
+751:               className="sans-font text-[10px] font-black uppercase tracking-[0.4em] text-[#111111] inline-flex items-center gap-4 hover:gap-6 transition-all"
+752:             >
+753:                {copy.back}
+754:                <ArrowRight size={14} />
+755:             </Link>
+756:         </footer>
+757:       </main>
+758:     </div>
+759:   )
+760: 
+761: }
+762: 
+763: export default function CustomerOrderDetailPage({ params }: { params: { orderId: string } }) {
+764:   // Use a proper decoded orderId for the component
+765:   const decodedOrderId = useMemo(() => {
+766:     try {
+767:       return decodeURIComponent(params.orderId)
+768:     } catch {
+769:       return params.orderId
+770:     }
+771:   }, [params.orderId])
+772: 
+773:   return (
+774:     <Suspense fallback={<XYLLoader tagline="Initializing Scene..." />}>
+775:       <OrderDetailContent orderId={decodedOrderId} />
+776:     </Suspense>
+777:   )
+778: }
+The above content shows the entire, complete file contents of the requested file.
+

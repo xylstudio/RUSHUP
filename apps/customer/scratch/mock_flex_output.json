@@ -1,0 +1,232 @@
+{
+  "type": "flex",
+  "altText": "รายงานการดูแลสวน (1 หลัง): House 1",
+  "contents": {
+    "type": "carousel",
+    "contents": [
+      {
+        "type": "bubble",
+        "size": "mega",
+        "styles": {
+          "header": {
+            "backgroundColor": "#FFFFFF"
+          },
+          "body": {
+            "backgroundColor": "#FFFFFF"
+          },
+          "footer": {
+            "separator": false
+          }
+        },
+        "header": {
+          "type": "box",
+          "layout": "vertical",
+          "paddingTop": "20px",
+          "paddingBottom": "0px",
+          "paddingStart": "20px",
+          "paddingEnd": "20px",
+          "contents": [
+            {
+              "type": "text",
+              "text": "XYLEM LANDSCAPE",
+              "color": "#A3A39C",
+              "size": "xxs",
+              "weight": "bold"
+            },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "margin": "sm",
+              "alignItems": "center",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "House 1",
+                  "weight": "bold",
+                  "size": "xl",
+                  "color": "#123524",
+                  "flex": 4,
+                  "wrap": true
+                },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "flex": 2,
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "SESSION",
+                      "size": "xxs",
+                      "color": "#10B981",
+                      "weight": "bold",
+                      "align": "end"
+                    },
+                    {
+                      "type": "text",
+                      "text": "1/24",
+                      "size": "xs",
+                      "color": "#10B981",
+                      "weight": "bold",
+                      "align": "end"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "text",
+              "text": "#1 • Service 1",
+              "size": "xs",
+              "color": "#A3A39C",
+              "margin": "xs"
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "margin": "lg",
+              "height": "1px",
+              "backgroundColor": "#F1F1EB",
+              "contents": []
+            }
+          ]
+        },
+        "body": {
+          "type": "box",
+          "layout": "vertical",
+          "spacing": "lg",
+          "paddingStart": "20px",
+          "paddingEnd": "20px",
+          "paddingBottom": "20px",
+          "contents": [
+            {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "sm",
+              "contents": [
+                {
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "ผู้ดูแล",
+                      "size": "xs",
+                      "color": "#A3A39C",
+                      "flex": 1
+                    },
+                    {
+                      "type": "text",
+                      "text": "Test Staff",
+                      "size": "sm",
+                      "weight": "bold",
+                      "color": "#123524",
+                      "flex": 3,
+                      "align": "end"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "spacing": "md",
+              "contents": [
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "flex": 1,
+                  "contents": [
+                    {
+                      "type": "image",
+                      "url": "https://xylem-landscape.vercel.app/images/placeholder-garden.jpg",
+                      "size": "full",
+                      "aspectRatio": "1:1",
+                      "aspectMode": "cover",
+                      "cornerRadius": "md"
+                    },
+                    {
+                      "type": "text",
+                      "text": "ก่อนทำ (Before)",
+                      "size": "xxs",
+                      "color": "#A3A39C",
+                      "align": "center",
+                      "margin": "xs"
+                    }
+                  ]
+                },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "flex": 1,
+                  "contents": [
+                    {
+                      "type": "image",
+                      "url": "https://xylem-landscape.vercel.app/images/placeholder-garden.jpg",
+                      "size": "full",
+                      "aspectRatio": "1:1",
+                      "aspectMode": "cover",
+                      "cornerRadius": "md"
+                    },
+                    {
+                      "type": "text",
+                      "text": "หลังทำ (After)",
+                      "size": "xxs",
+                      "color": "#10B981",
+                      "align": "center",
+                      "margin": "xs",
+                      "weight": "bold"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "box",
+              "layout": "vertical",
+              "spacing": "sm",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "• รายการที่ดำเนินการ",
+                  "size": "xs",
+                  "weight": "bold",
+                  "color": "#123524"
+                },
+                {
+                  "type": "box",
+                  "layout": "vertical",
+                  "spacing": "xs",
+                  "contents": [
+                    {
+                      "type": "text",
+                      "text": "Task 1\nTask 2"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "footer": {
+          "type": "box",
+          "layout": "vertical",
+          "spacing": "sm",
+          "paddingAll": "20px",
+          "contents": [
+            {
+              "type": "button",
+              "style": "primary",
+              "color": "#123524",
+              "action": {
+                "type": "uri",
+                "label": "ดูรายละเอียดรายงาน →",
+                "uri": "https://xylem-landscape.vercel.app/mock-detail"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,153 @@
+
+> xylem-landscape@0.1.0 build
+> next build
+
+  ▲ Next.js 14.2.33
+  - Environments: .env.local
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully
+   Skipping validation of types
+   Skipping linting
+   Collecting page data ...
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+   Generating static pages (0/98) ...
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+   Generating static pages (24/98) 
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+   Generating static pages (48/98) 
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+   Generating static pages (73/98) 
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Error: @supabase/ssr: Your project's URL and API key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\.next\server\app\liff\menu\page.js:19:684
+    at ez (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\.next\server\app\liff\menu\page.js:23:4931)
+    at nj (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:46252)
+    at nM (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:47572)
+    at nN (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:64547)
+    at nM (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:61157)
+    at nN (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:64547)
+    at nI (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:47011)
+    at nM (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:47718)
+    at nN (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:64547) {
+  digest: '563351983'
+}
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY. Using placeholder Supabase config; authentication and database calls will fail until env vars are set.
+
+Error occurred prerendering page "/liff/menu". Read more: https://nextjs.org/docs/messages/prerender-error
+
+Error: @supabase/ssr: Your project's URL and API key are required to create a Supabase client!
+
+Check your Supabase project's API settings to find these values
+
+https://supabase.com/dashboard/project/_/settings/api
+    at C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\.next\server\app\liff\menu\page.js:19:684
+    at ez (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\.next\server\app\liff\menu\page.js:23:4931)
+    at nj (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:46252)
+    at nM (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:47572)
+    at nN (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:64547)
+    at nM (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:61157)
+    at nN (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:64547)
+    at nI (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:47011)
+    at nM (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:47718)
+    at nN (C:\Users\localadmin\Desktop\xylproject-pr-copilot-swe-agent-3\xylem-landscape\node_modules\next\dist\compiled\next-server\app-page.runtime.prod.js:12:64547)
+ ✓ Generating static pages (98/98)
+
+> Export encountered errors on following paths:
+	/liff/menu/page: /liff/menu
