@@ -501,7 +501,7 @@ export default function App({ services = [], branches = [], orders = [], profile
             />}
             {activeTab === 'wallet' && <WalletView />}
             {activeTab === 'trip' && <ExploreView />}
-            {activeTab === 'profile' && <ProfileView />}
+            {activeTab === 'profile' && <ProfileView orders={orders} />}
             {activeTab === 'plus' && <RUSHUPPlusView />}
             {activeTab === 'saved' && <SavedReviewsView />}
             {activeTab === 'myposts' && <MyPostsView />}
