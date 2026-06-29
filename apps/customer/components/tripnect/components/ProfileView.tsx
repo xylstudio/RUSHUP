@@ -5,7 +5,7 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../../../lib/AuthContext';
-import { updateProfileAvatar } from '../../../lib/supabaseClient';
+import { updateProfileAvatar, supabase } from '../../../lib/supabaseClient';
 
 interface TravelBadge {
   id: number;
@@ -144,7 +144,25 @@ export function ProfileView() {
 
   const isOwnProfile = true;
   
-  const userPosts = POSTS?.filter(post => post?.user?.username === CURRENT_USER?.username) || [];
+  const [dbUserPosts, setDbUserPosts] = useState<any[]>([]);
+
+  useEffect(() => {
+    import('react').then(({ useEffect }) => {}); // just to satisfy linter if needed, but we already have useEffect
+    if (viewingUser?.id) {
+      supabase.from('posts').select('*').eq('user_id', viewingUser.id).order('created_at', { ascending: false })
+      .then(({data, error}) => {
+         if (data && !error) {
+           setDbUserPosts(data.map(p => ({
+             id: p.id,
+             imageUrl: p.image_url,
+             videoUrl: p.video_url
+           })));
+         }
+      })
+    }
+  }, [viewingUser?.id]);
+
+  const userPosts = dbUserPosts;
 
   const handleAvatarClick = () => {
     if (isOwnProfile && fileInputRef.current) {

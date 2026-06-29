@@ -162,7 +162,7 @@ export default function App({ services = [], orders = [], profile = null }: { se
             id: post.profiles?.id || post.user_id,
             username: post.profiles?.first_name ? post.profiles.first_name.toLowerCase() : 'traveler',
             fullName: post.profiles ? `${post.profiles.first_name || ''} ${post.profiles.last_name || ''}`.trim() : 'นักเดินทางไร้นาม',
-            avatarUrl: post.profiles?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800',
+            avatarUrl: post.profiles?.avatar_url || null,
             rating: 9.5
           },
           imageUrl: post.image_url,

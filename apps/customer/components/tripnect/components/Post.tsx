@@ -1,4 +1,4 @@
-import { Heart, MessageCircle, Bookmark, MoreHorizontal, Play, ArrowRight, Car, Share2 } from 'lucide-react';
+import { Heart, MessageCircle, Bookmark, MoreHorizontal, Play, ArrowRight, Car, Share2, User } from 'lucide-react';
 import { PostData } from '../data';
 import { useState } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -38,7 +38,13 @@ export function Post({ post, onVideoClick, onBookingClick, onRideClick, onCommen
       <div className="flex items-center justify-between mb-3 px-1">
         <div className="flex items-center gap-3">
             <div className="cursor-pointer hover:opacity-80 transition-opacity">
-                <img src={post.user.avatarUrl} className="w-8 h-8 rounded-full object-cover" />
+                {post.user.avatarUrl ? (
+                    <img src={post.user.avatarUrl} className="w-8 h-8 rounded-full object-cover" />
+                ) : (
+                    <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-stone-800 flex items-center justify-center border border-slate-200 dark:border-stone-700">
+                        <User size={16} className="text-slate-400 dark:text-stone-500" strokeWidth={2} />
+                    </div>
+                )}
             </div>
             <div className="flex flex-col">
                 <span className="font-bold text-slate-900 text-[13px] leading-tight">{post.user.fullName}</span>
