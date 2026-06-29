@@ -56,7 +56,10 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
         body: JSON.stringify({ filename: file.name, contentType: file.type }),
       });
 
-      if (!res.ok) throw new Error('Failed to get upload URL');
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || `Failed to get upload URL (HTTP ${res.status})`);
+      }
       const { presignedUrl, finalUrl } = await res.json();
 
       // 2. Upload file directly to Cloudflare R2
