@@ -22,12 +22,14 @@ export function Sidebar({ className, onCreateClick }: SidebarProps) {
     { 
       icon: null, 
       label: 'โปรไฟล์', 
-      customIcon: (
+      customIcon: profile?.avatar_url ? (
         <img 
-          src={avatarUrl} 
+          src={profile.avatar_url} 
           alt="โปรไฟล์" 
           className="w-6 h-6 rounded-full object-cover border border-gray-200"
         />
+      ) : (
+        <User className="w-6 h-6 text-stone-400 dark:text-stone-500" />
       )
     },
   ];

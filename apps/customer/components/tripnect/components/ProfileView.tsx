@@ -128,7 +128,7 @@ export function ProfileView() {
         id: profile.id,
         fullName: profile.first_name ? `${profile.first_name} ${profile.last_name || ''}`.trim() : 'นักเดินทางไร้นาม',
         username: profile.first_name ? profile.first_name.toLowerCase() : 'traveler',
-        avatarUrl: profile.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800',
+        avatarUrl: profile.avatar_url || null,
       };
     }
     if (user) {
@@ -136,7 +136,7 @@ export function ProfileView() {
         id: user.id,
         fullName: user.email?.split('@')[0] || 'นักเดินทางใหม่',
         username: user.email?.split('@')[0] || 'traveler',
-        avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800',
+        avatarUrl: null,
       };
     }
     return null;
@@ -245,15 +245,19 @@ export function ProfileView() {
             </button>
           </div>
         </div>
-
+ 
         <div className="flex items-start gap-4 mb-5">
           <div className="relative">
-            <div className="w-[92px] h-[92px] rounded-[20px] overflow-hidden bg-stone-100 dark:bg-stone-800 border-2 border-stone-200 dark:border-stone-700">
-              <img 
-                src={viewingUser.avatarUrl} 
-                alt={viewingUser.fullName}
-                className="w-full h-full object-cover"
-              />
+            <div className="w-[92px] h-[92px] rounded-[20px] overflow-hidden bg-stone-100 dark:bg-stone-800 border-2 border-stone-200 dark:border-stone-700 flex items-center justify-center text-stone-400 dark:text-stone-500">
+              {viewingUser.avatarUrl ? (
+                <img 
+                  src={viewingUser.avatarUrl} 
+                  alt={viewingUser.fullName}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <User size={38} strokeWidth={1.8} />
+              )}
             </div>
             <div className="absolute -top-2 -right-2 px-2.5 py-1 bg-orange-500 rounded-full border-[3px] border-white dark:border-stone-950 shadow-lg">
               <span className="text-[11px] font-black text-white">Lv.{travelStats.level}</span>
