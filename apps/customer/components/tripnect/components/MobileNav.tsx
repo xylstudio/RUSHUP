@@ -193,80 +193,46 @@ export function MobileNav({
             <div className="w-full h-[1px] bg-slate-50 mb-4" />
             
             <div className="grid grid-cols-4 gap-1">
-                <button onClick={() => { if(setIsMenuOpen && setShowRideModal) { setIsMenuOpen(false); setShowRideModal(true); } }} className="flex flex-col items-center gap-1.5 group p-1.5 rounded-xl hover:bg-slate-50"><div className="group-active:scale-95 transition-transform duration-200"><Bike className="w-5 h-5 text-slate-400 group-hover:text-slate-900 transition-colors" strokeWidth={1.5} /></div><span className="text-[10px] text-slate-400 font-medium">เรียกรถ</span></button>
-                <button onClick={() => { if(setIsMenuOpen && setShowFoodDelivery) { setIsMenuOpen(false); setShowFoodDelivery(true); } }} className="flex flex-col items-center gap-1.5 group p-1.5 rounded-xl hover:bg-slate-50"><div className="group-active:scale-95 transition-transform duration-200"><UtensilsCrossed className="w-5 h-5 text-slate-400 group-hover:text-slate-900 transition-colors" strokeWidth={1.5} /></div><span className="text-[10px] text-slate-400 font-medium">สั่งอาหาร</span></button>
-                <button onClick={() => { if(setIsMenuOpen && setShowHotelModal) { setIsMenuOpen(false); setShowHotelModal(true); } }} className="flex flex-col items-center gap-1.5 group p-1.5 rounded-xl hover:bg-slate-50"><div className="group-active:scale-95 transition-transform duration-200"><BedDouble className="w-5 h-5 text-slate-400 group-hover:text-slate-900 transition-colors" strokeWidth={1.5} /></div><span className="text-[10px] text-slate-400 font-medium">ที่พัก</span></button>
-                <button onClick={() => { if(setIsMenuOpen && setShowCarRentalModal) { setIsMenuOpen(false); setShowCarRentalModal(true); } }} className="flex flex-col items-center gap-1.5 group p-1.5 rounded-xl hover:bg-slate-50"><div className="group-active:scale-95 transition-transform duration-200"><CarFront className="w-5 h-5 text-slate-400 group-hover:text-slate-900 transition-colors" strokeWidth={1.5} /></div><span className="text-[10px] text-slate-400 font-medium">เช่รถ</span></button>
+                <button onClick={() => { setIsMenuOpen(false); setShowRideModal(true); }} className="flex flex-col items-center gap-1.5 group p-1.5 rounded-xl hover:bg-slate-50"><div className="group-active:scale-95 transition-transform duration-200"><Bike className="w-5 h-5 text-slate-400 group-hover:text-slate-900 transition-colors" strokeWidth={1.5} /></div><span className="text-[10px] text-slate-400 font-medium">เรียกรถ</span></button>
+                <button onClick={() => { setIsMenuOpen(false); setShowFoodDelivery(true); }} className="flex flex-col items-center gap-1.5 group p-1.5 rounded-xl hover:bg-slate-50"><div className="group-active:scale-95 transition-transform duration-200"><UtensilsCrossed className="w-5 h-5 text-slate-400 group-hover:text-slate-900 transition-colors" strokeWidth={1.5} /></div><span className="text-[10px] text-slate-400 font-medium">สั่งอาหาร</span></button>
+                <button onClick={() => { setIsMenuOpen(false); setShowHotelModal(true); }} className="flex flex-col items-center gap-1.5 group p-1.5 rounded-xl hover:bg-slate-50"><div className="group-active:scale-95 transition-transform duration-200"><BedDouble className="w-5 h-5 text-slate-400 group-hover:text-slate-900 transition-colors" strokeWidth={1.5} /></div><span className="text-[10px] text-slate-400 font-medium">ที่พัก</span></button>
+                <button onClick={() => { setIsMenuOpen(false); setShowCarRentalModal(true); }} className="flex flex-col items-center gap-1.5 group p-1.5 rounded-xl hover:bg-slate-50"><div className="group-active:scale-95 transition-transform duration-200"><CarFront className="w-5 h-5 text-slate-400 group-hover:text-slate-900 transition-colors" strokeWidth={1.5} /></div><span className="text-[10px] text-slate-400 font-medium">เช่รถ</span></button>
             </div>
         </motion.div>
       </div>
 
-      {/* ================= Bottom Nav Bar (Compact & Small) ================= */}
+      {/* ================= Bottom Nav Bar ================= */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-100 flex justify-between items-end px-2 z-[220] md:hidden pb-[max(4px,env(safe-area-inset-bottom))] shadow-[0_-2px_10px_rgba(0,0,0,0.02)] h-[58px]">
         
         {/* Tab 1: Home */}
         <div className="flex-1 flex justify-center pb-1">
-            <button 
-                onClick={() => handleTabClick('home')} 
-                className="flex flex-col items-center gap-0.5 min-w-[50px] group"
-            >
-                <div className={clsx(
-                    "p-1 transition-all duration-300",
-                    activeTab === 'home' && !isMenuOpen && !activeContext ? "text-orange-500 scale-110" : "text-stone-400 group-hover:text-stone-600"
-                )}>
+            <button onClick={() => handleTabClick('home')} className="flex flex-col items-center gap-0.5 min-w-[50px] group">
+                <div className={clsx("p-1 transition-all duration-300", activeTab === 'home' && !isMenuOpen && !activeContext ? "text-orange-500 scale-110" : "text-stone-400 group-hover:text-stone-600")}>
                     <Home size={24} strokeWidth={activeTab === 'home' && !isMenuOpen && !activeContext ? 1.8 : 1.5} />
                 </div>
-                <span className={clsx(
-                    "text-[9px] font-medium transition-colors leading-none",
-                    activeTab === 'home' && !isMenuOpen && !activeContext ? "text-orange-500" : "text-stone-400"
-                )}>
-                    หน้าแรก
-                </span>
+                <span className={clsx("text-[9px] font-medium transition-colors leading-none", activeTab === 'home' && !isMenuOpen && !activeContext ? "text-orange-500" : "text-stone-400")}>หน้าแรก</span>
             </button>
         </div>
         
         {/* Tab 2: Mail */}
         <div className="flex-1 flex justify-center pb-1">
-            <button 
-                onClick={() => handleTabClick('mail')} 
-                className="flex flex-col items-center gap-0.5 min-w-[50px] group"
-            >
-                <div className={clsx(
-                    "p-1 transition-all duration-300",
-                    activeTab === 'mail' && !isMenuOpen && !activeContext ? "text-orange-500 scale-110" : "text-stone-400 group-hover:text-stone-600"
-                )}>
+            <button onClick={() => handleTabClick('mail')} className="flex flex-col items-center gap-0.5 min-w-[50px] group">
+                <div className={clsx("p-1 transition-all duration-300", activeTab === 'mail' && !isMenuOpen && !activeContext ? "text-orange-500 scale-110" : "text-stone-400 group-hover:text-stone-600")}>
                     <Mail size={24} strokeWidth={activeTab === 'mail' && !isMenuOpen && !activeContext ? 1.8 : 1.5} />
                 </div>
-                <span className={clsx(
-                    "text-[9px] font-medium transition-colors leading-none",
-                    activeTab === 'mail' && !isMenuOpen && !activeContext ? "text-orange-500" : "text-stone-400"
-                )}>
-                    ข้อความ
-                </span>
+                <span className={clsx("text-[9px] font-medium transition-colors leading-none", activeTab === 'mail' && !isMenuOpen && !activeContext ? "text-orange-500" : "text-stone-400")}>ข้อความ</span>
             </button>
         </div>
 
-        {/* ================= CENTER BUTTON (Modern Squircle Redesign) ================= */}
+        {/* Center: Action Button */}
         <div className="flex-1 flex justify-center relative z-20 pb-2">
-            <button 
-                {...plusButtonHandlers}
-                className="group flex flex-col items-center justify-center -mt-6 relative select-none touch-none"
-            >
-                {/* Long Press Loading Ring - Removed as per request */}
-
-
-                <div className="w-[44px] h-[44px] rounded-2xl flex items-center justify-center border-[4px] border-white relative z-10 overflow-hidden bg-orange-400 transition-transform group-active:scale-95 pointer-events-none isolate transform-gpu shadow-sm" style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}>
-                    {/* Vertical Fill Animation */}
+            <button onClick={onPlusClick} className="group flex flex-col items-center justify-center -mt-6 relative select-none touch-none">
+                <div className="w-[44px] h-[44px] rounded-2xl flex items-center justify-center border-[4px] border-white relative z-10 overflow-hidden bg-orange-400 transition-transform active:scale-95 shadow-sm">
                     <motion.div 
                         className="absolute bottom-0 left-0 w-full bg-orange-600"
                         initial={{ height: "0%" }}
-                        animate={{ 
-                            height: activeContext ? "100%" : isPlusPressing ? "100%" : "0%" 
-                        }}
-                        transition={{ 
-                            duration: isPlusPressing ? 0.6 : 0.2,
-                            ease: "linear" 
-                        }}
+                        animate={{ height: activeContext ? "100%" : "0%" }}
+                        transition={{ duration: 0.2, ease: "linear" }}
                     />
 
                     {/* Icon */}

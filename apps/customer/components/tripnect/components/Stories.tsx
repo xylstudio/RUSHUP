@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { Plus, User } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../../lib/AuthContext';
@@ -32,12 +32,18 @@ function StoryCircle({ story, index, onClick, isMyStory = false, myAvatarUrl }: 
         className="flex flex-col items-center gap-2 cursor-pointer group min-w-[72px]"
       >
         <div className="relative">
-          <div className="w-[62px] h-[62px] rounded-full p-[2px] border border-dashed border-stone-200 group-hover:border-orange-300 transition-colors">
-            <img 
-              src={myAvatarUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800'} 
-              alt="My Story"
-              className="w-full h-full rounded-full object-cover"
-            />
+          <div className="w-[62px] h-[62px] rounded-full p-[2px] border border-dashed border-stone-200 group-hover:border-orange-300 transition-colors flex items-center justify-center overflow-hidden">
+            {myAvatarUrl ? (
+                <img 
+                  src={myAvatarUrl} 
+                  alt="My Story"
+                  className="w-full h-full rounded-full object-cover"
+                />
+            ) : (
+                <div className="w-full h-full rounded-full bg-stone-100 flex items-center justify-center text-stone-400">
+                   <User size={24} strokeWidth={2} />
+                </div>
+            )}
           </div>
           <div className="absolute bottom-0 right-0 bg-orange-500 text-white w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-md">
             <Plus size={10} strokeWidth={3} />
