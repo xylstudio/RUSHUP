@@ -1,12 +1,17 @@
 import { Home, Compass, Wallet, Mail, Search, Sparkles, X, Image, Video, MapPinned, Bike, UtensilsCrossed, BedDouble, CarFront, User, Star, Settings, LogOut, HelpCircle, FileText, Globe, Plus } from 'lucide-react';
 import React from 'react';
-import { CURRENT_USER } from '../data';
+import { useAuth } from '../../../lib/AuthContext';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
 import { TripnectLogo } from './Logo';
 
 // --- Mobile Sidebar Component (Unchanged) ---
 export function MobileSidebar({ onClose, onOpenPassport, onNavigate }: { onClose: () => void; onOpenPassport?: () => void; onNavigate?: (tab: string) => void }) {
+    const { profile } = useAuth();
+    const avatarUrl = profile?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800';
+    const fullName = profile ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() : 'นักเดินทางไร้นาม';
+    const username = profile?.first_name ? profile.first_name.toLowerCase() : 'traveler';
+
     const menuItems = [
         { icon: User, label: 'ข้อมูลส่วนตัว', href: '#', action: 'profile' },
         { icon: Globe, label: 'Tripnect Passport', href: '#', highlight: true, action: 'passport' },
@@ -36,13 +41,13 @@ export function MobileSidebar({ onClose, onOpenPassport, onNavigate }: { onClose
             <div className="px-6 pb-6 mb-2">
                 <div className="flex justify-between items-start mb-4">
                     <div className="relative">
-                         <img src={CURRENT_USER.avatarUrl} className="relative w-14 h-14 rounded-full shadow-sm object-cover border border-slate-100" alt="User Avatar"/>
+                         <img src={avatarUrl} className="relative w-14 h-14 rounded-full shadow-sm object-cover border border-slate-100" alt="User Avatar"/>
                     </div>
                     <button onClick={onClose} className="p-2 bg-white rounded-full text-slate-400 hover:text-slate-900 border border-slate-50"><X size={20} /></button>
                 </div>
                 <div className="flex flex-col">
-                    <span className="font-bold text-2xl text-slate-900 tracking-tight">{CURRENT_USER.fullName}</span>
-                    <span className="text-slate-400 text-sm font-medium">@{CURRENT_USER.username}</span>
+                    <span className="font-bold text-2xl text-slate-900 tracking-tight">{fullName}</span>
+                    <span className="text-slate-400 text-sm font-medium">@{username}</span>
                 </div>
                 <div className="flex gap-4 mt-5 text-sm">
                     <div className="flex flex-col"><span className="font-bold text-slate-900 text-lg">1.2k</span><span className="text-slate-400 text-xs">กำลังติดตาม</span></div>

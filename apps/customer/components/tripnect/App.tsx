@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { POSTS, PostData, CURRENT_USER } from './data';
+import { supabase } from '../../lib/supabaseClient';
 import { Sidebar } from './components/Sidebar';
 import { MobileNav, MobileSidebar } from './components/MobileNav';
 import { MobileHeader } from './components/MobileHeader';
@@ -127,6 +128,57 @@ function useLongPress(
 }
 
 export default function App({ services = [], orders = [], profile = null }: { services?: any[], orders?: any[], profile?: any }) {
+  const [dbPosts, setDbPosts] = useState<PostData[]>([]);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const { data, error } = await supabase
+          .from('posts')
+          .select(`
+            id,
+            image_url,
+            video_url,
+            caption,
+            location,
+            price,
+            discount,
+            created_at,
+            user_id,
+            profiles (
+              id,
+              first_name,
+              last_name,
+              avatar_url
+            )
+          `)
+          .order('created_at', { ascending: false });
+
+        if (data && !error) {
+          const formatted: PostData[] = data.map((post: any) => ({
+            id: post.id,
+            user: {
+              id: post.profiles?.id || post.user_id,
+              username: post.profiles?.first_name ? post.profiles.first_name.toLowerCase() : 'traveler',
+              fullName: post.profiles ? `${post.profiles.first_name || ''} ${post.profiles.last_name || ''}`.trim() : 'นักเดินทางไร้นาม',
+              avatarUrl: post.profiles?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800',
+              rating: 9.5
+            },
+            imageUrl: post.image_url,
+            videoUrl: post.video_url || undefined,
+            likes: 0,
+            caption: post.caption || '',
+            timestamp: new Date(post.created_at).toLocaleDateString('th-TH'),
+            comments: 0
+          }));
+          setDbPosts(formatted);
+        }
+      } catch (err) {
+        console.error('Error fetching posts:', err);
+      }
+    }
+    fetchPosts();
+  }, []);
   const [activeTab, setActiveTab] = useState<'home' | 'search' | 'mail' | 'wallet'>('home');
   const [activeCategory, setActiveCategory] = useState<Category | 'all'>('food'); // Default to food for RUSHUP
   const [homeTab, setHomeTab] = useState<'foryou' | 'following'>('foryou');
@@ -162,6 +214,10 @@ export default function App({ services = [], orders = [], profile = null }: { se
       location: 'Local Kitchen'
     }));
   }, [services]);
+
+  const finalPosts = useMemo(() => {
+    return dbPosts.length > 0 ? dbPosts : dynamicPosts;
+  }, [dbPosts, dynamicPosts]);
   const [showHotelModal, setShowHotelModal] = useState(false);
   const [showCarRentalModal, setShowCarRentalModal] = useState(false);
   const [selectedBookingPost, setSelectedBookingPost] = useState<PostData | null>(null);
@@ -386,14 +442,14 @@ export default function App({ services = [], orders = [], profile = null }: { se
 
                    {/* Content Feed */}
                    <div className="flex flex-col gap-0">
-                     {POSTS.map((post, index) => (
+                     {finalPosts.map((post, index) => (
                        <Post 
                             key={post.id} 
                             post={post} 
                             onVideoClick={(videoPost) => {
                               setSelectedVideo(videoPost);
                               // Find the index of this video in all videos
-                              const videoOnlyPosts = POSTS.filter(p => p.videoUrl);
+                              const videoOnlyPosts = finalPosts.filter(p => p.videoUrl);
                               const videoIndex = videoOnlyPosts.findIndex(p => p.id === videoPost.id);
                               setSelectedVideoIndex(videoIndex >= 0 ? videoIndex : 0);
                             }}
@@ -523,7 +579,7 @@ export default function App({ services = [], orders = [], profile = null }: { se
       {/* Fullscreen Video */}
       {selectedVideo && (
         <ReelsViewer 
-            posts={POSTS.filter(p => p.videoUrl)}
+            posts={finalPosts.filter(p => p.videoUrl)}
             initialIndex={selectedVideoIndex}
             onClose={() => setSelectedVideo(null)} 
         />

@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, MapPin, Trophy, Plane, Calendar } from 'lucide-react';
-import { CURRENT_USER } from '../data';
+import { useAuth } from '../../../lib/AuthContext';
 
 interface PassportModalProps {
   isOpen: boolean;
@@ -20,6 +20,11 @@ const STAMPS = [
 ];
 
 export function PassportModal({ isOpen, onClose }: PassportModalProps) {
+  const { profile } = useAuth();
+  const avatarUrl = profile?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800';
+  const fullName = profile ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() : 'นักเดินทางไร้นาม';
+  const userId = profile?.id || 'Unknown';
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -70,13 +75,13 @@ export function PassportModal({ isOpen, onClose }: PassportModalProps) {
                 {/* User Bio Section */}
                 <div className="flex gap-4 items-center mb-8 bg-white/5 p-4 rounded-xl border border-white/5">
                    <img 
-                      src={CURRENT_USER.avatarUrl} 
+                      src={avatarUrl} 
                       className="w-16 h-16 rounded-lg object-cover border-2 border-white/10 grayscale-[30%]"
                    />
                    <div className="flex flex-col">
                       <span className="text-stone-400 text-xs uppercase tracking-wider mb-1">Holder Name</span>
-                      <span className="text-white font-mono text-lg">{CURRENT_USER.name}</span>
-                      <span className="text-stone-500 text-xs font-mono mt-1">ID: {CURRENT_USER.id}</span>
+                      <span className="text-white font-mono text-lg">{fullName}</span>
+                      <span className="text-stone-500 text-xs font-mono mt-1">ID: {userId}</span>
                    </div>
                 </div>
 

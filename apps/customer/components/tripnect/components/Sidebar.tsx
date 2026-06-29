@@ -1,13 +1,15 @@
-
 import { Home, Search, Compass, MessageCircle, Heart, PlusSquare, User, Menu, Film, MapPin } from 'lucide-react';
 import { clsx } from 'clsx';
-import { CURRENT_USER } from '../data';
+import { useAuth } from '../../../lib/AuthContext';
 
 interface SidebarProps {
   className?: string;
 }
 
 export function Sidebar({ className }: SidebarProps) {
+  const { profile } = useAuth();
+  const avatarUrl = profile?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800';
+
   const navItems = [
     { icon: Home, label: 'หน้าหลัก', active: true },
     { icon: Search, label: 'ค้นหา' },
@@ -21,7 +23,7 @@ export function Sidebar({ className }: SidebarProps) {
       label: 'โปรไฟล์', 
       customIcon: (
         <img 
-          src={CURRENT_USER.avatarUrl} 
+          src={avatarUrl} 
           alt="โปรไฟล์" 
           className="w-6 h-6 rounded-full object-cover border border-gray-200"
         />
