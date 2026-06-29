@@ -1,6 +1,6 @@
 import { MapPin, Settings, Camera, ChevronRight, Globe, Plane, Calendar, Star, Users, Share2, UserPlus, Grid3x3, FileText, Image, Edit2, Trophy, Target, TrendingUp, Plus, X, Heart, MessageCircle, Map as MapIcon, Home, Briefcase, GraduationCap, MoreHorizontal, Edit, Search, PenSquare, Video, Mail, Shield, Clock, ChevronDown, Award, Compass, Mountain, Flag, Stamp, Navigation, Zap, Flame, Bookmark, Eye, Send, ArrowRight, Lock, CheckCircle, Circle, Moon, Sun, User } from 'lucide-react';
 import { CURRENT_USER, POSTS } from '../data';
-import { useState, useRef, useMemo } from 'react';
+import { useState, useRef, useMemo, useEffect } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
@@ -147,7 +147,6 @@ export function ProfileView() {
   const [dbUserPosts, setDbUserPosts] = useState<any[]>([]);
 
   useEffect(() => {
-    import('react').then(({ useEffect }) => {}); // just to satisfy linter if needed, but we already have useEffect
     if (viewingUser?.id) {
       supabase.from('posts').select('*').eq('user_id', viewingUser.id).order('created_at', { ascending: false })
       .then(({data, error}) => {
