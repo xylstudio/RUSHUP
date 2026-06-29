@@ -29,7 +29,7 @@ import { BookingWidget } from './components/BookingWidget';
 
 // Import new views
 import { ProfileView } from './components/ProfileView';
-import { RUSHUPPlusView } from './components/RUSHUPPlusView';
+import { RUSHUPPlusView } from './components/TripnectPlusView';
 import { SavedReviewsView } from './components/SavedReviewsView';
 import { MyPostsView } from './components/MyPostsView';
 import { SettingsView } from './components/SettingsView';
