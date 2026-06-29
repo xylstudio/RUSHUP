@@ -2,30 +2,39 @@
 import { useEffect, useState, FormEvent } from 'react';
 import Link from 'next/link';
 import StatCard from '../../../components/StatCard';
-import { UsersIcon, BriefcaseIcon, Cog6ToothIcon, CurrencyDollarIcon, CheckCircleIcon, CalendarIcon, BellIcon, ArrowRightIcon, BuildingStorefrontIcon } from '@heroicons/react/24/outline';
+import { 
+  BuildingStorefrontIcon, 
+  CurrencyDollarIcon, 
+  ShoppingBagIcon, 
+  CheckCircleIcon, 
+  ListBulletIcon, 
+  ClockIcon, 
+  ArrowRightIcon, 
+  Cog6ToothIcon, 
+  BookOpenIcon, 
+  InboxStackIcon 
+} from '@heroicons/react/24/outline';
 import { supabase } from '../../../lib/supabaseClient';
 import { useI18n } from '@/lib/I18nContext';
-import { appCopy, pickLocalizedText } from '@/lib/appLocale';
 import { formatCurrencyByLocale } from '@/lib/localeFormat';
 import { useAuth } from '../../../lib/AuthContext';
 
-export default function AdminDashboard() {
+export default function MerchantDashboard() {
   const { locale } = useI18n();
   const { profile, refreshProfile } = useAuth();
   
+  // Branch Info
+  const [branchName, setBranchName] = useState<string>('ร้านค้าของคุณ');
+  
   // States for Stats
-  const [revenue, setRevenue] = useState<number|null>(null);
-  const [activeJobs, setActiveJobs] = useState<number|null>(null);
-  const [customers, setCustomers] = useState<number|null>(null);
-  const [staff, setStaff] = useState<number|null>(null);
-  const [services, setServices] = useState<number|null>(null);
-  const [completedJobs, setCompletedJobs] = useState<number|null>(null);
-  const [notificationFailuresTotal, setNotificationFailuresTotal] = useState<number|null>(null);
-  const [notificationFailures24h, setNotificationFailures24h] = useState<number|null>(null);
-  const [upcomingJobsList, setUpcomingJobsList] = useState<any[]>([]);
+  const [revenue, setRevenue] = useState<number>(0);
+  const [activeOrdersCount, setActiveOrdersCount] = useState<number>(0);
+  const [completedOrdersCount, setCompletedOrdersCount] = useState<number>(0);
+  const [menuItemsCount, setMenuItemsCount] = useState<number>(0);
+  const [recentOrders, setRecentOrders] = useState<any[]>([]);
+  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string|null>(null);
-  const [sendingReminders, setSendingReminders] = useState(false);
 
   // States for Onboarding Form
   const [submittingOnboarding, setSubmittingOnboarding] = useState(false);
@@ -43,99 +52,81 @@ export default function AdminDashboard() {
       return;
     }
 
-    async function fetchStats() {
+    async function fetchBranchData() {
       setLoading(true);
       setError(null);
       if (!supabase) {
-        setError(pickLocalizedText(locale, appCopy.adminDashboard.dbUnavailable));
+        setError('ไม่สามารถเชื่อมต่อฐานข้อมูลได้');
         setLoading(false);
         return;
       }
       try {
-        const startOfMonth = new Date();
-        startOfMonth.setDate(1);
-        startOfMonth.setHours(0,0,0,0);
+        // 1. Fetch Branch Info
+        const { data: branch, error: branchErr } = await supabase
+          .from('branches')
+          .select('id, branch_name')
+          .eq('branch_code', profile.branch_code)
+          .single();
 
-        const fetchRevenue = async () => {
-          const candidateColumns = ['total', 'total_price', 'calculated_price', 'base_price'];
-          for (const columnName of candidateColumns) {
-            const { data, error } = await supabase
-              .from('orders')
-              .select(`${columnName}`)
-              .gte('created_at', startOfMonth.toISOString());
-            if (!error) {
-              return data?.reduce((sum: number, row: any) => sum + (Number(row?.[columnName]) || 0), 0) || 0;
-            }
-          }
-          return 0;
-        };
+        if (branchErr) throw branchErr;
+        setBranchName(branch.branch_name);
 
-        const results = await Promise.allSettled([
-          fetchRevenue(),
-          supabase.from('job_assignments').select('*', { count: 'exact', head: true }).in('status', ['assigned', 'accepted', 'in_progress']),
-          supabase.from('job_assignments').select('*', { count: 'exact', head: true }).eq('status', 'completed').gte('completed_at', startOfMonth.toISOString()),
-          supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'customer'),
-          supabase.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'staff'),
-          supabase.from('services').select('*', { count: 'exact', head: true }),
-          (async () => {
-            const since24h = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-            const [all, recent] = await Promise.all([
-              supabase.from('audit_logs').select('*', { count: 'exact', head: true }).eq('action', 'notification_delivery_failed'),
-              supabase.from('audit_logs').select('*', { count: 'exact', head: true }).eq('action', 'notification_delivery_failed').gte('created_at', since24h)
-            ]);
-            return { total: all.count || 0, recent24h: recent.count || 0 };
-          })(),
-          (async () => {
-            const now = new Date().toISOString().split('T')[0];
-            const { data } = await supabase
-              .from('orders')
-              .select('*, profiles!orders_customer_id_fkey(display_name, line_user_id), services(service_name), houses(name)')
-              .gte('scheduled_date', now)
-              .in('status', ['pending', 'confirmed'])
-              .order('scheduled_date', { ascending: true })
-              .limit(5);
-            return data || [];
-          })()
-        ]);
+        const branchId = branch.id;
 
-        if (results[0].status === 'fulfilled') setRevenue(results[0].value as number);
-        if (results[1].status === 'fulfilled') setActiveJobs((results[1] as any).value.count);
-        if (results[2].status === 'fulfilled') setCompletedJobs((results[2] as any).value.count);
-        if (results[3].status === 'fulfilled') setCustomers((results[3] as any).value.count);
-        if (results[4].status === 'fulfilled') setStaff((results[4] as any).value.count);
-        if (results[5].status === 'fulfilled') setServices((results[5] as any).value.count);
-        if (results[6].status === 'fulfilled') {
-          setNotificationFailuresTotal((results[6] as any).value.total);
-          setNotificationFailures24h((results[6] as any).value.recent24h);
-        }
-        if (results[7].status === 'fulfilled') setUpcomingJobsList(results[7].value as any[]);
+        // 2. Fetch Stats
+        // Branch Revenue (Sum of total from orders table for this branch_id)
+        const { data: revenueData } = await supabase
+          .from('orders')
+          .select('total, total_price, calculated_price')
+          .eq('branch_id', branchId)
+          .eq('status', 'completed');
+
+        const totalRevenue = revenueData?.reduce((sum, order: any) => {
+          return sum + (Number(order.total || order.total_price || order.calculated_price) || 0);
+        }, 0) || 0;
+        setRevenue(totalRevenue);
+
+        // Active Orders
+        const { count: activeCount } = await supabase
+          .from('orders')
+          .select('*', { count: 'exact', head: true })
+          .eq('branch_id', branchId)
+          .in('status', ['pending', 'confirmed', 'preparing', 'delivering']);
+        setActiveOrdersCount(activeCount || 0);
+
+        // Completed Orders
+        const { count: completedCount } = await supabase
+          .from('orders')
+          .select('*', { count: 'exact', head: true })
+          .eq('branch_id', branchId)
+          .eq('status', 'completed');
+        setCompletedOrdersCount(completedCount || 0);
+
+        // Total Menu Items (POS Services matching branch)
+        const { count: itemsCount } = await supabase
+          .from('services')
+          .select('*', { count: 'exact', head: true })
+          .eq('branch_id', branchId);
+        setMenuItemsCount(itemsCount || 0);
+
+        // 3. Fetch Recent Orders for this branch
+        const { data: orders } = await supabase
+          .from('orders')
+          .select('*, profiles!orders_customer_id_fkey(display_name)')
+          .eq('branch_id', branchId)
+          .order('created_at', { ascending: false })
+          .limit(5);
+        setRecentOrders(orders || []);
 
       } catch (err: any) {
-        setError(err.message || pickLocalizedText(locale, appCopy.adminDashboard.loadError));
+        setError(err.message || 'เกิดข้อผิดพลาดในการโหลดข้อมูลแดชบอร์ด');
       } finally {
         setLoading(false);
       }
     }
-    fetchStats();
-  }, [locale, profile?.branch_code, profile?.is_verified]);
 
-  const handleSendReminders = async () => {
-    if (!confirm(pickLocalizedText(locale, { th: 'คุณต้องการส่งการแจ้งเตือนงานพรุ่งนี้ให้ลูกค้าทุกคนใช่หรือไม่?', en: 'Are you sure you want to send reminders for tomorrow\'s jobs to all customers?' }))) return;
-    setSendingReminders(true);
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      const response = await fetch('/api/admin/notifications/reminders', { 
-        method: 'POST',
-        headers: {
-          'Authorization': session?.access_token ? `Bearer ${session.access_token}` : ''
-        }
-      });
-      const result = await response.json();
-      if (result.success) {
-        alert(pickLocalizedText(locale, { th: `ส่งการแจ้งเตือนสำเร็จ! พบงานพรุ่งนี้ ${result.count} รายการ`, en: `Reminders sent successfully! Found ${result.count} jobs for tomorrow.` }));
-      } else throw new Error(result.error || 'Failed');
-    } catch (err: any) { alert('Error: ' + err.message); } finally { setSendingReminders(false); }
-  };
+    fetchBranchData();
+  }, [profile?.branch_code, profile?.is_verified]);
 
   const handleRegisterOnboarding = async (e: FormEvent) => {
     e.preventDefault();
@@ -149,10 +140,8 @@ export default function AdminDashboard() {
     }
 
     try {
-      // 1. Generate 2-char code
       const randCode = Math.random().toString(36).substring(2, 4).toUpperCase();
 
-      // 2. Insert Branch
       const { data: branchData, error: branchErr } = await supabase
         .from('branches')
         .insert([{
@@ -173,7 +162,6 @@ export default function AdminDashboard() {
 
       if (branchErr) throw branchErr;
 
-      // 3. Update User Profile
       const { error: profileErr } = await supabase
         .from('profiles')
         .update({
@@ -231,7 +219,7 @@ export default function AdminDashboard() {
               <select 
                 value={shopType} 
                 onChange={e => setShopType(e.target.value as any)} 
-                className="w-full px-4 py-3 rounded-2xl border border-stone-200 focus:outline-none focus:border-orange-500 font-medium text-stone-950 bg-white"
+                className="w-full px-4 py-3 rounded-2xl border border-stone-200 focus:outline-none focus:border-orange-500 font-medium text-stone-955 bg-white"
               >
                 <option value="both">ร้านอาหาร และ บริการทั่วไป (Both)</option>
                 <option value="cafe">ร้านอาหารและคาเฟ่ (Food & Cafe)</option>
@@ -311,153 +299,158 @@ export default function AdminDashboard() {
           </div>
           <h1 className="text-2xl font-black text-stone-900 tracking-tight">อยู่ระหว่างการตรวจสอบ</h1>
           <p className="text-stone-500 text-sm mt-3 leading-relaxed">
-            ข้อมูลร้านค้าของคุณได้ส่งไปยังระบบแล้ว ทีมงาน RUSHUP กำลังดำเนินการตรวจสอบเอกสารและความถูกต้องของร้านค้า
+            ข้อมูลร้านค้าของคุณได้ส่งไปยังระบบแล้ว ทีมงาน RUSHUP กำลังตรวจสอบและอนุมัติร้านค้าของคุณ
           </p>
-          <div className="mt-8 pt-6 border-t border-stone-100">
-            <p className="text-xs text-stone-400 font-medium">หากต้องการสอบถามเพิ่มเติม โปรดติดต่อฝ่ายสนับสนุนระบบ RUSHUP</p>
-          </div>
         </div>
       </div>
     );
   }
 
-  // Main Merchant Dashboard (Fully onboarded & verified)
+  // Main Merchant Dashboard (Branch filtered data)
   return (
-    <div className="max-w-7xl mx-auto py-6 px-2 md:px-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-1">{pickLocalizedText(locale, appCopy.adminDashboard.title)}</h1>
-        <p className="text-gray-500 text-lg">{pickLocalizedText(locale, appCopy.adminDashboard.subtitle)}</p>
+    <div className="max-w-7xl mx-auto py-8 px-4 md:px-8">
+      {/* Header */}
+      <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <span className="text-xs font-bold uppercase tracking-widest text-orange-600 mb-1 block">ยินดีต้อนรับกลับมา</span>
+          <h1 className="text-4xl font-extrabold tracking-tight text-stone-900 mb-2">{branchName}</h1>
+          <p className="text-stone-500 text-base font-medium">จัดการร้านค้า ระบบเมนู และคำสั่งซื้อ RUSHUP ของสาขาคุณ</p>
+        </div>
+        <div className="flex items-center gap-3 bg-white border border-stone-100 rounded-2xl px-4 py-2.5 shadow-sm">
+            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
+            <span className="text-xs font-bold text-stone-600 uppercase tracking-widest">ร้านค้าเปิดบริการอยู่</span>
+        </div>
       </div>
-      {error && <div className="text-red-600 mb-4">{error}</div>}
 
-      <div className="flex overflow-x-auto scrollbar-hide gap-6 mb-8 flex-nowrap pb-2 -mx-2 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 md:gap-6 md:overflow-visible md:flex-none md:mx-0">
+      {error && (
+        <div className="bg-red-50 text-red-600 border border-red-200 rounded-2xl p-4 mb-8 font-medium">
+          {error}
+        </div>
+      )}
+
+      {/* Stats Cards Grid (4 Columns for branch stats) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         <div className="animate-slide-in-up stagger-1">
-          <StatCard icon={<CurrencyDollarIcon className="w-7 h-7" />} value={loading ? '...' : formatCurrencyByLocale(revenue ?? 0, locale)} label={pickLocalizedText(locale, appCopy.adminDashboard.revenueMonth)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.lastUpdated)} loading={loading} />
+          <StatCard 
+            icon={<CurrencyDollarIcon className="w-7 h-7" />} 
+            value={loading ? '...' : formatCurrencyByLocale(revenue, locale)} 
+            label="ยอดขายทั้งหมด" 
+            subtext="ออเดอร์ที่เสร็จสมบูรณ์แล้ว" 
+            loading={loading} 
+          />
         </div>
         <div className="animate-slide-in-up stagger-2">
-          <StatCard icon={<BriefcaseIcon className="w-7 h-7" />} value={loading ? '...' : activeJobs ?? 0} label={pickLocalizedText(locale, appCopy.adminDashboard.activeJobs)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.unfinishedJobs)} loading={loading} />
+          <StatCard 
+            icon={<ClockIcon className="w-7 h-7" />} 
+            value={loading ? '...' : activeOrdersCount} 
+            label="ออเดอร์กำลังดำเนินการ" 
+            subtext="รอทำ/กำลังทำ/กำลังส่ง" 
+            loading={loading} 
+          />
         </div>
         <div className="animate-slide-in-up stagger-3">
-          <StatCard icon={<CheckCircleIcon className="w-7 h-7" />} value={loading ? '...' : completedJobs ?? 0} label={pickLocalizedText(locale, appCopy.adminDashboard.completedMonth)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.completedAll)} loading={loading} />
+          <StatCard 
+            icon={<CheckCircleIcon className="w-7 h-7" />} 
+            value={loading ? '...' : completedOrdersCount} 
+            label="ออเดอร์เสร็จสิ้น" 
+            subtext="ออเดอร์ทั้งหมดที่ส่งมอบแล้ว" 
+            loading={loading} 
+          />
         </div>
         <div className="animate-slide-in-up stagger-4">
-          <StatCard icon={<UsersIcon className="w-7 h-7" />} value={loading ? '...' : customers ?? 0} label={pickLocalizedText(locale, appCopy.adminDashboard.totalCustomers)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.newCustomersMonth)} loading={loading} />
-        </div>
-        <div className="animate-slide-in-up stagger-5">
-          <StatCard icon={<BriefcaseIcon className="w-7 h-7" />} value={loading ? '...' : staff ?? 0} label={pickLocalizedText(locale, appCopy.adminDashboard.totalStaff)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.staffOnline)} loading={loading} />
-        </div>
-        <div className="animate-slide-in-up stagger-6">
-          <StatCard icon={<Cog6ToothIcon className="w-7 h-7" />} value={loading ? '...' : services ?? 0} label={pickLocalizedText(locale, appCopy.adminDashboard.totalServices)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.allServiceTypes)} loading={loading} />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <div className="col-span-2 bg-white/80 backdrop-blur-xl rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 p-6 min-h-[220px] flex flex-col relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl pointer-events-none -mr-32 -mt-32"></div>
-          <h2 className="text-xl font-bold text-stone-900 mb-4 flex items-center gap-2">
-            <CurrencyDollarIcon className="h-6 w-6 text-orange-500" />
-            {pickLocalizedText(locale, appCopy.adminDashboard.revenueOverview)}
-          </h2>
-          <div className="flex-1 flex items-center justify-center text-stone-400 font-medium">{pickLocalizedText(locale, appCopy.adminDashboard.revenuePlaceholder)}</div>
-        </div>
-        <div className="bg-white/80 backdrop-blur-xl rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 p-6 min-h-[220px] flex flex-col">
-          <h2 className="text-xl font-bold text-stone-900 mb-4">{pickLocalizedText(locale, appCopy.adminDashboard.recentActivity)}</h2>
-          <ul className="flex-1 space-y-4">
-            <li className="flex items-center justify-between">
-              <div>
-                <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 align-middle"></span>
-                <span className="font-medium text-gray-800">{pickLocalizedText(locale, appCopy.adminDashboard.installationDone)}</span>
-                <div className="text-xs text-gray-500">{pickLocalizedText(locale, appCopy.adminDashboard.sampleHouse)}</div>
-                <div className="text-xs text-gray-400">{pickLocalizedText(locale, appCopy.adminDashboard.fiveMinutesAgo)}</div>
-              </div>
-              <span className="text-gray-900 font-semibold">{formatCurrencyByLocale(2500, locale)}</span>
-            </li>
-          </ul>
+          <StatCard 
+            icon={<ListBulletIcon className="w-7 h-7" />} 
+            value={loading ? '...' : menuItemsCount} 
+            label="รายการสินค้าและบริการ" 
+            subtext="รายการทั้งหมดในคลังร้าน" 
+            loading={loading} 
+          />
         </div>
       </div>
 
-      <div className="bg-white/80 backdrop-blur-xl rounded-[32px] p-6 mb-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/5 rounded-full blur-3xl pointer-events-none -mr-32 -mt-32"></div>
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-bold text-stone-900 mb-1">{pickLocalizedText(locale, appCopy.adminDashboard.notificationStatus)}</h2>
-            <p className="text-[13px] font-medium text-stone-500">{pickLocalizedText(locale, appCopy.adminDashboard.notificationSubtitle)}</p>
+      {/* Main Grid for Operations */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+        {/* Recent Branch Orders */}
+        <div className="col-span-1 lg:col-span-2 bg-white/80 backdrop-blur-xl rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 p-8 flex flex-col min-h-[350px]">
+          <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-bold text-stone-900 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600">
+                    <ShoppingBagIcon className="h-6 w-6" />
+                </div>
+                ออเดอร์ล่าสุดของร้าน
+              </h2>
+              <Link href="/dashboard/merchant/orders" className="text-sm font-bold text-orange-600 hover:text-orange-700 flex items-center gap-1 transition-colors">
+                  ดูออเดอร์ทั้งหมด <ArrowRightIcon className="h-4 w-4" />
+              </Link>
           </div>
-          <Link href="/dashboard/admin/audit-logs" className="inline-flex items-center rounded-2xl bg-stone-900 px-4 py-2 text-sm font-bold text-white hover:bg-stone-800 transition-colors shadow-md">{pickLocalizedText(locale, appCopy.adminDashboard.openAuditPage)}</Link>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 relative z-10">
-          <div className="rounded-2xl border border-red-200/50 bg-gradient-to-br from-red-50 to-white p-5 shadow-sm">
-            <div className="text-xs font-bold uppercase tracking-wider text-red-600 mb-2">{pickLocalizedText(locale, appCopy.adminDashboard.notificationFailedTotal)}</div>
-            <div className="text-3xl font-extrabold text-red-700">{loading ? '...' : notificationFailuresTotal ?? 0}</div>
-          </div>
-          <div className="rounded-2xl border border-amber-200/50 bg-gradient-to-br from-amber-50 to-white p-5 shadow-sm">
-            <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">{pickLocalizedText(locale, appCopy.adminDashboard.notificationFailed24h)}</div>
-            <div className="text-3xl font-extrabold text-amber-700">{loading ? '...' : notificationFailures24h ?? 0}</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Quick System Controls */}
-      <div className="bg-white/80 backdrop-blur-xl rounded-[32px] p-6 mb-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 animate-slide-in-up stagger-7">
-        <h2 className="text-xl font-bold text-stone-900 mb-6 flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-            <CheckCircleIcon className="h-5 w-5 text-orange-600" />
-          </div>
-          {pickLocalizedText(locale, { th: 'ควบคุมระบบด่วน', en: 'Quick System Controls' })}
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="p-5 rounded-2xl bg-stone-50/50 border border-stone-100 hover:border-orange-200 transition-all group hover:bg-orange-50/30">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-stone-500 mb-2 group-hover:text-orange-600 transition-colors">{pickLocalizedText(locale, { th: 'การนัดหมาย', en: 'Appointments' })}</h3>
-            <p className="text-sm text-stone-600 mb-5 font-medium">{pickLocalizedText(locale, { th: 'ส่งการแจ้งเตือนเตือนความจำสำหรับงานพรุ่งนี้ให้ลูกค้าทุกคน (LINE & In-app)', en: 'Send reminders for tomorrow\'s jobs to all customers (LINE & In-app).' })}</p>
-            <button onClick={handleSendReminders} disabled={sendingReminders} className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-xl text-sm font-bold shadow-md shadow-orange-200 hover:shadow-lg active:scale-95 transition-all disabled:opacity-50">
-              {sendingReminders ? 'กำลังส่ง...' : pickLocalizedText(locale, { th: 'ส่งการแจ้งเตือน', en: 'Send Reminders' })}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Upcoming Jobs */}
-      <div className="bg-white/80 backdrop-blur-xl rounded-[32px] p-6 border border-stone-100/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] animate-slide-in-up stagger-8 mb-20">
-        <h2 className="text-xl font-bold text-stone-900 mb-6 flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center">
-            <CalendarIcon className="h-5 w-5 text-stone-700" />
-          </div>
-          {pickLocalizedText(locale, appCopy.adminDashboard.upcomingJobs)}
-        </h2>
-        <div className="space-y-4">
-          {loading ? (
-            <div className="text-stone-400 py-4 font-medium">{locale === 'en' ? 'Loading...' : locale === 'zh' ? '加载中...' : 'กำลังโหลด...'}</div>
-          ) : upcomingJobsList.length === 0 ? (
-            <div className="text-stone-400 py-4 font-medium">{pickLocalizedText(locale, appCopy.adminDashboard.upcomingPlaceholder)}</div>
-          ) : (
-            upcomingJobsList.map((job) => (
-              <div key={job.id} className="flex flex-col md:flex-row md:items-center justify-between p-5 rounded-2xl bg-white border border-stone-100/50 hover:border-orange-200 transition-all hover:shadow-lg hover:shadow-orange-100 gap-4 group">
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-orange-50 flex items-center justify-center text-orange-500 group-hover:scale-110 transition-transform">
-                    <BriefcaseIcon className="h-6 w-6" />
-                  </div>
+          
+          <div className="flex-1 space-y-4">
+            {loading ? (
+              <div className="text-stone-400 text-center py-10 font-medium">กำลังโหลดข้อมูล...</div>
+            ) : recentOrders.length === 0 ? (
+              <div className="text-stone-400 text-center py-10 font-medium bg-stone-50/50 border border-stone-100 border-dashed rounded-2xl">ไม่มีออเดอร์ล่าสุดในร้านค้าขณะนี้</div>
+            ) : (
+              recentOrders.map((order) => (
+                <div key={order.id} className="flex items-center justify-between p-5 border border-stone-100 hover:border-orange-100 rounded-2xl bg-white/50 hover:shadow-lg transition-all group">
                   <div>
-                    <h4 className="text-base font-bold text-stone-900 tracking-tight">{job.services?.service_name}</h4>
+                    <h4 className="text-base font-bold text-stone-950">ออเดอร์ #{order.order_code || order.id.substring(0, 6).toUpperCase()}</h4>
                     <p className="text-xs font-bold text-stone-400 uppercase tracking-wider mt-1">
-                      {job.profiles?.display_name} <span className="mx-1">•</span> {job.houses?.name}
+                      ลูกค้า: {order.profiles?.display_name || 'ทั่วไป'} <span className="mx-1.5">•</span> 
+                      {new Date(order.created_at).toLocaleDateString('th-TH')}
                     </p>
                   </div>
-                </div>
-                <div className="flex items-center justify-between md:justify-end gap-6 border-t border-stone-50 pt-4 md:border-0 md:pt-0">
-                  <div className="text-left md:text-right">
-                    <p className="text-[11px] font-bold uppercase tracking-wider text-stone-400">{locale === 'en' ? 'Date' : 'วันที่'}</p>
-                    <p className="text-sm font-bold text-stone-800">{new Date(job.scheduled_date).toLocaleDateString('th-TH')}</p>
+                  <div className="text-right">
+                    <span className="text-sm font-black text-stone-900 block">{formatCurrencyByLocale(order.total || order.total_price || 0, locale)}</span>
+                    <span className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mt-1.5 ${
+                      order.status === 'completed' ? 'bg-emerald-50 text-emerald-600' :
+                      order.status === 'pending' ? 'bg-amber-50 text-amber-600' :
+                      'bg-orange-50 text-orange-600'
+                    }`}>
+                      {order.status}
+                    </span>
                   </div>
-                  <button 
-                    onClick={() => alert(`ส่งการแจ้งเตือนให้ ${job.profiles?.display_name} เรียบร้อยแล้ว (Mock)`)}
-                    className="p-3 bg-stone-50 rounded-xl text-stone-400 hover:text-white hover:bg-stone-900 transition-all"
-                  >
-                    <BellIcon className="h-5 w-5" />
-                  </button>
                 </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        {/* Quick Menu & Settings Links */}
+        <div className="col-span-1 bg-white/80 backdrop-blur-xl rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 p-8 flex flex-col">
+          <h2 className="text-2xl font-bold text-stone-900 mb-6">จัดการด่วน</h2>
+          <div className="flex-1 flex flex-col gap-4">
+            
+            <Link href="/dashboard/merchant/pos-settings" className="flex items-center gap-4 p-5 border border-stone-100 rounded-2xl hover:border-orange-200 bg-white/50 hover:bg-orange-50/20 hover:shadow-lg hover:shadow-orange-500/5 transition-all group">
+              <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <Cog6ToothIcon className="h-6 w-6" />
               </div>
-            ))
-          )}
+              <div className="text-left">
+                <h3 className="font-extrabold text-stone-900 text-sm">ตั้งค่าระบบ POS</h3>
+                <p className="text-xs font-medium text-stone-500 mt-0.5">เปิด-ปิดร้าน และแก้ไขการจัดส่ง</p>
+              </div>
+            </Link>
+
+            <Link href="/dashboard/merchant/item-library" className="flex items-center gap-4 p-5 border border-stone-100 rounded-2xl hover:border-orange-200 bg-white/50 hover:bg-orange-50/20 hover:shadow-lg hover:shadow-orange-500/5 transition-all group">
+              <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <BookOpenIcon className="h-6 w-6" />
+              </div>
+              <div className="text-left">
+                <h3 className="font-extrabold text-stone-900 text-sm">จัดการเมนูอาหาร & สินค้า</h3>
+                <p className="text-xs font-medium text-stone-500 mt-0.5">เพิ่ม ลบ หรือแก้ไขราคาเมนู</p>
+              </div>
+            </Link>
+
+            <Link href="/dashboard/merchant/inventory/restock" className="flex items-center gap-4 p-5 border border-stone-100 rounded-2xl hover:border-orange-200 bg-white/50 hover:bg-orange-50/20 hover:shadow-lg hover:shadow-orange-500/5 transition-all group">
+              <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <InboxStackIcon className="h-6 w-6" />
+              </div>
+              <div className="text-left">
+                <h3 className="font-extrabold text-stone-900 text-sm">จัดการสต๊อกสินค้า</h3>
+                <p className="text-xs font-medium text-stone-500 mt-0.5">เติมสต๊อกและวัตถุดิบสาขา</p>
+              </div>
+            </Link>
+
+          </div>
         </div>
       </div>
     </div>
