@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import StatCard from '../../../components/StatCard';
-import { UsersIcon, BriefcaseIcon, Cog6ToothIcon, CurrencyDollarIcon, CheckCircleIcon, CalendarIcon, BellIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import { UsersIcon, BriefcaseIcon, Cog6ToothIcon, CurrencyDollarIcon, CheckCircleIcon, CalendarIcon, BellIcon, ArrowRightIcon, BuildingStorefrontIcon, ShieldCheckIcon } from '@heroicons/react/24/outline';
 import { supabase } from '../../../lib/supabaseClient';
 import { useI18n } from '@/lib/I18nContext';
 import { appCopy, pickLocalizedText } from '@/lib/appLocale';
@@ -19,9 +19,22 @@ export default function AdminDashboard() {
   const [notificationFailuresTotal, setNotificationFailuresTotal] = useState<number|null>(null);
   const [notificationFailures24h, setNotificationFailures24h] = useState<number|null>(null);
   const [upcomingJobsList, setUpcomingJobsList] = useState<any[]>([]);
+  const [pendingMerchants, setPendingMerchants] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string|null>(null);
   const [sendingReminders, setSendingReminders] = useState(false);
+
+  async function fetchPendingMerchants() {
+    if (!supabase) return;
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('role', 'merchant')
+      .eq('is_verified', false);
+    if (!error) {
+      setPendingMerchants(data || []);
+    }
+  }
 
   useEffect(() => {
     async function fetchStats() {
@@ -91,6 +104,8 @@ export default function AdminDashboard() {
         }
         if (results[7].status === 'fulfilled') setUpcomingJobsList(results[7].value as any[]);
 
+        await fetchPendingMerchants();
+
       } catch (err: any) {
         setError(err.message || pickLocalizedText(locale, appCopy.adminDashboard.loadError));
       } finally {
@@ -118,6 +133,22 @@ export default function AdminDashboard() {
     } catch (err: any) { alert('Error: ' + err.message); } finally { setSendingReminders(false); }
   };
 
+  const handleApproveMerchant = async (id: string) => {
+    if (!confirm('ยืนยันที่จะอนุมัติร้านค้านี้เข้าร่วมระบบใช่หรือไม่?')) return;
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ is_verified: true })
+        .eq('id', id);
+
+      if (error) throw error;
+      alert('อนุมัติร้านค้าเรียบร้อยแล้ว!');
+      fetchPendingMerchants();
+    } catch (err: any) {
+      alert('เกิดข้อผิดพลาด: ' + err.message);
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto py-8 px-4 md:px-8">
       {/* Header Section */}
@@ -138,7 +169,7 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      {/* KPI Stats - Horizontal Scroll on Mobile, Grid on Desktop */}
+      {/* KPI Stats */}
       <div className="flex overflow-x-auto scrollbar-hide gap-6 mb-10 flex-nowrap pb-4 -mx-4 px-4 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 md:gap-6 md:overflow-visible md:flex-none md:px-0 md:mx-0">
         <div className="animate-slide-in-up stagger-1 min-w-[240px] md:min-w-0">
           <StatCard icon={<CurrencyDollarIcon className="w-7 h-7" />} value={loading ? '...' : formatCurrencyByLocale(revenue ?? 0, locale)} label={pickLocalizedText(locale, appCopy.adminDashboard.revenueMonth)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.lastUpdated)} loading={loading} />
@@ -160,13 +191,41 @@ export default function AdminDashboard() {
         </div>
       </div>
 
+      {/* Pending Approvals Section */}
+      {pendingMerchants.length > 0 && (
+        <div className="bg-white/80 backdrop-blur-xl rounded-[32px] p-8 border border-orange-200 shadow-[0_8px_30px_rgb(249,115,22,0.05)] animate-slide-in-up mb-10 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl pointer-events-none -mr-32 -mt-32"></div>
+          <h2 className="text-2xl font-bold text-stone-900 mb-6 flex items-center gap-3 relative z-10">
+            <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600">
+              <BuildingStorefrontIcon className="h-6 w-6" />
+            </div>
+            คำขออนุมัติร้านค้าใหม่ ({pendingMerchants.length})
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
+            {pendingMerchants.map((merchant) => (
+              <div key={merchant.id} className="p-5 rounded-2xl bg-white border border-stone-100 shadow-sm flex flex-col justify-between gap-4">
+                <div>
+                  <h3 className="font-extrabold text-stone-900 text-lg">{merchant.display_name || 'ไม่ระบุชื่อร้าน'}</h3>
+                  <p className="text-sm text-stone-500 font-medium mt-1">อีเมลติดต่อ: {merchant.email}</p>
+                  <p className="text-xs text-stone-400 font-mono mt-1">รหัสสาขา: {merchant.branch_code}</p>
+                </div>
+                <button
+                  onClick={() => handleApproveMerchant(merchant.id)}
+                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 rounded-xl font-bold text-sm hover:from-orange-600 hover:to-orange-700 shadow-md shadow-orange-200 transition-all flex items-center justify-center gap-2"
+                >
+                  <ShieldCheckIcon className="h-5 w-5" /> อนุมัติร้านค้า
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
-        
         {/* Revenue Overview Chart Area */}
         <div className="col-span-1 lg:col-span-2 bg-white/80 backdrop-blur-xl rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 p-8 min-h-[300px] flex flex-col relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-orange-400/10 to-orange-500/5 rounded-full blur-3xl pointer-events-none -mr-32 -mt-32 transition-transform duration-700 group-hover:scale-150"></div>
-          
           <div className="flex items-center justify-between mb-8 relative z-10">
               <h2 className="text-2xl font-bold text-stone-900 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600">
@@ -178,7 +237,6 @@ export default function AdminDashboard() {
                   View Details <ArrowRightIcon className="h-4 w-4" />
               </button>
           </div>
-          
           <div className="flex-1 flex flex-col items-center justify-center text-stone-400 font-medium bg-stone-50/50 rounded-2xl border border-stone-100 border-dashed relative z-10">
               <span className="text-4xl mb-4">📈</span>
               {pickLocalizedText(locale, appCopy.adminDashboard.revenuePlaceholder)}
@@ -191,7 +249,6 @@ export default function AdminDashboard() {
               <h2 className="text-2xl font-bold text-stone-900">{pickLocalizedText(locale, appCopy.adminDashboard.recentActivity)}</h2>
           </div>
           <ul className="flex-1 space-y-5">
-            {/* Mocked Feed Item */}
             <li className="flex items-start gap-4 p-4 rounded-2xl hover:bg-stone-50 transition-colors group cursor-pointer">
               <div className="w-2 h-2 mt-2 bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.6)] group-hover:scale-150 transition-transform"></div>
               <div className="flex-1">
@@ -203,7 +260,6 @@ export default function AdminDashboard() {
                 <div className="text-xs font-bold text-stone-400 uppercase tracking-wider mt-2">{pickLocalizedText(locale, appCopy.adminDashboard.fiveMinutesAgo)}</div>
               </div>
             </li>
-            {/* Another Mock Item */}
             <li className="flex items-start gap-4 p-4 rounded-2xl hover:bg-stone-50 transition-colors group cursor-pointer">
               <div className="w-2 h-2 mt-2 bg-blue-500 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.6)] group-hover:scale-150 transition-transform"></div>
               <div className="flex-1">
@@ -222,14 +278,12 @@ export default function AdminDashboard() {
           {/* Quick System Controls */}
           <div className="bg-white/80 backdrop-blur-xl rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 animate-slide-in-up stagger-7 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-stone-200/20 to-stone-100/5 rounded-full blur-3xl pointer-events-none -mr-32 -mt-32"></div>
-            
             <h2 className="text-2xl font-bold text-stone-900 mb-6 flex items-center gap-3 relative z-10">
               <div className="w-10 h-10 rounded-xl bg-stone-100 flex items-center justify-center">
                 <Cog6ToothIcon className="h-6 w-6 text-stone-700" />
               </div>
               {pickLocalizedText(locale, { th: 'ควบคุมระบบด่วน', en: 'Quick System Controls' })}
             </h2>
-            
             <div className="grid grid-cols-1 gap-4 relative z-10">
               <div className="p-6 rounded-2xl bg-white border border-stone-100 hover:border-orange-200 transition-all group hover:shadow-lg hover:shadow-orange-500/5">
                 <div className="flex items-center gap-3 mb-3">
@@ -253,7 +307,6 @@ export default function AdminDashboard() {
           {/* System Health / Notifications */}
           <div className="bg-white/80 backdrop-blur-xl rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/5 rounded-full blur-3xl pointer-events-none -mr-32 -mt-32"></div>
-            
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 relative z-10">
               <div>
                 <h2 className="text-2xl font-bold text-stone-900 flex items-center gap-3 mb-1">
@@ -268,7 +321,6 @@ export default function AdminDashboard() {
                   {pickLocalizedText(locale, appCopy.adminDashboard.openAuditPage)}
               </Link>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 relative z-10">
               <div className="rounded-2xl border border-red-100 bg-gradient-to-br from-red-50/50 to-white p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div className="text-xs font-bold uppercase tracking-wider text-red-500 mb-2">{pickLocalizedText(locale, appCopy.adminDashboard.notificationFailedTotal)}</div>
@@ -290,7 +342,6 @@ export default function AdminDashboard() {
           </div>
           {pickLocalizedText(locale, appCopy.adminDashboard.upcomingJobs)}
         </h2>
-        
         <div className="space-y-4">
           {loading ? (
             <div className="text-stone-400 py-8 text-center font-medium">{locale === 'en' ? 'Loading data...' : locale === 'zh' ? '加载中...' : 'กำลังโหลดข้อมูล...'}</div>
