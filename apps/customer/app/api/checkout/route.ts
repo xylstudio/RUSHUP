@@ -112,7 +112,7 @@ export async function POST(req: Request) {
     const hasActiveShift = !!activeShifts?.length
 
     const now = new Date()
-    let isAcceptingOrders = hasActiveShift
+    let isAcceptingOrders = true // By default accept orders, don't strictly require POS shift for delivery platform
     if (currentSettings?.is_open === false) {
       isAcceptingOrders = false
     } else if (currentSettings?.status === 'paused' || currentSettings?.status === 'closed') {

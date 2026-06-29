@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '../styles/globals.css';
+import '../styles/tripnect-theme.css';
 import ClientProviders from './client-providers';
 import AppChrome from '../components/AppChrome';
 

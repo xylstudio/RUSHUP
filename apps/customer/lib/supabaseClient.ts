@@ -142,6 +142,21 @@ export interface PriceTemplate {
   updated_at: string;
 }
 
+export interface PosMenuItem {
+  id: string;
+  name: string;
+  category_id?: string;
+  description?: string;
+  sale_price: number;
+  cost_price?: number;
+  image_url?: string;
+  is_active?: boolean;
+  branch_id?: string;
+  in_stock?: boolean;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export interface Order {
   id: string;
   customer_id: string;
@@ -1632,6 +1647,19 @@ export const getBranches = async (): Promise<{ data: Branch[], error: any }> => 
       .select('*')
       .order('branch_name', { ascending: true })
 
+    return { data: data || [], error }
+  } catch (error) {
+    return { data: [], error }
+  }
+}
+
+export const getPosMenuItems = async (branchId?: string): Promise<{ data: PosMenuItem[], error: any }> => {
+  try {
+    let query = supabase.from('pos_menu_items').select('*').eq('is_active', true)
+    if (branchId) {
+      query = query.or(`branch_id.eq.${branchId},branch_id.is.null`)
+    }
+    const { data, error } = await query.order('name', { ascending: true })
     return { data: data || [], error }
   } catch (error) {
     return { data: [], error }

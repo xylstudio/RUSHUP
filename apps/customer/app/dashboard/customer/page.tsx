@@ -57,6 +57,7 @@ import CustomerProfile from '@/components/customer/CustomerProfile'
 import CustomerHouses from '@/components/customer/CustomerHouses'
 import CustomerDocuments from '@/components/customer/CustomerDocuments'
 import PropertyPortfolioTable from '@/components/customer/PropertyPortfolioTable'
+import TripnectApp from '../../../components/tripnect/App'
 import { useAuth } from '@/lib/AuthContext'
 import { useI18n } from '@/lib/I18nContext'
 import {
@@ -82,7 +83,7 @@ import {
   getDocuments,
   getMarketplacePlants,
   getOrdersWithDetails,
-  getServices,
+  getPosMenuItems,
   supabase,
   type Document,
   type House,
@@ -355,13 +356,13 @@ const DASHBOARD_COPY = {
     step03: 'ขั้นที่ 03',
     step04: 'ขั้นที่ 04',
     chooseService: 'เลือกบริการ',
-    selectProperty: 'เลือกอสังหาริมทรัพย์',
+    selectProperty: 'เลือกที่อยู่จัดส่ง',
     pricingPeriod: 'ราคาและระยะเวลา',
     paymentConfirm: 'ชำระเงิน & ยืนยัน',
     back: 'ย้อนกลับ',
     searchPlaceholder: 'ค้นหาบริการ...',
     startsAt: 'เริ่มต้นที่',
-    addFirstHome: 'เพิ่มที่พักแรกของคุณ',
+    addFirstHome: 'เพิ่มที่อยู่จัดส่งแรกของคุณ',
     billingMode: 'รูปแบบการชำระ',
     gardenArea: 'ขนาดสวน',
     matchedPackages: 'แพ็คเกจที่แนะนำ',
@@ -371,7 +372,7 @@ const DASHBOARD_COPY = {
     confirmingText: 'กำลังยืนยัน...',
     proceedPayment: 'ดำเนินการชำระเงิน',
     secureCheckout: 'ชำระเงินอย่างปลอดภัยโดย Xylem Landscape',
-    propertyLabel: 'อสังหาริมทรัพย์',
+    propertyLabel: 'ที่อยู่จัดส่ง',
     planLabel: 'แพ็คเกจ',
     billingLabel: 'รูปแบบ',
     totalLabel: 'ยอดรวม',
@@ -389,11 +390,11 @@ const DASHBOARD_COPY = {
     rareCollection: 'คอลเลกชันหายาก',
     browseAll: 'ดูทั้งหมด',
     allCat: 'ทั้งหมด',
-    treesCat: 'ไม้ยืนต้น',
-    shrubsCat: 'ไม้พุ่ม',
-    potsCat: 'กระถาง',
-    soilCat: 'ดินและปุ๋ย',
-    indoorCat: 'ไม้ในร่ม',
+    treesCat: 'อาหารคาว',
+    shrubsCat: 'อาหารว่าง',
+    potsCat: 'เครื่องดื่ม',
+    soilCat: 'ของหวาน',
+    indoorCat: 'อาหารเพื่อสุขภาพ',
     addToCart: 'สั่งซื้อสินค้า',
     stockAvailable: 'มีสินค้าพร้อมส่ง',
     stockOut: 'สินค้าหมดชั่วคราว',
@@ -414,8 +415,8 @@ const DASHBOARD_COPY = {
     updatesTitle: 'อัปเดต',
     allCaughtUp: 'ไม่มีการแจ้งเตือนใหม่',
     notificationLabel: 'การแจ้งเตือน',
-    estatesTitle: 'ที่พัก',
-    homes: 'บ้านของคุณ',
+    estatesTitle: 'สถานที่จัดส่ง',
+    homes: 'สถานที่จัดส่ง',
     oneTime: 'ครั้งเดียว',
     monthly: 'รายเดือน',
     yearly: 'รายปี',
@@ -429,19 +430,19 @@ const DASHBOARD_COPY = {
     yearlyOffer: 'โปรโมชั่นรายปี จ่ายเพียง 10 เดือน!',
     greeting: 'สวัสดี',
     title: 'Customer Dashboard',
-    subtitle: 'ภาพรวมงานดูแลสวน บ้าน เอกสาร และสินค้าในที่เดียว',
+    subtitle: 'สั่งอาหารมื้ออร่อย ร้านโปรด และโปรโมชั่นสุดคุ้มในที่เดียว',
     refreshError: 'โหลดข้อมูลบางส่วนไม่สำเร็จ',
     overview: 'ภาพรวม',
-    orders: 'งาน',
-    reports: 'รายงาน',
-    documents: 'เอกสาร',
-    marketplace: 'ร้านต้นไม้',
+    orders: 'คำสั่งซื้อ',
+    reports: 'สถานะจัดส่ง',
+    documents: 'ใบเสร็จ',
+    marketplace: 'โปรโมชั่น',
     profile: 'โปรไฟล์',
-    yourHomes: 'บ้านของคุณ',
-    activeOrders: 'งานที่กำลังเดินอยู่',
-    completedOrders: 'งานที่เสร็จแล้ว',
-    nextVisit: 'นัดถัดไป',
-    recentOrders: 'งานล่าสุด',
+    yourHomes: 'ที่อยู่จัดส่ง',
+    activeOrders: 'ออเดอร์กำลังจัดส่ง',
+    completedOrders: 'จัดส่งสำเร็จ',
+    nextVisit: 'คิวถัดไป',
+    recentOrders: 'ออเดอร์ล่าสุด',
     latestReports: 'รายงานล่าสุด',
     reportOverview: 'ดูรายงานล่าสุดก่อน แล้วค่อยเปิดรายละเอียดเต็มในครั้งเดียว',
     previousReports: 'รายงานก่อนหน้า',
@@ -462,17 +463,17 @@ const DASHBOARD_COPY = {
     reportNoData: 'ไม่พบข้อมูลรายงาน',
     reportScheduledNote: 'หมายเหตุนัดถัดไป',
     reportNextVisitLabel: 'นัดดูแลครั้งถัดไป',
-    docCenter: 'เอกสารล่าสุด',
-    featuredPlants: 'แนะนำจาก marketplace',
-    featuredServices: 'บริการที่พร้อมจอง',
+    docCenter: 'ใบเสร็จล่าสุด',
+    featuredPlants: 'ดีลเด็ดวันนี้',
+    featuredServices: 'ร้านอาหารยอดฮิต',
     viewAll: 'ดูทั้งหมด',
     openDetails: 'เปิดรายละเอียด',
-    openMarketplace: 'เปิดร้านต้นไม้',
+    openMarketplace: 'ดูโปรโมชั่นทั้งหมด',
     goServices: 'ไปหน้าจองบริการ',
     goReports: 'ดูรายงานทั้งหมด',
     goDocs: 'ดูเอกสารทั้งหมด',
     loading: 'กำลังโหลดแดชบอร์ด...',
-    noHomes: 'ยังไม่มีบ้านในระบบ',
+    noHomes: 'ยังไม่มีที่อยู่จัดส่ง',
     noOrders: 'ยังไม่มีคำสั่งซื้อ',
     noReports: 'ยังไม่มีรายงาน',
     noDocuments: 'ยังไม่มีเอกสาร',
@@ -484,9 +485,9 @@ const DASHBOARD_COPY = {
     uploaded: 'อัปโหลดเมื่อ',
     serviceArea: 'พื้นที่บริการ',
     from: 'เริ่มต้น',
-    browseHomes: 'จัดการบ้าน',
-    addHome: 'เพิ่มบ้าน',
-    addHomeHint: 'สร้างโปรไฟล์บ้านใหม่เพื่อจองงาน วัดพื้นที่ และติดตามเอกสารได้ครบในที่เดียว',
+    browseHomes: 'จัดการที่อยู่จัดส่ง',
+    addHome: 'เพิ่มที่อยู่',
+    addHomeHint: 'บันทึกที่อยู่จัดส่งใหม่เพื่อความสะดวกในการสั่งอาหารครั้งต่อไป',
     schedule: 'นัดหมาย',
     totalDocs: 'เอกสารทั้งหมด',
     summaryHealthy: 'สถานะล่าสุด',
@@ -501,14 +502,14 @@ const DASHBOARD_COPY = {
     estates: 'สถานที่',
     archive: 'คลังข้อมูล',
     summary: 'สรุปข้อมูล',
-    homePriority: 'สิ่งสำคัญตอนนี้',
-    homePriorityDetail: 'เปิดหน้าแล้วควรเห็นงานที่กำลังเดินอยู่ นัดถัดไป และรายงานล่าสุดได้ทันที',
-    activePropertyLabel: 'บ้านที่กำลังโฟกัส',
-    noUpcomingVisit: 'ยังไม่มีนัดถัดไป',
+    homePriority: 'ออเดอร์ปัจจุบัน',
+    homePriorityDetail: 'เปิดหน้าแล้วควรเห็นออเดอร์ที่กำลังจัดส่ง และสถานะล่าสุดได้ทันที',
+    activePropertyLabel: 'จัดส่งไปที่',
+    noUpcomingVisit: 'ยังไม่มีออเดอร์',
     nextStep: 'สิ่งที่ควรทำต่อ',
-    openCurrentOrder: 'เปิดงานปัจจุบัน',
+    openCurrentOrder: 'ดูสถานะออเดอร์',
     reviewLatestUpdate: 'ดูอัปเดตล่าสุด',
-    startFromProperty: 'เริ่มจากเพิ่มบ้าน',
+    startFromProperty: 'เริ่มจากเพิ่มที่อยู่',
     secondaryBrowse: 'ดูต่อ',
     activeWorkSnapshot: 'งานที่ต้องดูต่อ',
     primaryFocus: 'โครงการหลัก',
@@ -538,24 +539,24 @@ const DASHBOARD_COPY = {
     serviceMaintenanceDesc: 'เรากำลังพัฒนาระบบเพื่อเพิ่มประสิทธิภาพการจอง คาดว่าจะเปิดให้บริการอีกครั้งเร็วๆ นี้ ขออภัยในความไม่สะดวกค่ะ',
     marketplaceMaintenanceTitle: 'ร้านค้ากำลังเตรียมเปิดตัว',
     marketplaceMaintenanceDesc: 'สินค้าใหม่กำลังเดินทางมาถึงร้านค้าของเรา เร็วๆ นี้คุณจะสามารถสั่งซื้อได้ตามปกติค่ะ',
-    unnamedHouse: 'บ้านที่ยังไม่ได้ตั้งชื่อ',
+    unnamedHouse: 'ที่อยู่ที่ยังไม่ได้ระบุชื่อ',
     noAddressData: 'ไม่มีข้อมูลที่อยู่',
-    noHouseData: 'ไม่มีข้อมูลบ้าน',
-    pleaseAddHouseData: 'กรุณาเพิ่มข้อมูลบ้าน',
+    noHouseData: 'ไม่มีข้อมูลที่อยู่',
+    pleaseAddHouseData: 'กรุณาเพิ่มข้อมูลที่อยู่',
     recently: 'เมื่อเร็วๆ นี้',
     managedProjects: 'โครงการที่ดูแล',
     operation: 'การปฏิบัติงาน',
     sessions: 'ครั้ง',
     awaitingAppointment: 'รอนัดหมาย',
     activityLog: 'บันทึกกิจกรรม',
-    historicalRecords: 'ประวัติย้อนหลัง',
+    historicalRecords: 'ประวัติการสั่งอาหาร',
     noRecentActivity: 'ไม่มีกิจกรรมล่าสุด',
-    selectProject: 'เลือกโครงการ',
-    projectStatus: 'สถานะโครงการ',
-    activeOperation: 'ดำเนินการอยู่',
-    nextScheduledDate: 'หมายกำหนดการถัดไป',
-    serviceCatalog: 'สารบัญ / บริการ',
-    serviceDescPlaceholder: 'บริการดูแลและจัดสวนโดยทีมงานมืออาชีพ',
+    selectProject: 'เลือกสถานที่จัดส่ง',
+    projectStatus: 'สถานะการส่ง',
+    activeOperation: 'กำลังเตรียมอาหาร',
+    nextScheduledDate: 'เวลาจัดส่งโดยประมาณ',
+    serviceCatalog: 'ร้านอาหารแนะนำ',
+    serviceDescPlaceholder: 'อาหารอร่อยส่งตรงถึงบ้านคุณ',
     siteAssessment: 'ประเมินหน้างาน',
     serviceInfo: 'ข้อมูลบริการ',
     bookAppointment: 'จองวันนัดหมาย',
@@ -573,8 +574,8 @@ const DASHBOARD_COPY = {
     urgentPriority: 'เร่งด่วนพิเศษ',
     searchPlaceholder: 'ค้นหาบริการ...',
     confirmingText: 'กำลังยืนยัน...',
-    selectService: 'เลือกบริการ',
-    selectProperty: 'เลือกบ้าน',
+    selectService: 'เลือกร้านอาหาร',
+    selectProperty: 'เลือกที่อยู่จัดส่ง',
     matchedPackages: 'แพ็กเกจที่แนะนำ',
     priority: 'ระดับความสำคัญ',
     continuePayment: 'ดำเนินการต่อ',
@@ -593,8 +594,8 @@ const DASHBOARD_COPY = {
     accountSettings: 'การตั้งค่าบัญชี',
     personalInfo: 'ข้อมูลส่วนตัว',
     personalInfoDesc: 'แก้ไขชื่อ และข้อมูลติดต่อของคุณ',
-    myEstates: 'สถานที่ของฉัน',
-    myEstatesDesc: 'จัดการบ้าน และที่อยู่รับบริการ',
+    myEstates: 'ที่อยู่ของฉัน',
+    myEstatesDesc: 'จัดการที่อยู่สำหรับการจัดส่ง',
     generalSettings: 'การตั้งค่าทั่วไป',
     lineNotificationTitle: 'การแจ้งเตือนผ่าน LINE',
     lineConnected: 'เชื่อมต่อแล้ว',
@@ -618,7 +619,7 @@ const DASHBOARD_COPY = {
     savingChanges: 'กำลังบันทึก...',
     serviceConnected: 'เชื่อมต่อบริการแล้ว',
     notConnected: 'ยังไม่ได้เชื่อมต่อ',
-    lineConnectDesc: 'เชื่อมต่อเพื่อรับการแจ้งเตือนสถานะงานดูแลสวนแบบเรียลไทม์ผ่าน LINE Official Account ของเรา',
+    lineConnectDesc: 'เชื่อมต่อเพื่อรับการแจ้งเตือนสถานะการจัดส่งแบบเรียลไทม์ผ่าน LINE Official Account ของเรา',
     updateConnection: 'อัปเดตการเชื่อมต่อ',
     connectLineNow: 'เชื่อมต่อ LINE ทันที',
     selectLanguageDesc: 'เลือกภาษาที่ใช้ในระบบ',
@@ -632,9 +633,9 @@ const DASHBOARD_COPY = {
     completedOrder: 'เสร็จสมบูรณ์',
     newUpdate: 'อัปเดตใหม่',
     noNewNotifications: 'ไม่มีการแจ้งเตือนใหม่',
-    serviceBullet1: '• ประเมินพื้นที่และให้คำปรึกษาฟรี',
+    serviceBullet1: '• อาหารปรุงสดใหม่ ส่งตรงถึงหน้าบ้าน',
     serviceBullet2: '• เลือกใช้วัสดุออร์แกนิก ปลอดภัยต่อผู้อยู่อาศัย',
-    serviceBullet3: '• มีระบบติดตามผลหลังการให้บริการ',
+    serviceBullet3: '• ระบบติดตามสถานะการจัดส่งแบบเรียลไทม์',
   },
   en: {
     activityLog: 'Activity Log',
@@ -705,11 +706,11 @@ const DASHBOARD_COPY = {
     rareCollection: 'The Rare Collection',
     browseAll: 'Browse All',
     allCat: 'All',
-    treesCat: 'Trees',
-    shrubsCat: 'Shrubs',
-    potsCat: 'Pots',
-    soilCat: 'Soil & Feed',
-    indoorCat: 'Indoor',
+    treesCat: 'Main Course',
+    shrubsCat: 'Snacks',
+    potsCat: 'Drinks',
+    soilCat: 'Desserts',
+    indoorCat: 'Healthy',
     addToCart: 'Add to Cart',
     stockAvailable: 'In Stock',
     stockOut: 'Out of Stock',
@@ -738,15 +739,15 @@ const DASHBOARD_COPY = {
     maintenanceCat: 'Maintenance',
     greeting: 'Hello',
     title: 'Customer Dashboard',
-    subtitle: 'A single place for garden jobs, properties, documents, and plants.',
+    subtitle: 'A single place for food orders, restaurants, receipts, and promotions.',
     refreshError: 'Some dashboard data could not be loaded',
     overview: 'Overview',
     orders: 'Orders',
-    reports: 'Reports',
-    documents: 'Documents',
-    marketplace: 'Marketplace',
+    reports: 'Tracking',
+    documents: 'Receipts',
+    marketplace: 'Promos',
     profile: 'Profile',
-    yourHomes: 'Your Properties',
+    yourHomes: 'Delivery Addresses',
     activeOrders: 'Active jobs',
     completedOrders: 'Completed jobs',
     nextVisit: 'Next visit',
@@ -1584,7 +1585,7 @@ export default function CustomerDashboardPage() {
         queryData(getCustomerHouses(profile.id)),
         queryData(getDocuments({ user_id: profile.id })),
         queryData(getMarketplacePlants()),
-        queryData(getServices()),
+        queryData(getPosMenuItems()),
         fetchAuthorizedJson<{ success?: boolean; data?: OrderWithDetails[] }>(`/api/customer/orders?_t=${Date.now()}`),
         // We will fetch reports separately to be house-specific
         fetchAuthorizedJson<{ progress?: Record<string, ProgressItem> }>(`/api/customer/orders/progress?_t=${Date.now()}`),
@@ -2436,286 +2437,6 @@ export default function CustomerDashboardPage() {
   }
 
   return (
-    <div id="customer-mobile-root" className="fixed inset-0 z-0 bg-black flex justify-center overflow-hidden">
-
-      <motion.section
-        className={`h-full w-full relative overflow-x-hidden no-scrollbar scroll-smooth bg-[var(--customer-bg)] ${activeTab === 'orders' ? 'overflow-y-hidden' : 'overflow-y-auto'}`}
-        animate={{
-          scale: activeSheet !== null ? 0.93 : 1,
-          y: activeSheet !== null ? -10 : 0,
-          borderRadius: activeSheet !== null ? '40px' : '0px',
-          opacity: activeSheet !== null ? 0.6 : 1,
-        }}
-        transition={{ type: 'spring', damping: 25, stiffness: 200, mass: 0.8 }}
-      >
-        <div
-          className="dashboard-content-root relative min-h-full w-full flex flex-col mx-auto max-w-[1600px] overflow-hidden"
-        >
-          <div className="flex-1 relative pb-40">
-            <AnimatePresence initial={true} mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="w-full min-h-full"
-              >
-                {activeTab === 'overview' && (
-                  <CustomerOverview
-                    {...{
-                      displayName, shortName, activeHouse, activeTab, setActiveTab, primaryAction,
-                      overviewActiveOrders, nextVisitItems, rotatingVisitIndex, isNextVisitVisible,
-                      currentNextVisit, progressMap, getCustomerServiceFlow, locale, copy,
-                      overviewReports, 
-                      onReportClick: (report: any) => {
-                        const params = new URLSearchParams(searchParams.toString())
-                        params.set('reportId', report.id)
-                        router.push(`/dashboard/customer?${params.toString()}`, { scroll: false })
-                      },
-                      setActiveSheet, overviewStats,
-                      featuredServices, services, handleServiceSelectForBooking, featuredPlants,
-                      setSelectedPlant, isThaiLocale, localeLabelClass, localeCapsClass,
-                      localeMicroLabelClass, localeButtonClass, latestOrder,
-                      notifications,
-                      features,
-                      houses,
-                      documents, activeMaintenancePlans, setActiveHouseId
-                    }}
-                  />
-                )}
-
-                {activeTab === 'orders' && (
-                  <div className="h-full w-full pb-20">
-                    {features.service_booking_enabled ? (
-                      <CustomerServices
-                        {...{
-                          bookingStep, setBookingStep, bookingSearch, setBookingSearch, services,
-                          handleServiceSelectForBooking, copy, houses, handleHouseSelectForBooking,
-                          bookingHouseDraft, setBookingHouseDraft, bookingHouseError, isCreatingBookingHouse,
-                          handleCreateHouseForBooking, showInlineHouseComposer, setShowInlineHouseComposer,
-                          availableBookingPeriods, bookingPeriod, setBookingPeriod, bookingArea,
-                          setBookingArea, bookingPriority, setBookingPriority, bookingPricingSummary,
-                          selectedTemplateForBooking, setSelectedTemplateForBooking, calculatePricingSummary,
-                          selectedServiceForBooking, bookingPaymentMethod, setBookingPaymentMethod,
-                          bookingNotes, setBookingNotes, handleConfirmBooking, isSubmittingBooking,
-                          error, locale, isThaiLocale, localeLabelClass, localeMicroLabelClass,
-                          localeButtonClass, bookingHouseCopy
-                        }}
-                      />
-                    ) : (
-                      <div className="pt-20 px-6 flex flex-col items-center justify-center min-h-[60vh] text-center max-w-sm mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <div className="w-24 h-24 bg-white border border-[#F0F0F0] flex items-center justify-center mb-10">
-                          <Wrench size={32} className="text-[#111111] opacity-20" />
-                        </div>
-                        <h3 className="text-4xl font-serif-thai font-light text-[#111111] mb-6 uppercase tracking-tighter">{copy.serviceMaintenanceTitle}</h3>
-                        <p className="text-xs font-bold text-[#A3A3A3] leading-relaxed uppercase tracking-widest mb-12">"{copy.serviceMaintenanceDesc}"</p>
-                        <button
-                          onClick={() => setActiveTab('overview')}
-                          className="px-12 py-5 bg-[#111111] text-white text-[9px] font-bold uppercase tracking-[0.5em] hover:bg-black transition-all"
-                        >
-                          Back to Overview
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {activeTab === 'reports' && (
-                  <div className="w-full min-h-screen pb-24 bg-[#FAFAFA]">
-                    {/* HEADER */}
-                    <header className="border-b border-[#E5E5E5] px-6 py-12 md:py-16 bg-[#FAFAFA]">
-                      <div className="max-w-[1400px] mx-auto">
-                        <div className="flex items-center gap-3 mb-2">
-                           <div className="w-1.5 h-1.5 bg-[#1A1A1A] rounded-full" />
-                           <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-[#737373]">INTELLIGENCE HUB</p>
-                        </div>
-                        <h1 className="text-[28px] md:text-[32px] font-light text-[#1A1A1A] leading-tight tracking-tight mb-4">
-                          {isThaiLocale ? 'รายงานประจำเดือน.' : 'Monthly Reports.'}
-                        </h1>
-                        <p className="text-[12px] text-[#737373] max-w-xl leading-relaxed">
-                          {isThaiLocale 
-                            ? 'ติดตามสถานะการดูแลสวน ประวัติการเข้าบริการ และข้อเสนอแนะจากผู้เชี่ยวชาญ'
-                            : 'Track your garden maintenance status, service history, and expert recommendations.'}
-                        </p>
-                      </div>
-                    </header>
-
-                    <div className="max-w-[1400px] mx-auto px-6 py-12">
-                      
-                      {/* STATS + FILTER */}
-                      <div className="mb-12">
-                        <div className="grid grid-cols-2 md:flex md:flex-wrap gap-4 mb-8">
-                           <div className="bg-white text-[#1A1A1A] p-6 border border-[#E5E5E5] flex-1 min-w-[150px]">
-                              <div className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#737373] mb-2">{isThaiLocale ? 'สถานที่' : 'PROPERTIES'}</div>
-                              <div className="text-3xl font-light tracking-tight">{houses.length}</div>
-                           </div>
-                           <div className="bg-[#FAFAFA] text-[#1A1A1A] p-6 border border-[#E5E5E5] flex-1 min-w-[150px]">
-                              <div className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#737373] mb-2">{isThaiLocale ? 'รายงานรวม' : 'TOTAL REPORTS'}</div>
-                              <div className="text-3xl font-light tracking-tight">{reports.length}</div>
-                           </div>
-                        </div>
-
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[#E5E5E5]">
-                           <h3 className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#1A1A1A] shrink-0">{isThaiLocale ? 'กรองตามสถานที่' : 'FILTER BY PROPERTY'}</h3>
-                           <div className="flex overflow-x-auto no-scrollbar gap-2 pb-2 md:pb-0 w-full md:w-auto">
-                              <button 
-                                onClick={() => setActiveFilterHouseId(null)}
-                                className={`shrink-0 px-5 py-2.5 text-[10px] font-bold uppercase tracking-widest border transition-all ${!activeFilterHouseId ? 'border-[#1A1A1A] bg-white text-[#1A1A1A] shadow-[4px_4px_0px_0px_rgba(26,26,26,1)]' : 'border-[#E5E5E5] bg-white text-[#737373] hover:border-[#1A1A1A] hover:text-[#1A1A1A] hover:shadow-[4px_4px_0px_0px_rgba(26,26,26,1)]'}`}
-                              >
-                                 {isThaiLocale ? 'ทั้งหมด' : 'ALL'}
-                              </button>
-                              {houses.map(house => (
-                                <button 
-                                  key={house.id}
-                                  onClick={() => setActiveFilterHouseId(house.id)}
-                                  className={`shrink-0 px-5 py-2.5 text-[10px] font-bold uppercase tracking-widest border transition-all ${activeFilterHouseId === house.id ? 'border-[#1A1A1A] bg-white text-[#1A1A1A] shadow-[4px_4px_0px_0px_rgba(26,26,26,1)]' : 'border-[#E5E5E5] bg-white text-[#737373] hover:border-[#1A1A1A] hover:text-[#1A1A1A] hover:shadow-[4px_4px_0px_0px_rgba(26,26,26,1)]'}`}
-                                >
-                                  {house.name}
-                                </button>
-                              ))}
-                           </div>
-                        </div>
-                      </div>
-
-                      {/* CALENDAR */}
-                      <section className="mb-12">
-                        <GardenCalendar 
-                          orders={orders.filter(o => {
-                            if (!o.scheduled_date || !['pending', 'confirmed', 'in_progress'].includes(o.status || '')) return false
-                            if (activeFilterHouseId && o.house_id !== activeFilterHouseId && o.houses?.house_code !== activeFilterHouseId) return false
-                            return true
-                          })}
-                          reports={reports.filter(r => {
-                            if (activeFilterHouseId && r.houseId !== activeFilterHouseId && r.houseCode !== activeFilterHouseId) return false
-                            return true
-                          })}
-                          locale={locale as any}
-                          showHouseName={true}
-                          onOpenReport={(reportId) => {
-                            const params = new URLSearchParams(searchParams.toString())
-                            params.set('reportId', reportId)
-                            router.push(`/dashboard/customer?${params.toString()}`, { scroll: false })
-                          }}
-                        />
-                      </section>
-
-                      {/* ALERTS */}
-                      {portfolioAlerts.length > 0 && (
-                        <div className="mb-12 border border-[#E5E5E5] bg-white p-6 relative">
-                          <div className="flex items-center gap-3 mb-5">
-                            <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
-                            <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#1A1A1A]">NEEDS ATTENTION</span>
-                          </div>
-                          <div className="grid gap-4">
-                            {portfolioAlerts.map((alert, idx) => (
-                              <div key={idx} className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-3 border-b border-[#E5E5E5] last:border-0 last:pb-0">
-                                <div className="flex items-start gap-4">
-                                  <AlertCircle size={18} className="text-red-500 shrink-0 mt-0.5" strokeWidth={1.5} />
-                                  <div>
-                                    <h4 className="text-[11px] font-bold uppercase tracking-widest text-[#1A1A1A] mb-1">{alert.houseName}</h4>
-                                    <p className="text-[13px] text-[#737373]">{alert.message}</p>
-                                  </div>
-                                </div>
-                                <span className="text-[9px] font-bold uppercase tracking-widest text-[#737373] whitespace-nowrap">
-                                  {(() => {
-                                    const d = new Date(alert.date)
-                                    return !isNaN(d.getTime()) ? format(d, 'd MMM yyyy', { locale: dfnsLocale }) : '-'
-                                  })()}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-
-
-
-                    {/* Historical Archive Feed */}
-                    <section className="pb-24 border-t border-[#F0EFEB] pt-8">
-                      <CustomerReportFeed
-                        reports={reports.slice(0, 20)}
-                        emptyMessage={copy.noReports}
-                        showHouseContext={true}
-                        showOrderContext={true}
-                        minimal={true}
-                        onClick={(report) => {
-                          const params = new URLSearchParams(searchParams.toString())
-                          params.set('reportId', report.id)
-                          router.push(`/dashboard/customer?${params.toString()}`, { scroll: false })
-                        }}
-                      />
-                    </section>
-                  </div>
-                </div>
-                )}
-
-                {activeTab === 'marketplace' && (
-                  <div className="pt-20 px-6 md:px-12">
-                    {features.marketplace_enabled ? (
-                      <CustomerMarketplace
-                        {...{
-                          categories, shopCategory, setShopCategory, filteredPlants,
-                          setSelectedPlant, setActiveSheet, copy, getSafePlantImage
-                        }}
-                      />
-                    ) : (
-                      <div className="flex flex-col items-center justify-center min-h-[60vh] text-center max-w-sm mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <div className="w-24 h-24 bg-white border border-[#F0F0F0] flex items-center justify-center mb-10">
-                          <ShoppingBag size={32} className="text-[#111111] opacity-20" />
-                        </div>
-                        <h3 className="text-4xl font-serif-thai font-light text-[#111111] mb-6 uppercase tracking-tighter">{copy.marketplaceMaintenanceTitle || 'Marketplace'}</h3>
-                        <p className="text-xs font-bold text-[#A3A3A3] leading-relaxed uppercase tracking-widest mb-12">"{copy.marketplaceMaintenanceDesc || 'Our boutique selection is currently being updated.'}"</p>
-                        <button
-                          onClick={() => setActiveTab('overview')}
-                          className="px-12 py-5 bg-[#111111] text-white text-[9px] font-bold uppercase tracking-[0.5em] hover:bg-black transition-all"
-                        >
-                          Back to Overview
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {activeTab === 'profile' && (
-                  <div className="pt-20 px-6 md:px-12">
-                    <CustomerProfile
-                      profile={profile}
-                      copy={copy}
-                      supabase={supabase}
-                      WebsiteLanguageSettings={WebsiteLanguageSettings}
-                    />
-                  </div>
-                )}
-                {activeTab === 'houses' && (
-                  <div className="pt-20 px-6 md:px-12">
-                    <CustomerHouses
-                      houses={houses}
-                      copy={copy}
-                      activeHouse={activeHouse}
-                      setActiveHouseId={setActiveHouseId}
-                    />
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
-      </motion.section>
-
-      <CustomerPremiumNav
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        copy={copy}
-        features={features}
-      />
-
-      {/* Render popups OUTSIDE the scaling container */}
-      {renderDetailSheets()}
-
-      {showOnboardingTour && (
-        <CustomerOnboardingTour onComplete={() => setShowOnboardingTour(false)} />
-      )}
-    </div>
+    <TripnectApp services={services} orders={orders} profile={profile} />
   )
 }

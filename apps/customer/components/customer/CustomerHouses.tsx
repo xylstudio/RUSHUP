@@ -109,7 +109,7 @@ const CustomerHouses: React.FC<CustomerHousesProps> = ({
                     </h3>
                     <div className="mt-2.5 flex items-center gap-3">
                       <p className={`text-[10px] md:text-xs font-bold uppercase tracking-widest ${activeHouse?.id === h.id ? 'text-[#A3E6B2]' : 'text-[#A3A3A3]'}`}>
-                        {h.area_size ? `${h.area_size} ${copy.sqmSpace || 'ตร.ม.'}` : '—'}
+                        {/* Hidden Area Size */}
                       </p>
                       <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-widest ${
                         activeHouse?.id === h.id 

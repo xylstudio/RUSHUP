@@ -1,5 +1,5 @@
 {
-  "name": "xylem-landscape",
+  "name": "rushup-customer",
   "version": 2,
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
