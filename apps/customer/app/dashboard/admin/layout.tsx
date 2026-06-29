@@ -81,7 +81,7 @@ export default function AdminLayout({
   return (
     <ProtectedRoute allowedRoles={['admin']}>
       <SidebarContext.Provider value={{ sidebarLocked, sidebarOpen }}>
-        <div className="xyl-shell xyl-page flex min-h-screen w-full flex-col overflow-x-hidden">
+        <div className="xyl-shell xyl-page flex min-h-screen w-full flex-col overflow-x-hidden bg-[#FAFAF8]">
           {!isDocumentBuilderPage && (
             <>
               <TopNavBar 

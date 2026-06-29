@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import StatCard from '../../../components/StatCard';
-import { UsersIcon, BriefcaseIcon, Cog6ToothIcon, CurrencyDollarIcon, CheckCircleIcon, CalendarIcon, BellIcon } from '@heroicons/react/24/outline';
+import { UsersIcon, BriefcaseIcon, Cog6ToothIcon, CurrencyDollarIcon, CheckCircleIcon, CalendarIcon, BellIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { supabase } from '../../../lib/supabaseClient';
 import { useI18n } from '@/lib/I18nContext';
 import { appCopy, pickLocalizedText } from '@/lib/appLocale';
@@ -119,128 +119,213 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-6 px-2 md:px-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-1">{pickLocalizedText(locale, appCopy.adminDashboard.title)}</h1>
-        <p className="text-gray-500 text-lg">{pickLocalizedText(locale, appCopy.adminDashboard.subtitle)}</p>
+    <div className="max-w-7xl mx-auto py-8 px-4 md:px-8">
+      {/* Header Section */}
+      <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div>
+          <h1 className="text-4xl font-extrabold tracking-tight text-stone-900 mb-2">{pickLocalizedText(locale, appCopy.adminDashboard.title)}</h1>
+          <p className="text-stone-500 text-lg font-medium">{pickLocalizedText(locale, appCopy.adminDashboard.subtitle)}</p>
+        </div>
+        <div className="flex items-center gap-3">
+            <span className="inline-flex h-3 w-3 rounded-full bg-green-500 animate-pulse"></span>
+            <span className="text-sm font-bold text-stone-600 uppercase tracking-widest">System Online</span>
+        </div>
       </div>
-      {error && <div className="text-red-600 mb-4">{error}</div>}
 
-      <div className="flex overflow-x-auto scrollbar-hide gap-6 mb-8 flex-nowrap pb-2 -mx-2 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 md:gap-6 md:overflow-visible md:flex-none md:mx-0">
-        <div className="animate-slide-in-up stagger-1">
+      {error && (
+        <div className="bg-red-50 text-red-600 border border-red-200 rounded-2xl p-4 mb-8 font-medium">
+          {error}
+        </div>
+      )}
+
+      {/* KPI Stats - Horizontal Scroll on Mobile, Grid on Desktop */}
+      <div className="flex overflow-x-auto scrollbar-hide gap-6 mb-10 flex-nowrap pb-4 -mx-4 px-4 md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 md:gap-6 md:overflow-visible md:flex-none md:px-0 md:mx-0">
+        <div className="animate-slide-in-up stagger-1 min-w-[240px] md:min-w-0">
           <StatCard icon={<CurrencyDollarIcon className="w-7 h-7" />} value={loading ? '...' : formatCurrencyByLocale(revenue ?? 0, locale)} label={pickLocalizedText(locale, appCopy.adminDashboard.revenueMonth)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.lastUpdated)} loading={loading} />
         </div>
-        <div className="animate-slide-in-up stagger-2">
+        <div className="animate-slide-in-up stagger-2 min-w-[240px] md:min-w-0">
           <StatCard icon={<BriefcaseIcon className="w-7 h-7" />} value={loading ? '...' : activeJobs ?? 0} label={pickLocalizedText(locale, appCopy.adminDashboard.activeJobs)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.unfinishedJobs)} loading={loading} />
         </div>
-        <div className="animate-slide-in-up stagger-3">
+        <div className="animate-slide-in-up stagger-3 min-w-[240px] md:min-w-0">
           <StatCard icon={<CheckCircleIcon className="w-7 h-7" />} value={loading ? '...' : completedJobs ?? 0} label={pickLocalizedText(locale, appCopy.adminDashboard.completedMonth)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.completedAll)} loading={loading} />
         </div>
-        <div className="animate-slide-in-up stagger-4">
+        <div className="animate-slide-in-up stagger-4 min-w-[240px] md:min-w-0">
           <StatCard icon={<UsersIcon className="w-7 h-7" />} value={loading ? '...' : customers ?? 0} label={pickLocalizedText(locale, appCopy.adminDashboard.totalCustomers)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.newCustomersMonth)} loading={loading} />
         </div>
-        <div className="animate-slide-in-up stagger-5">
-          <StatCard icon={<BriefcaseIcon className="w-7 h-7" />} value={loading ? '...' : staff ?? 0} label={pickLocalizedText(locale, appCopy.adminDashboard.totalStaff)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.staffOnline)} loading={loading} />
+        <div className="animate-slide-in-up stagger-5 min-w-[240px] md:min-w-0">
+          <StatCard icon={<UsersIcon className="w-7 h-7" />} value={loading ? '...' : staff ?? 0} label={pickLocalizedText(locale, appCopy.adminDashboard.totalStaff)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.staffOnline)} loading={loading} />
         </div>
-        <div className="animate-slide-in-up stagger-6">
+        <div className="animate-slide-in-up stagger-6 min-w-[240px] md:min-w-0">
           <StatCard icon={<Cog6ToothIcon className="w-7 h-7" />} value={loading ? '...' : services ?? 0} label={pickLocalizedText(locale, appCopy.adminDashboard.totalServices)} subtext={pickLocalizedText(locale, appCopy.adminDashboard.allServiceTypes)} loading={loading} />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <div className="col-span-2 bg-white rounded-xl p-6 min-h-[220px] flex flex-col">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">{pickLocalizedText(locale, appCopy.adminDashboard.revenueOverview)}</h2>
-          <div className="flex-1 flex items-center justify-center text-gray-400">{pickLocalizedText(locale, appCopy.adminDashboard.revenuePlaceholder)}</div>
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+        
+        {/* Revenue Overview Chart Area */}
+        <div className="col-span-1 lg:col-span-2 bg-white/80 backdrop-blur-xl rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 p-8 min-h-[300px] flex flex-col relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-orange-400/10 to-orange-500/5 rounded-full blur-3xl pointer-events-none -mr-32 -mt-32 transition-transform duration-700 group-hover:scale-150"></div>
+          
+          <div className="flex items-center justify-between mb-8 relative z-10">
+              <h2 className="text-2xl font-bold text-stone-900 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600">
+                    <CurrencyDollarIcon className="h-6 w-6" />
+                </div>
+                {pickLocalizedText(locale, appCopy.adminDashboard.revenueOverview)}
+              </h2>
+              <button className="text-sm font-bold text-orange-600 hover:text-orange-700 flex items-center gap-1 transition-colors">
+                  View Details <ArrowRightIcon className="h-4 w-4" />
+              </button>
+          </div>
+          
+          <div className="flex-1 flex flex-col items-center justify-center text-stone-400 font-medium bg-stone-50/50 rounded-2xl border border-stone-100 border-dashed relative z-10">
+              <span className="text-4xl mb-4">📈</span>
+              {pickLocalizedText(locale, appCopy.adminDashboard.revenuePlaceholder)}
+          </div>
         </div>
-        <div className="bg-white rounded-xl p-6 min-h-[220px] flex flex-col">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">{pickLocalizedText(locale, appCopy.adminDashboard.recentActivity)}</h2>
-          <ul className="flex-1 space-y-4">
-            <li className="flex items-center justify-between">
-              <div>
-                <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 align-middle"></span>
-                <span className="font-medium text-gray-800">{pickLocalizedText(locale, appCopy.adminDashboard.installationDone)}</span>
-                <div className="text-xs text-gray-500">{pickLocalizedText(locale, appCopy.adminDashboard.sampleHouse)}</div>
-                <div className="text-xs text-gray-400">{pickLocalizedText(locale, appCopy.adminDashboard.fiveMinutesAgo)}</div>
+
+        {/* Recent Activity Feed */}
+        <div className="col-span-1 bg-white/80 backdrop-blur-xl rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 p-8 min-h-[300px] flex flex-col">
+          <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-stone-900">{pickLocalizedText(locale, appCopy.adminDashboard.recentActivity)}</h2>
+          </div>
+          <ul className="flex-1 space-y-5">
+            {/* Mocked Feed Item */}
+            <li className="flex items-start gap-4 p-4 rounded-2xl hover:bg-stone-50 transition-colors group cursor-pointer">
+              <div className="w-2 h-2 mt-2 bg-orange-500 rounded-full shadow-[0_0_8px_rgba(249,115,22,0.6)] group-hover:scale-150 transition-transform"></div>
+              <div className="flex-1">
+                <div className="flex justify-between items-start mb-1">
+                    <span className="font-bold text-stone-900 leading-tight">{pickLocalizedText(locale, appCopy.adminDashboard.installationDone)}</span>
+                    <span className="text-sm font-bold text-orange-600">{formatCurrencyByLocale(2500, locale)}</span>
+                </div>
+                <div className="text-sm text-stone-500 font-medium">{pickLocalizedText(locale, appCopy.adminDashboard.sampleHouse)}</div>
+                <div className="text-xs font-bold text-stone-400 uppercase tracking-wider mt-2">{pickLocalizedText(locale, appCopy.adminDashboard.fiveMinutesAgo)}</div>
               </div>
-              <span className="text-gray-900 font-semibold">{formatCurrencyByLocale(2500, locale)}</span>
+            </li>
+            {/* Another Mock Item */}
+            <li className="flex items-start gap-4 p-4 rounded-2xl hover:bg-stone-50 transition-colors group cursor-pointer">
+              <div className="w-2 h-2 mt-2 bg-blue-500 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.6)] group-hover:scale-150 transition-transform"></div>
+              <div className="flex-1">
+                <div className="flex justify-between items-start mb-1">
+                    <span className="font-bold text-stone-900 leading-tight">New user registered</span>
+                </div>
+                <div className="text-sm text-stone-500 font-medium">customer@example.com</div>
+                <div className="text-xs font-bold text-stone-400 uppercase tracking-wider mt-2">12 minutes ago</div>
+              </div>
             </li>
           </ul>
         </div>
       </div>
 
-      <div className="bg-white rounded-xl p-6 mb-8 border border-gray-100">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-1">{pickLocalizedText(locale, appCopy.adminDashboard.notificationStatus)}</h2>
-            <p className="text-sm text-gray-600">{pickLocalizedText(locale, appCopy.adminDashboard.notificationSubtitle)}</p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+          {/* Quick System Controls */}
+          <div className="bg-white/80 backdrop-blur-xl rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 animate-slide-in-up stagger-7 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-stone-200/20 to-stone-100/5 rounded-full blur-3xl pointer-events-none -mr-32 -mt-32"></div>
+            
+            <h2 className="text-2xl font-bold text-stone-900 mb-6 flex items-center gap-3 relative z-10">
+              <div className="w-10 h-10 rounded-xl bg-stone-100 flex items-center justify-center">
+                <Cog6ToothIcon className="h-6 w-6 text-stone-700" />
+              </div>
+              {pickLocalizedText(locale, { th: 'ควบคุมระบบด่วน', en: 'Quick System Controls' })}
+            </h2>
+            
+            <div className="grid grid-cols-1 gap-4 relative z-10">
+              <div className="p-6 rounded-2xl bg-white border border-stone-100 hover:border-orange-200 transition-all group hover:shadow-lg hover:shadow-orange-500/5">
+                <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-orange-50 rounded-lg text-orange-600">
+                        <BellIcon className="h-5 w-5" />
+                    </div>
+                    <h3 className="text-sm font-bold uppercase tracking-widest text-stone-900">{pickLocalizedText(locale, { th: 'การนัดหมาย', en: 'Appointments' })}</h3>
+                </div>
+                <p className="text-sm text-stone-500 mb-6 font-medium leading-relaxed">{pickLocalizedText(locale, { th: 'ส่งการแจ้งเตือนเตือนความจำสำหรับงานพรุ่งนี้ให้ลูกค้าทุกคน (LINE & In-app)', en: 'Send reminders for tomorrow\'s jobs to all customers (LINE & In-app).' })}</p>
+                <button 
+                  onClick={handleSendReminders} 
+                  disabled={sendingReminders} 
+                  className="w-full bg-gradient-to-r from-stone-900 to-stone-800 text-white py-4 rounded-xl text-sm font-bold shadow-md hover:shadow-xl active:scale-[0.98] transition-all disabled:opacity-50 hover:from-orange-600 hover:to-orange-500 group-hover:shadow-orange-500/20"
+                >
+                  {sendingReminders ? 'กำลังส่ง...' : pickLocalizedText(locale, { th: 'ส่งการแจ้งเตือน', en: 'Send Reminders' })}
+                </button>
+              </div>
+            </div>
           </div>
-          <Link href="/dashboard/admin/audit-logs" className="inline-flex items-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-gray-800">{pickLocalizedText(locale, appCopy.adminDashboard.openAuditPage)}</Link>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div className="rounded-lg border border-red-200 bg-red-50 p-4">
-            <div className="text-sm text-red-700">{pickLocalizedText(locale, appCopy.adminDashboard.notificationFailedTotal)}</div>
-            <div className="mt-1 text-2xl font-semibold text-red-800">{loading ? '...' : notificationFailuresTotal ?? 0}</div>
-          </div>
-          <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
-            <div className="text-sm text-amber-700">{pickLocalizedText(locale, appCopy.adminDashboard.notificationFailed24h)}</div>
-            <div className="mt-1 text-2xl font-semibold text-amber-800">{loading ? '...' : notificationFailures24h ?? 0}</div>
-          </div>
-        </div>
-      </div>
 
-      {/* Quick System Controls */}
-      <div className="bg-white rounded-xl p-6 mb-8 border border-[#E5E5DF] shadow-sm animate-slide-in-up stagger-7">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <CheckCircleIcon className="h-5 w-5 text-[#1A1A1A]" /> {pickLocalizedText(locale, { th: 'ควบคุมระบบด่วน', en: 'Quick System Controls' })}
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="p-4 border border-[#F1F1EB] hover:border-[#1A1A1A] transition-all group">
-            <h3 className="text-[10px] font-black uppercase tracking-widest text-[#A3A3A3] mb-2">{pickLocalizedText(locale, { th: 'การนัดหมาย', en: 'Appointments' })}</h3>
-            <p className="text-sm text-[#70706B] mb-4">{pickLocalizedText(locale, { th: 'ส่งการแจ้งเตือนเตือนความจำสำหรับงานพรุ่งนี้ให้ลูกค้าทุกคน (LINE & In-app)', en: 'Send reminders for tomorrow\'s jobs to all customers (LINE & In-app).' })}</p>
-            <button onClick={handleSendReminders} disabled={sendingReminders} className="w-full bg-[#1A1A1A] text-white py-2 text-[10px] font-black uppercase tracking-widest hover:bg-[#333] transition-all disabled:opacity-50">
-              {sendingReminders ? 'Sending...' : pickLocalizedText(locale, { th: 'ส่งการแจ้งเตือนงานพรุ่งนี้', en: 'Send Tomorrow Reminders' })}
-            </button>
+          {/* System Health / Notifications */}
+          <div className="bg-white/80 backdrop-blur-xl rounded-[32px] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-red-500/5 rounded-full blur-3xl pointer-events-none -mr-32 -mt-32"></div>
+            
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 relative z-10">
+              <div>
+                <h2 className="text-2xl font-bold text-stone-900 flex items-center gap-3 mb-1">
+                    <div className="w-10 h-10 rounded-xl bg-red-50 flex items-center justify-center">
+                        <CheckCircleIcon className="h-6 w-6 text-red-500" />
+                    </div>
+                    {pickLocalizedText(locale, appCopy.adminDashboard.notificationStatus)}
+                </h2>
+                <p className="text-[13px] font-medium text-stone-500 ml-13 pl-13">{pickLocalizedText(locale, appCopy.adminDashboard.notificationSubtitle)}</p>
+              </div>
+              <Link href="/dashboard/admin/audit-logs" className="inline-flex items-center rounded-2xl bg-stone-100 px-5 py-3 text-sm font-bold text-stone-700 hover:bg-stone-200 hover:text-stone-900 transition-colors">
+                  {pickLocalizedText(locale, appCopy.adminDashboard.openAuditPage)}
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 relative z-10">
+              <div className="rounded-2xl border border-red-100 bg-gradient-to-br from-red-50/50 to-white p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-xs font-bold uppercase tracking-wider text-red-500 mb-2">{pickLocalizedText(locale, appCopy.adminDashboard.notificationFailedTotal)}</div>
+                <div className="text-4xl font-extrabold text-red-700">{loading ? '...' : notificationFailuresTotal ?? 0}</div>
+              </div>
+              <div className="rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50/50 to-white p-6 shadow-sm hover:shadow-md transition-shadow">
+                <div className="text-xs font-bold uppercase tracking-wider text-amber-600 mb-2">{pickLocalizedText(locale, appCopy.adminDashboard.notificationFailed24h)}</div>
+                <div className="text-4xl font-extrabold text-amber-700">{loading ? '...' : notificationFailures24h ?? 0}</div>
+              </div>
+            </div>
           </div>
-        </div>
       </div>
 
       {/* Upcoming Jobs */}
-      <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm animate-slide-in-up stagger-8">
-        <h2 className="text-lg font-semibold text-gray-900 mb-6 flex items-center gap-2">
-          <CalendarIcon className="h-5 w-5 text-[#1A1A1A]" /> {pickLocalizedText(locale, appCopy.adminDashboard.upcomingJobs)}
+      <div className="bg-white/80 backdrop-blur-xl rounded-[32px] p-8 border border-stone-100/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] animate-slide-in-up stagger-8 mb-20">
+        <h2 className="text-2xl font-bold text-stone-900 mb-8 flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center">
+            <CalendarIcon className="h-6 w-6 text-orange-600" />
+          </div>
+          {pickLocalizedText(locale, appCopy.adminDashboard.upcomingJobs)}
         </h2>
+        
         <div className="space-y-4">
           {loading ? (
-            <div className="text-gray-400 py-4">{locale === 'en' ? 'Loading...' : locale === 'zh' ? '加载中...' : 'กำลังโหลด...'}</div>
+            <div className="text-stone-400 py-8 text-center font-medium">{locale === 'en' ? 'Loading data...' : locale === 'zh' ? '加载中...' : 'กำลังโหลดข้อมูล...'}</div>
           ) : upcomingJobsList.length === 0 ? (
-            <div className="text-gray-400 py-4">{pickLocalizedText(locale, appCopy.adminDashboard.upcomingPlaceholder)}</div>
+            <div className="text-stone-400 py-8 text-center font-medium bg-stone-50 rounded-2xl border border-stone-100 border-dashed">{pickLocalizedText(locale, appCopy.adminDashboard.upcomingPlaceholder)}</div>
           ) : (
             upcomingJobsList.map((job) => (
-              <div key={job.id} className="flex flex-col md:flex-row md:items-center justify-between p-4 border border-[#F1F1EB] hover:border-[#1A1A1A] transition-all gap-4">
-                <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 bg-[#FAFAF8] flex items-center justify-center text-[#1A1A1A] border border-[#F1F1EB]">
-                    <BriefcaseIcon className="h-5 w-5" />
+              <div key={job.id} className="flex flex-col md:flex-row md:items-center justify-between p-6 rounded-2xl bg-white border border-stone-100 hover:border-orange-200 transition-all hover:shadow-xl hover:shadow-orange-500/10 gap-6 group cursor-pointer">
+                <div className="flex items-center gap-6">
+                  <div className="h-14 w-14 rounded-2xl bg-stone-50 flex items-center justify-center text-stone-400 group-hover:bg-orange-50 group-hover:text-orange-500 transition-all duration-300">
+                    <BriefcaseIcon className="h-7 w-7" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-bold text-[#1A1A1A] uppercase tracking-wide">{job.services?.service_name}</h4>
-                    <p className="text-[10px] font-black text-[#A3A3A3] uppercase tracking-widest">
-                      {locale === 'en' ? 'customer:' : locale === 'zh' ? '顾客：' : '                       ลูกค้า: '}{job.profiles?.display_name} • {job.houses?.name}
+                    <h4 className="text-lg font-bold text-stone-900 tracking-tight group-hover:text-orange-600 transition-colors">{job.services?.service_name}</h4>
+                    <p className="text-xs font-bold text-stone-400 uppercase tracking-wider mt-1.5 flex items-center gap-2">
+                      <span className="bg-stone-100 px-2 py-1 rounded text-stone-600">{job.profiles?.display_name}</span>
+                      <span>•</span> 
+                      <span>{job.houses?.name}</span>
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center justify-between md:justify-end gap-6">
-                  <div className="text-right">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-[#A3A3A3]">{locale === 'en' ? 'วันนัดหมาย' : locale === 'zh' ? 'วันนัดหมาย' : 'วันนัดหมาย'}</p>
-                    <p className="text-sm font-medium text-[#1A1A1A]">{new Date(job.scheduled_date).toLocaleDateString('th-TH')}</p>
+                <div className="flex items-center justify-between md:justify-end gap-8 border-t border-stone-50 pt-4 md:border-0 md:pt-0 w-full md:w-auto">
+                  <div className="text-left md:text-right">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-1">{locale === 'en' ? 'Scheduled For' : 'วันที่นัดหมาย'}</p>
+                    <p className="text-base font-extrabold text-stone-800">{new Date(job.scheduled_date).toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
                   </div>
                   <button 
-                    onClick={() => {
-                      // Manual single notify
-                      alert(`ส่งการแจ้งเตือนให้ ${job.profiles?.display_name} เรียบร้อยแล้ว (Mock)`);
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      alert(`ระบบจำลอง: ส่งแจ้งเตือนหาคุณ ${job.profiles?.display_name} แล้ว`);
                     }}
-                    className="p-2 text-[#A3A3A3] hover:text-[#1A1A1A] transition-colors"
+                    className="p-3.5 bg-stone-50 rounded-xl text-stone-400 hover:text-white hover:bg-orange-500 hover:shadow-lg hover:shadow-orange-500/30 transition-all active:scale-95"
+                    title="ส่งการแจ้งเตือน (Mock)"
                   >
-                    <BellIcon className="h-5 w-5" />
+                    <BellIcon className="h-6 w-6" />
                   </button>
                 </div>
               </div>
