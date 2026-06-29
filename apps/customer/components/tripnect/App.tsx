@@ -198,7 +198,7 @@ export default function App({ services = [], orders = [], profile = null }: { se
 
   // Map RUSHUPAPP services (pos_menu_items) to Tripnect POSTS format
   const dynamicPosts: PostData[] = useMemo(() => {
-    if (!services || services.length === 0) return POSTS;
+    if (!services || services.length === 0) return [];
     return services.map((item, index) => ({
       id: item.id,
       user: {
@@ -218,7 +218,11 @@ export default function App({ services = [], orders = [], profile = null }: { se
     }));
   }, [services]);
 
-  const finalPosts = dbPosts;
+  const finalPosts = useMemo(() => {
+    // Combine regular user posts (dbPosts) with POS products (dynamicPosts)
+    const combined = [...dbPosts, ...dynamicPosts];
+    return combined;
+  }, [dbPosts, dynamicPosts]);
   const [showHotelModal, setShowHotelModal] = useState(false);
   const [showCarRentalModal, setShowCarRentalModal] = useState(false);
   const [selectedBookingPost, setSelectedBookingPost] = useState<PostData | null>(null);
