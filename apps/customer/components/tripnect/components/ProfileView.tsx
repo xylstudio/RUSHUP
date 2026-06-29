@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
-import { useAuth } from '../../../../lib/AuthContext';
-import { updateProfileAvatar } from '../../../../lib/supabaseClient';
+import { useAuth } from '../../../lib/AuthContext';
+import { updateProfileAvatar } from '../../../lib/supabaseClient';
 import { useRef } from 'react';
 
 interface TravelBadge {
