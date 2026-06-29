@@ -1,1 +1,0 @@
-ALTER TABLE pos_orders ADD COLUMN IF NOT EXISTS void_reason TEXT;
