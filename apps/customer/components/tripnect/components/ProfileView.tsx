@@ -1,5 +1,5 @@
-import { MapPin, Settings, Camera, ChevronRight, Globe, Image, Edit2, Bookmark, Heart, MessageCircle, Map as MapIcon, Award, Briefcase, Sun, Moon, User, ShoppingBag, Grid3x3, Tag, Truck, Plus } from 'lucide-react';
-import { useState, useRef, useMemo, useEffect } from 'react';
+import { MapPin, Settings, Camera, ChevronRight, Briefcase, Sun, Moon, User, ShoppingBag, Truck, CreditCard, ChevronDown } from 'lucide-react';
+import { useState, useRef, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../../../lib/AuthContext';
@@ -12,7 +12,6 @@ interface ProfileViewProps {
 }
 
 export function ProfileView({ orders = [] }: ProfileViewProps) {
-  const [activeTab, setActiveTab] = useState<'orders' | 'saved'>('orders');
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
@@ -42,10 +41,8 @@ export function ProfileView({ orders = [] }: ProfileViewProps) {
     return null;
   }, [profile, user]);
 
-  const isOwnProfile = true;
-
   const handleAvatarClick = () => {
-    if (isOwnProfile && fileInputRef.current) {
+    if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
@@ -87,150 +84,148 @@ export function ProfileView({ orders = [] }: ProfileViewProps) {
     return {
       orders: totalOrders,
       completed: completedOrders,
-      points: Math.floor(totalOrders * 10), // mock points calculation
+      points: Math.floor(totalOrders * 10),
     };
   }, [orders]);
 
   if (loading) {
-    return <div className="min-h-screen bg-white dark:bg-stone-950 flex items-center justify-center text-stone-500">กำลังโหลด...</div>;
+    return <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex items-center justify-center text-stone-500">กำลังโหลด...</div>;
   }
 
   if (!viewingUser) {
-    return <div className="min-h-screen bg-white dark:bg-stone-950 flex items-center justify-center text-stone-500">ไม่พบข้อมูลโปรไฟล์ กรุณาเข้าสู่ระบบใหม่อีกครั้ง</div>;
+    return <div className="min-h-screen bg-stone-50 dark:bg-stone-900 flex items-center justify-center text-stone-500">ไม่พบข้อมูลโปรไฟล์ กรุณาเข้าสู่ระบบใหม่อีกครั้ง</div>;
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-stone-950 pb-24 transition-colors font-sans">
-      {/* Top Navigation */}
-      <div className="flex items-center justify-between px-5 py-4 bg-white dark:bg-stone-950 sticky top-0 z-20">
-        <h1 className="text-xl font-bold text-stone-900 dark:text-stone-100">{viewingUser.username}</h1>
-        <div className="flex items-center gap-4">
-          <motion.button onClick={toggleTheme} whileTap={{ scale: 0.9 }}>
-            {theme === 'dark' ? <Sun size={24} className="text-stone-100" /> : <Moon size={24} className="text-stone-900" />}
-          </motion.button>
-          <button onClick={() => window.location.href = '/dashboard/merchant/orders'}>
-             <Briefcase size={24} className="text-stone-900 dark:text-stone-100" />
-          </button>
-        </div>
+    <div className="min-h-screen bg-stone-50 dark:bg-stone-900 pb-24 transition-colors font-sans">
+      
+      {/* Top Header */}
+      <div className="flex items-center justify-between px-5 py-4 bg-stone-50 dark:bg-stone-900 sticky top-0 z-20">
+        <h1 className="text-2xl font-bold text-stone-900 dark:text-white tracking-tight">โปรไฟล์</h1>
+        <button 
+          onClick={toggleTheme}
+          className="w-10 h-10 rounded-full bg-white dark:bg-stone-800 shadow-sm flex items-center justify-center text-stone-600 dark:text-stone-300 hover:scale-105 transition-transform"
+        >
+          {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+        </button>
       </div>
 
-      {/* Header Info */}
-      <div className="px-5 pt-2 pb-6">
-        <div className="flex items-center gap-6 mb-4">
-          <div className="relative shrink-0">
-            <div className="w-20 h-20 rounded-full overflow-hidden bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 flex items-center justify-center">
-              {viewingUser.avatarUrl ? (
-                <img src={viewingUser.avatarUrl} alt={viewingUser.fullName} className="w-full h-full object-cover" />
-              ) : (
-                <User size={32} className="text-stone-400" />
-              )}
-            </div>
-            {isOwnProfile && (
-              <>
-                <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
-                <button 
-                  onClick={handleAvatarClick}
-                  disabled={isUploading}
-                  className="absolute bottom-0 right-0 w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center border-2 border-white dark:border-stone-950"
-                >
-                  <Plus size={16} className="text-white" strokeWidth={3} />
-                </button>
-              </>
-            )}
-          </div>
-
-          <div className="flex-1 flex justify-around text-center">
-            <div>
-              <div className="text-lg font-bold text-stone-900 dark:text-stone-100">{stats.orders}</div>
-              <div className="text-xs text-stone-900 dark:text-stone-100">ออเดอร์</div>
-            </div>
-            <div>
-              <div className="text-lg font-bold text-stone-900 dark:text-stone-100">{stats.completed}</div>
-              <div className="text-xs text-stone-900 dark:text-stone-100">สำเร็จแล้ว</div>
-            </div>
-            <div>
-              <div className="text-lg font-bold text-stone-900 dark:text-stone-100">{stats.points}</div>
-              <div className="text-xs text-stone-900 dark:text-stone-100">พอยต์</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mb-4">
-          <h2 className="font-semibold text-sm text-stone-900 dark:text-stone-100">{viewingUser.fullName}</h2>
-          <p className="text-sm text-stone-600 dark:text-stone-400 mt-1 whitespace-pre-wrap">
-            ลูกค้าระดับ Gold Member 🌟
-            {viewingUser.phone && `\nติดต่อ: ${viewingUser.phone}`}
-          </p>
-        </div>
-
-        <div className="flex gap-2">
-          <button className="flex-1 h-8 bg-stone-100 dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-sm font-semibold rounded-lg">
-            แก้ไขโปรไฟล์
-          </button>
-          <button className="flex-1 h-8 bg-stone-100 dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-sm font-semibold rounded-lg">
-            แชร์โปรไฟล์
-          </button>
-          <button className="w-8 h-8 bg-stone-100 dark:bg-stone-800 text-stone-900 dark:text-stone-100 flex items-center justify-center rounded-lg">
-            <User size={16} />
-          </button>
-        </div>
-      </div>
-
-      {/* Story Highlights (Settings/Features) */}
-      <div className="px-5 mb-6 overflow-x-auto no-scrollbar">
-        <div className="flex gap-4 min-w-max">
-          {[
-            { id: 'pos', name: 'ระบบ POS', icon: Briefcase, action: () => window.location.href = '/dashboard/merchant/orders' },
-            { id: 'address', name: 'ที่อยู่', icon: MapPin },
-            { id: 'settings', name: 'ตั้งค่า', icon: Settings },
-          ].map(highlight => (
-            <div key={highlight.id} className="flex flex-col items-center gap-1 cursor-pointer" onClick={highlight.action}>
-              <div className="w-16 h-16 rounded-full border border-stone-200 dark:border-stone-800 flex items-center justify-center bg-stone-50 dark:bg-stone-900">
-                <highlight.icon size={24} className="text-stone-900 dark:text-stone-100" strokeWidth={1.5} />
+      {/* User Info Card */}
+      <div className="px-5 mb-6">
+        <div className="bg-white dark:bg-stone-800 rounded-[24px] p-6 shadow-sm border border-stone-100 dark:border-stone-700/50">
+          <div className="flex items-center gap-5">
+            <div className="relative shrink-0">
+              <div className="w-20 h-20 rounded-full overflow-hidden bg-stone-100 dark:bg-stone-700 flex items-center justify-center">
+                {viewingUser.avatarUrl ? (
+                  <img src={viewingUser.avatarUrl} alt={viewingUser.fullName} className="w-full h-full object-cover" />
+                ) : (
+                  <User size={32} className="text-stone-400 dark:text-stone-500" />
+                )}
               </div>
-              <span className="text-xs text-stone-900 dark:text-stone-100">{highlight.name}</span>
+              <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
+              <button 
+                onClick={handleAvatarClick}
+                disabled={isUploading}
+                className="absolute bottom-0 right-0 w-8 h-8 bg-stone-900 dark:bg-stone-100 rounded-full flex items-center justify-center border-2 border-white dark:border-stone-800 hover:scale-105 transition-transform"
+              >
+                <Camera size={14} className="text-white dark:text-stone-900" />
+              </button>
             </div>
-          ))}
+            
+            <div className="flex-1">
+              <h2 className="text-xl font-bold text-stone-900 dark:text-white mb-1">{viewingUser.fullName}</h2>
+              <p className="text-sm text-stone-500 dark:text-stone-400 font-medium">{viewingUser.phone || 'ยังไม่ได้เพิ่มเบอร์โทรศัพท์'}</p>
+              <div className="mt-2 inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-50 dark:bg-amber-500/10 rounded-md">
+                <span className="text-[11px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wide">Gold Member</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Grid Tabs */}
-      <div className="flex border-t border-stone-200 dark:border-stone-800">
-        <button 
-          onClick={() => setActiveTab('orders')}
-          className={`flex-1 flex justify-center py-3 border-b-2 ${activeTab === 'orders' ? 'border-stone-900 dark:border-stone-100 text-stone-900 dark:text-stone-100' : 'border-transparent text-stone-400'}`}
-        >
-          <Grid3x3 size={24} strokeWidth={1.5} />
-        </button>
-        <button 
-          onClick={() => setActiveTab('saved')}
-          className={`flex-1 flex justify-center py-3 border-b-2 ${activeTab === 'saved' ? 'border-stone-900 dark:border-stone-100 text-stone-900 dark:text-stone-100' : 'border-transparent text-stone-400'}`}
-        >
-          <Tag size={24} strokeWidth={1.5} />
-        </button>
+      {/* Stats Cards */}
+      <div className="px-5 mb-6 grid grid-cols-2 gap-3">
+        <div className="bg-white dark:bg-stone-800 rounded-[20px] p-5 shadow-sm border border-stone-100 dark:border-stone-700/50">
+           <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center mb-3">
+              <ShoppingBag size={20} className="text-blue-600 dark:text-blue-400" />
+           </div>
+           <div className="text-2xl font-black text-stone-900 dark:text-white mb-1">{stats.orders}</div>
+           <div className="text-xs font-semibold text-stone-500 dark:text-stone-400">ออเดอร์ทั้งหมด</div>
+        </div>
+        <div className="bg-white dark:bg-stone-800 rounded-[20px] p-5 shadow-sm border border-stone-100 dark:border-stone-700/50">
+           <div className="w-10 h-10 rounded-full bg-orange-50 dark:bg-orange-500/10 flex items-center justify-center mb-3">
+              <CreditCard size={20} className="text-orange-600 dark:text-orange-400" />
+           </div>
+           <div className="text-2xl font-black text-stone-900 dark:text-white mb-1">{stats.points}</div>
+           <div className="text-xs font-semibold text-stone-500 dark:text-stone-400">พอยต์สะสม</div>
+        </div>
       </div>
 
-      {/* Grid Content */}
-      <div className="grid grid-cols-3 gap-[1px] bg-stone-200 dark:bg-stone-800">
-        {activeTab === 'orders' && orders.length > 0 ? (
-          orders.map((order, idx) => (
-            <div key={idx} className="aspect-square bg-stone-100 dark:bg-stone-900 relative group overflow-hidden flex items-center justify-center">
-               <div className="absolute inset-0 bg-stone-900/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="text-white font-bold text-xs">{formatCurrencyByLocale(order.totalAmount || 0, locale)}</span>
-                  <span className="text-white text-[10px] uppercase">{order.status}</span>
-               </div>
-               <div className="text-stone-400 dark:text-stone-600 flex flex-col items-center">
-                  <ShoppingBag size={24} strokeWidth={1} />
-                  <span className="text-[10px] mt-1 font-mono">#{order.id.slice(0, 4)}</span>
-               </div>
-            </div>
-          ))
-        ) : activeTab === 'orders' ? (
-          <div className="col-span-3 py-16 text-center text-stone-500">ไม่มีออเดอร์</div>
-        ) : (
-          <div className="col-span-3 py-16 text-center text-stone-500">ไม่มีรายการที่ถูกใจ</div>
-        )}
+      {/* Action Buttons */}
+      <div className="px-5 mb-8">
+        <div className="bg-stone-900 dark:bg-stone-100 rounded-[20px] p-1 flex items-center">
+           <button 
+             onClick={() => window.location.href = '/dashboard/merchant/orders'}
+             className="flex-1 bg-transparent py-3.5 flex items-center justify-center gap-2 text-white dark:text-stone-900 font-bold"
+           >
+              <Briefcase size={18} />
+              เข้าสู่ระบบร้านค้า (POS)
+           </button>
+        </div>
+        <div className="grid grid-cols-2 gap-3 mt-3">
+           <button className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 py-3 rounded-[16px] text-sm font-semibold text-stone-700 dark:text-stone-300 flex items-center justify-center gap-2">
+              <MapPin size={16} /> ที่อยู่จัดส่ง
+           </button>
+           <button className="bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 py-3 rounded-[16px] text-sm font-semibold text-stone-700 dark:text-stone-300 flex items-center justify-center gap-2">
+              <Settings size={16} /> ตั้งค่าบัญชี
+           </button>
+        </div>
       </div>
+
+      {/* Recent Orders List */}
+      <div className="px-5">
+        <h3 className="text-lg font-bold text-stone-900 dark:text-white mb-4">ประวัติการสั่งซื้อล่าสุด</h3>
+        
+        <div className="space-y-3">
+          {orders.length > 0 ? (
+            orders.slice(0, 5).map((order, idx) => (
+              <div key={idx} className="bg-white dark:bg-stone-800 rounded-[20px] p-4 shadow-sm border border-stone-100 dark:border-stone-700/50 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-stone-50 dark:bg-stone-900 flex items-center justify-center shrink-0">
+                   <ShoppingBag size={20} className="text-stone-400 dark:text-stone-500" />
+                </div>
+                <div className="flex-1">
+                   <div className="flex items-center justify-between mb-1">
+                      <span className="font-bold text-stone-900 dark:text-white">Order #{order.id.slice(0, 5)}</span>
+                      <span className="text-sm font-bold text-stone-900 dark:text-white">
+                         {formatCurrencyByLocale(order.totalAmount || 0, locale)}
+                      </span>
+                   </div>
+                   <div className="flex items-center justify-between">
+                      <span className="text-xs text-stone-500 dark:text-stone-400">
+                         {order.createdAt ? formatDateByLocale(order.createdAt, locale) : 'วันนี้'}
+                      </span>
+                      <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md ${
+                        order.status === 'completed' ? 'bg-green-50 text-green-600 dark:bg-green-500/10 dark:text-green-400' :
+                        'bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-400'
+                      }`}>
+                         {order.status || 'pending'}
+                      </span>
+                   </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="py-12 bg-white dark:bg-stone-800 rounded-[24px] border border-stone-100 dark:border-stone-700/50 flex flex-col items-center justify-center text-center px-6">
+               <div className="w-16 h-16 rounded-full bg-stone-50 dark:bg-stone-900 flex items-center justify-center mb-4">
+                  <ShoppingBag size={28} className="text-stone-300 dark:text-stone-600" />
+               </div>
+               <h4 className="text-base font-bold text-stone-900 dark:text-white mb-1">ยังไม่มีออเดอร์</h4>
+               <p className="text-sm text-stone-500 dark:text-stone-400">เมื่อคุณสั่งซื้อสินค้า รายการออเดอร์จะแสดงที่นี่</p>
+            </div>
+          )}
+        </div>
+      </div>
+      
     </div>
   );
 }
