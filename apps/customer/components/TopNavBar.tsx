@@ -176,9 +176,9 @@ export default function TopNavBar({ onMenuClick, sidebarOpen, isLocked }: TopNav
         <Link
           href={profile?.role ? `/dashboard/${profile.role}` : '/dashboard'}
           aria-label={copy.backToDashboard}
-          className="absolute left-1/2 -translate-x-1/2 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#D1D5DB] transition-colors hover:text-white"
+          className="absolute left-1/2 -translate-x-1/2 text-sm font-black uppercase tracking-widest text-white transition-colors hover:text-orange-500"
         >
-          XYLEM LANDSCAPE
+          RUSHUP<span className="text-orange-500">.</span>
         </Link>
 
         <div className="z-10 flex w-24 items-center justify-end gap-1">

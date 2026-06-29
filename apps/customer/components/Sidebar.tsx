@@ -538,7 +538,7 @@ export default function Sidebar({ isOpen, onMenuClick, isLocked, onLockToggle, o
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className={`fixed inset-0 z-[50] bg-black/10 ${showBackdrop && !isLocked ? '' : 'hidden'}`}
+            className={`fixed inset-0 z-[50] bg-orange-950/10 ${showBackdrop && !isLocked ? '' : 'hidden'}`}
             onClick={onMenuClick}
             aria-label={copy.closeSidebar}
           />
@@ -548,13 +548,13 @@ export default function Sidebar({ isOpen, onMenuClick, isLocked, onLockToggle, o
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: -280, opacity: 0 }}
             transition={{ duration: 0.32, ease: 'easeOut' }}
-            className={`fixed left-0 top-[56px] z-[90] flex h-[calc(100%-56px)] w-[280px] flex-col border-r border-[#E5E5DF] bg-[#FAFAF8] shadow-sm group`}
+            className={`fixed left-0 top-[56px] z-[90] flex h-[calc(100%-56px)] w-[280px] flex-col border-r border-orange-100 bg-[#FDFBF7] shadow-sm group`}
           >
-            <div className="border-b border-[#E5E5DF] px-6 py-4">
+            <div className="border-b border-orange-100 px-6 py-4">
               <div className="hidden md:flex items-center justify-end mb-4">
                 <button
                   onClick={onLockToggle}
-                  className="inline-flex items-center justify-center rounded-none p-2 text-[#A3A3A3] hover:bg-white hover:text-[#111111] transition-colors"
+                  className="inline-flex items-center justify-center rounded-none p-2 text-orange-400 hover:bg-orange-50 hover:text-orange-600 transition-colors"
                   title={isLocked ? copy.unlockSidebar : copy.lockSidebar}
                 >
                   {isLocked ? (
@@ -572,21 +572,21 @@ export default function Sidebar({ isOpen, onMenuClick, isLocked, onLockToggle, o
                     className="flex w-full items-center justify-between group/profile pt-2 pb-2"
                   >
                     <div className="flex items-center gap-3 overflow-hidden">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-none bg-[#111111] text-xs font-medium text-white ring-2 ring-transparent group-hover/profile:ring-[#E5E5E5] transition-all">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-100 text-xs font-bold text-orange-600 ring-2 ring-transparent group-hover/profile:ring-orange-200 transition-all">
                         {profile.display_name?.charAt(0) || 'U'}
                       </div>
                       <div className="overflow-hidden text-left">
-                        <p className="truncate text-xs font-bold uppercase tracking-wider text-[#111111] group-hover/profile:text-[#666666] transition-colors">
+                        <p className="truncate text-xs font-bold uppercase tracking-wider text-orange-950 group-hover/profile:text-orange-600 transition-colors">
                             {profile.display_name || copy.unknownUser}
                         </p>
-                        <p className="truncate text-[10px] text-[#A3A3A3] font-light font-mono">{profile.email}</p>
+                        <p className="truncate text-[10px] text-orange-400 font-light font-mono">{profile.email}</p>
                       </div>
                     </div>
-                    <ChevronDownIcon className="h-3 w-3 text-[#A3A3A3] group-hover/profile:text-[#111111] transition-colors" />
+                    <ChevronDownIcon className="h-3 w-3 text-orange-300 group-hover/profile:text-orange-600 transition-colors" />
                   </button>
 
                   {profileDropdownOpen && (
-                    <div className="absolute top-full left-0 w-full mt-2 overflow-hidden rounded-none border border-[#E5E5E5] bg-white shadow-xl z-50">
+                    <div className="absolute top-full left-0 w-full mt-2 overflow-hidden rounded-lg border border-orange-100 bg-white shadow-xl z-50">
                       <Link
                         href={`/dashboard/${profile.role}/profile`}
                         onClick={() => {
@@ -621,8 +621,8 @@ export default function Sidebar({ isOpen, onMenuClick, isLocked, onLockToggle, o
                 <div key={section.title || sIndex} className="space-y-4">
                   {section.title && (
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="h-[1px] w-4 bg-[#E5E5DF]"></div>
-                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#D4D4D4]">
+                      <div className="h-[1px] w-4 bg-stone-200"></div>
+                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-400">
                         {section.title}
                       </span>
                     </div>
@@ -647,14 +647,14 @@ export default function Sidebar({ isOpen, onMenuClick, isLocked, onLockToggle, o
                             className="group flex items-center gap-3 w-full text-left transition-all duration-300 py-1"
                           >
                                <div className="w-4 flex items-center justify-center">
-                                  <span className={`h-[1px] bg-[#111111] transition-all duration-500 ${isActive ? 'w-4 opacity-100' : 'w-0 opacity-0 group-hover:w-2 group-hover:opacity-30'}`}></span>
+                                  <span className={`h-[1px] bg-orange-500 transition-all duration-500 ${isActive ? 'w-4 opacity-100' : 'w-0 opacity-0 group-hover:w-2 group-hover:opacity-30'}`}></span>
                                </div>
                                
-                               <span className={`text-xs font-mono transition-colors duration-300 ${isActive ? 'text-[#111111] font-bold' : 'text-[#D4D4D4] group-hover:text-[#A3A3A3]'}`}>
+                               <span className={`text-xs font-mono transition-colors duration-300 ${isActive ? 'text-orange-600 font-bold' : 'text-stone-400 group-hover:text-orange-400'}`}>
                                   {itemNumber}.
                                </span>
 
-                               <span className={`text-xs uppercase tracking-wider transition-colors duration-300 ${isActive ? 'text-[#111111] font-bold' : 'text-[#A3A3A3] group-hover:text-[#666666]'}`}>
+                               <span className={`text-xs uppercase tracking-wider transition-colors duration-300 ${isActive ? 'text-orange-600 font-bold' : 'text-stone-500 group-hover:text-orange-500'}`}>
                                   {item.name}
                                </span>
                           </Link>
@@ -667,8 +667,8 @@ export default function Sidebar({ isOpen, onMenuClick, isLocked, onLockToggle, o
               </div>
             </nav>
 
-            <div className="border-t border-[#E5E5E5] px-6 py-4 bg-[#FAFAFA]">
-              <p className="text-center text-[8px] uppercase tracking-[0.3em] text-[#D4D4D4]">XYL STUDIO</p>
+            <div className="border-t border-stone-200 px-6 py-4 bg-stone-50">
+              <p className="text-center text-[10px] font-bold uppercase tracking-[0.3em] text-stone-400">RUSHUP<span className="text-orange-500">.</span></p>
             </div>
           </motion.aside>
         </>
