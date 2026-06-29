@@ -18,6 +18,7 @@ import { supabase } from '../../../lib/supabaseClient';
 import { useI18n } from '@/lib/I18nContext';
 import { formatCurrencyByLocale } from '@/lib/localeFormat';
 import { useAuth } from '../../../lib/AuthContext';
+import POSApp from '@/components/pos/POSApp';
 
 export default function MerchantDashboard() {
   const { locale } = useI18n();
@@ -25,13 +26,6 @@ export default function MerchantDashboard() {
   
   // Branch Info
   const [branchName, setBranchName] = useState<string>('ร้านค้าของคุณ');
-  
-  // States for Stats
-  const [revenue, setRevenue] = useState<number>(0);
-  const [activeOrdersCount, setActiveOrdersCount] = useState<number>(0);
-  const [completedOrdersCount, setCompletedOrdersCount] = useState<number>(0);
-  const [menuItemsCount, setMenuItemsCount] = useState<number>(0);
-  const [recentOrders, setRecentOrders] = useState<any[]>([]);
   
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string|null>(null);
@@ -306,153 +300,6 @@ export default function MerchantDashboard() {
     );
   }
 
-  // Main Merchant Dashboard (Branch filtered data)
-  return (
-    <div className="max-w-7xl mx-auto py-8 px-4 md:px-8">
-      {/* Header */}
-      <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <span className="text-xs font-bold uppercase tracking-widest text-orange-600 mb-1 block">ยินดีต้อนรับกลับมา</span>
-          <h1 className="text-4xl font-extrabold tracking-tight text-stone-900 mb-2">{branchName}</h1>
-          <p className="text-stone-500 text-base font-medium">จัดการร้านค้า ระบบเมนู และคำสั่งซื้อ RUSHUP ของสาขาคุณ</p>
-        </div>
-        <div className="flex items-center gap-3 bg-white border border-stone-100 rounded-2xl px-4 py-2.5 shadow-sm">
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
-            <span className="text-xs font-bold text-stone-600 uppercase tracking-widest">ร้านค้าเปิดบริการอยู่</span>
-        </div>
-      </div>
-
-      {error && (
-        <div className="bg-red-50 text-red-600 border border-red-200 rounded-2xl p-4 mb-8 font-medium">
-          {error}
-        </div>
-      )}
-
-      {/* Stats Cards Grid (4 Columns for branch stats) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        <div className="animate-slide-in-up stagger-1">
-          <StatCard 
-            icon={<CurrencyDollarIcon className="w-7 h-7" />} 
-            value={loading ? '...' : formatCurrencyByLocale(revenue, locale)} 
-            label="ยอดขายทั้งหมด" 
-            subtext="ออเดอร์ที่เสร็จสมบูรณ์แล้ว" 
-            loading={loading} 
-          />
-        </div>
-        <div className="animate-slide-in-up stagger-2">
-          <StatCard 
-            icon={<ClockIcon className="w-7 h-7" />} 
-            value={loading ? '...' : activeOrdersCount} 
-            label="ออเดอร์กำลังดำเนินการ" 
-            subtext="รอทำ/กำลังทำ/กำลังส่ง" 
-            loading={loading} 
-          />
-        </div>
-        <div className="animate-slide-in-up stagger-3">
-          <StatCard 
-            icon={<CheckCircleIcon className="w-7 h-7" />} 
-            value={loading ? '...' : completedOrdersCount} 
-            label="ออเดอร์เสร็จสิ้น" 
-            subtext="ออเดอร์ทั้งหมดที่ส่งมอบแล้ว" 
-            loading={loading} 
-          />
-        </div>
-        <div className="animate-slide-in-up stagger-4">
-          <StatCard 
-            icon={<ListBulletIcon className="w-7 h-7" />} 
-            value={loading ? '...' : menuItemsCount} 
-            label="รายการสินค้าและบริการ" 
-            subtext="รายการทั้งหมดในคลังร้าน" 
-            loading={loading} 
-          />
-        </div>
-      </div>
-
-      {/* Main Grid for Operations */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
-        {/* Recent Branch Orders */}
-        <div className="col-span-1 lg:col-span-2 bg-white/80 backdrop-blur-xl rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 p-8 flex flex-col min-h-[350px]">
-          <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold text-stone-900 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-600">
-                    <ShoppingBagIcon className="h-6 w-6" />
-                </div>
-                ออเดอร์ล่าสุดของร้าน
-              </h2>
-              <Link href="/dashboard/merchant/orders" className="text-sm font-bold text-orange-600 hover:text-orange-700 flex items-center gap-1 transition-colors">
-                  ดูออเดอร์ทั้งหมด <ArrowRightIcon className="h-4 w-4" />
-              </Link>
-          </div>
-          
-          <div className="flex-1 space-y-4">
-            {loading ? (
-              <div className="text-stone-400 text-center py-10 font-medium">กำลังโหลดข้อมูล...</div>
-            ) : recentOrders.length === 0 ? (
-              <div className="text-stone-400 text-center py-10 font-medium bg-stone-50/50 border border-stone-100 border-dashed rounded-2xl">ไม่มีออเดอร์ล่าสุดในร้านค้าขณะนี้</div>
-            ) : (
-              recentOrders.map((order) => (
-                <div key={order.id} className="flex items-center justify-between p-5 border border-stone-100 hover:border-orange-100 rounded-2xl bg-white/50 hover:shadow-lg transition-all group">
-                  <div>
-                    <h4 className="text-base font-bold text-stone-950">ออเดอร์ #{order.order_code || order.id.substring(0, 6).toUpperCase()}</h4>
-                    <p className="text-xs font-bold text-stone-400 uppercase tracking-wider mt-1">
-                      ลูกค้า: {order.profiles?.display_name || 'ทั่วไป'} <span className="mx-1.5">•</span> 
-                      {new Date(order.created_at).toLocaleDateString('th-TH')}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-sm font-black text-stone-900 block">{formatCurrencyByLocale(order.total || order.total_price || 0, locale)}</span>
-                    <span className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mt-1.5 ${
-                      order.status === 'completed' ? 'bg-emerald-50 text-emerald-600' :
-                      order.status === 'pending' ? 'bg-amber-50 text-amber-600' :
-                      'bg-orange-50 text-orange-600'
-                    }`}>
-                      {order.status}
-                    </span>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-
-        {/* Quick Menu & Settings Links */}
-        <div className="col-span-1 bg-white/80 backdrop-blur-xl rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 p-8 flex flex-col">
-          <h2 className="text-2xl font-bold text-stone-900 mb-6">จัดการด่วน</h2>
-          <div className="flex-1 flex flex-col gap-4">
-            
-            <Link href="/dashboard/merchant/pos-settings" className="flex items-center gap-4 p-5 border border-stone-100 rounded-2xl hover:border-orange-200 bg-white/50 hover:bg-orange-50/20 hover:shadow-lg hover:shadow-orange-500/5 transition-all group">
-              <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <Cog6ToothIcon className="h-6 w-6" />
-              </div>
-              <div className="text-left">
-                <h3 className="font-extrabold text-stone-900 text-sm">ตั้งค่าระบบ POS</h3>
-                <p className="text-xs font-medium text-stone-500 mt-0.5">เปิด-ปิดร้าน และแก้ไขการจัดส่ง</p>
-              </div>
-            </Link>
-
-            <Link href="/dashboard/merchant/item-library" className="flex items-center gap-4 p-5 border border-stone-100 rounded-2xl hover:border-orange-200 bg-white/50 hover:bg-orange-50/20 hover:shadow-lg hover:shadow-orange-500/5 transition-all group">
-              <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <BookOpenIcon className="h-6 w-6" />
-              </div>
-              <div className="text-left">
-                <h3 className="font-extrabold text-stone-900 text-sm">จัดการเมนูอาหาร & สินค้า</h3>
-                <p className="text-xs font-medium text-stone-500 mt-0.5">เพิ่ม ลบ หรือแก้ไขราคาเมนู</p>
-              </div>
-            </Link>
-
-            <Link href="/dashboard/merchant/inventory/restock" className="flex items-center gap-4 p-5 border border-stone-100 rounded-2xl hover:border-orange-200 bg-white/50 hover:bg-orange-50/20 hover:shadow-lg hover:shadow-orange-500/5 transition-all group">
-              <div className="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-                <InboxStackIcon className="h-6 w-6" />
-              </div>
-              <div className="text-left">
-                <h3 className="font-extrabold text-stone-900 text-sm">จัดการสต๊อกสินค้า</h3>
-                <p className="text-xs font-medium text-stone-500 mt-0.5">เติมสต๊อกและวัตถุดิบสาขา</p>
-              </div>
-            </Link>
-
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  // Main Merchant Dashboard (POS Application)
+  return <POSApp />;
 }
