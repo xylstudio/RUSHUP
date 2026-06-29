@@ -1,17 +1,29 @@
 import { Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { CURRENT_USER } from '../data';
-import { STORIES_DATA, Story } from '../storiesData';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../../../lib/AuthContext';
+import { supabase } from '../../../lib/supabaseClient';
 
 interface StoriesProps {
   onStoryClick: (storyIndex: number) => void;
 }
 
-function StoryCircle({ story, index, onClick, isMyStory = false }: { 
-  story?: Story; 
+export interface DBStory {
+  id: string;
+  user_id: string;
+  media_url: string;
+  media_type: string;
+  username: string;
+  avatarUrl: string;
+  isViewed: boolean;
+}
+
+function StoryCircle({ story, index, onClick, isMyStory = false, myAvatarUrl }: { 
+  story?: DBStory; 
   index: number; 
   onClick: () => void;
   isMyStory?: boolean;
+  myAvatarUrl?: string;
 }) {
   if (isMyStory) {
     return (
@@ -22,7 +34,7 @@ function StoryCircle({ story, index, onClick, isMyStory = false }: {
         <div className="relative">
           <div className="w-[62px] h-[62px] rounded-full p-[2px] border border-dashed border-stone-200 group-hover:border-orange-300 transition-colors">
             <img 
-              src={CURRENT_USER.avatarUrl} 
+              src={myAvatarUrl || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800'} 
               alt="My Story"
               className="w-full h-full rounded-full object-cover"
             />
@@ -41,9 +53,6 @@ function StoryCircle({ story, index, onClick, isMyStory = false }: {
   if (!story) return null;
 
   const isViewed = story.isViewed;
-  const visitedFriends = story.visitedFriends || [];
-  const displayFriends = visitedFriends.slice(0, 3); // แสดงได้ถึง 3 คน
-  const remainingCount = visitedFriends.length - displayFriends.length;
 
   return (
     <motion.div 
@@ -53,9 +62,7 @@ function StoryCircle({ story, index, onClick, isMyStory = false }: {
       onClick={onClick}
       className="flex flex-col items-center gap-2 cursor-pointer group min-w-[72px] relative"
     >
-      {/* Main Story Circle Container */}
       <div className="relative">
-        {/* Main Story Circle */}
         <div className={`relative w-[62px] h-[62px] p-[2.5px] rounded-full transition-all duration-300 ${
           !isViewed 
             ? 'bg-gradient-to-tr from-orange-500 via-orange-400 to-orange-500' 
@@ -71,66 +78,8 @@ function StoryCircle({ story, index, onClick, isMyStory = false }: {
             />
           </div>
         </div>
-
-        {/* Friend Avatars Stack - Static Display */}
-        {displayFriends.length > 0 && (
-          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 flex items-center z-10">
-            {displayFriends.map((friendAvatar, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ 
-                  delay: (index * 0.05) + (idx * 0.1) + 0.2,
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20
-                }}
-                className="relative"
-                style={{
-                  marginLeft: idx > 0 ? '-6px' : '0',
-                }}
-              >
-                <img
-                  src={friendAvatar}
-                  alt={`Friend ${idx + 1}`}
-                  className="w-[18px] h-[18px] rounded-full object-cover border-[2px] border-white shadow-md"
-                />
-              </motion.div>
-            ))}
-            
-            {/* +X Badge for remaining friends */}
-            {remainingCount > 0 && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ 
-                  delay: (index * 0.05) + (displayFriends.length * 0.1) + 0.2,
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20
-                }}
-                className="w-[18px] h-[18px] rounded-full bg-orange-500 text-white flex items-center justify-center border-[2px] border-white shadow-md"
-                style={{
-                  marginLeft: '-6px',
-                }}
-              >
-                <span className="text-[8px] font-bold">+{remainingCount}</span>
-              </motion.div>
-            )}
-          </div>
-        )}
-
-        {/* Live Indicator */}
-        {index === 0 && !isViewed && (
-          <div className="absolute -top-0.5 -left-0.5 z-20">
-            <div className="relative">
-            </div>
-          </div>
-        )}
       </div>
 
-      {/* Username */}
       <span className={`text-[10px] tracking-wide mt-1 transition-colors max-w-[72px] truncate ${
         !isViewed 
           ? "font-bold text-stone-900" 
@@ -143,6 +92,46 @@ function StoryCircle({ story, index, onClick, isMyStory = false }: {
 }
 
 export function Stories({ onStoryClick }: StoriesProps) {
+  const { profile } = useAuth();
+  const avatarUrl = profile?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800';
+  const [dbStories, setDbStories] = useState<DBStory[]>([]);
+
+  useEffect(() => {
+    async function fetchStories() {
+      try {
+        const { data, error } = await supabase
+          .from('stories')
+          .select(`
+            id,
+            user_id,
+            media_url,
+            media_type,
+            profiles (
+              first_name,
+              avatar_url
+            )
+          `)
+          .gt('expires_at', new Date().toISOString());
+
+        if (data && !error) {
+          const formatted: DBStory[] = data.map((story: any) => ({
+            id: story.id,
+            user_id: story.user_id,
+            media_url: story.media_url,
+            media_type: story.media_type,
+            username: story.profiles?.first_name ? story.profiles.first_name.toLowerCase() : 'traveler',
+            avatarUrl: story.profiles?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800',
+            isViewed: false
+          }));
+          setDbStories(formatted);
+        }
+      } catch (err) {
+        console.error('Error fetching stories:', err);
+      }
+    }
+    fetchStories();
+  }, []);
+
   const handleMyStoryClick = () => {
     console.log('Create/View my story');
     if (navigator.vibrate) navigator.vibrate(30);
@@ -151,15 +140,14 @@ export function Stories({ onStoryClick }: StoriesProps) {
   return (
     <div className="flex flex-col w-full pb-3 pt-3">
       <div className="flex gap-3 overflow-x-auto scrollbar-hide px-4 items-end pb-2">
-        {/* My Story */}
         <StoryCircle 
           index={-1} 
           onClick={handleMyStoryClick}
           isMyStory 
+          myAvatarUrl={avatarUrl}
         />
         
-        {/* Friends Stories */}
-        {STORIES_DATA.map((story, index) => (
+        {dbStories.map((story, index) => (
           <StoryCircle 
             key={story.id}
             story={story}

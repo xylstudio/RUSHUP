@@ -215,9 +215,7 @@ export default function App({ services = [], orders = [], profile = null }: { se
     }));
   }, [services]);
 
-  const finalPosts = useMemo(() => {
-    return dbPosts.length > 0 ? dbPosts : dynamicPosts;
-  }, [dbPosts, dynamicPosts]);
+  const finalPosts = dbPosts;
   const [showHotelModal, setShowHotelModal] = useState(false);
   const [showCarRentalModal, setShowCarRentalModal] = useState(false);
   const [selectedBookingPost, setSelectedBookingPost] = useState<PostData | null>(null);
