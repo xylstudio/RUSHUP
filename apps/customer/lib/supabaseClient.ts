@@ -10,7 +10,7 @@ import {
 // ============================================================================
 
 // Enum Types (matching SQL schema exactly)
-export type UserRole = 'customer' | 'staff' | 'admin';
+export type UserRole = 'customer' | 'staff' | 'admin' | 'merchant';
 export type HouseTypeEnum = 'บ้านเดี่ยว' | 'คาเฟ่/ร้านอาหาร' | 'โรงแรม/รีสอร์ท' | 'โครงการหมู่บ้าน/คอนโด';
 export type OrderStatus = 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled';
 export type MeasurementStatus = 'pending' | 'assigned' | 'in_progress' | 'completed' | 'cancelled';
@@ -3384,3 +3384,35 @@ export const getSystemFeatures = async (): Promise<{ data: SystemFeatures, error
     return { data: DEFAULT_SYSTEM_FEATURES, error }
   }
 }
+
+// ==========================================
+// Admin Approvals (Merchants & Riders)
+// ==========================================
+export const getPendingApprovals = async (role: 'merchant' | 'staff'): Promise<{ data: Profile[] | null; error: any }> => {
+  try {
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('role', role)
+      .eq('is_verified', false)
+      .order('created_at', { ascending: false });
+
+    return { data: data as Profile[], error };
+  } catch (error) {
+    return { data: null, error };
+  }
+};
+
+export const approveUser = async (userId: string): Promise<{ error: any }> => {
+  try {
+    const { error } = await supabase
+      .from('profiles')
+      .update({ is_verified: true, is_active: true })
+      .eq('id', userId);
+
+    return { error };
+  } catch (error) {
+    return { error };
+  }
+};
+

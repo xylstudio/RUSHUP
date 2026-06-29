@@ -81,6 +81,7 @@ const copyByLocale: Record<Locale, Record<string, string>> = {
     staffAttendance: 'การลงเวลาและเงินเดือน',
     staffVerification: 'ตรวจสอบพนักงานใหม่',
     promotions: 'โปรโมชั่น',
+    approvals: 'อนุมัติบัญชีร้าน/คนขับ',
   },
   en: {
     dashboard: 'Dashboard',
@@ -127,6 +128,7 @@ const copyByLocale: Record<Locale, Record<string, string>> = {
     staffAttendance: 'Staff Attendance & Payroll',
     staffVerification: 'Staff Verification',
     promotions: 'Promotions',
+    approvals: 'Account Approvals',
   },
   zh: {
     dashboard: '仪表盘',
@@ -172,6 +174,7 @@ const copyByLocale: Record<Locale, Record<string, string>> = {
     posSettings: 'POS与分支设置',
     staffVerification: '员工核查',
     promotions: '促销',
+    approvals: '账户审批',
   },
 }
 
@@ -399,6 +402,11 @@ export default function Sidebar({ isOpen, onMenuClick, isLocked, onLockToggle, o
               name: copy.branches,
               href: '/dashboard/admin/branches',
               current: pathname.startsWith('/dashboard/admin/branches'),
+            },
+            {
+              name: (copy as any).approvals || 'Approvals',
+              href: '/dashboard/admin/approvals',
+              current: pathname.startsWith('/dashboard/admin/approvals'),
             },
             {
               name: copy.staffAttendance || 'Attendance',

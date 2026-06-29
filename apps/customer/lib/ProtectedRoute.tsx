@@ -55,6 +55,14 @@ export default function ProtectedRoute({ children, allowedRoles }: ProtectedRout
           return
         }
 
+        // Block unverified merchants and staff from their respective dashboards
+        if (profile.is_verified === false && (profile.role === 'staff' || profile.role === 'merchant')) {
+          if (!pathname?.startsWith('/dashboard/pending')) {
+            router.push('/dashboard/pending')
+            return
+          }
+        }
+
         // Standard Authorization Check
         if (allowedRoles && !allowedRoles.includes(profile.role)) {
           if (profile.role === 'customer') router.push('/dashboard/customer')
