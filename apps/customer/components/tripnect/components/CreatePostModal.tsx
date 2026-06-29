@@ -11,7 +11,7 @@ interface CreatePostModalProps {
 }
 
 export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostModalProps) {
-  const { profile } = useAuth();
+  const { profile, user } = useAuth();
   const [caption, setCaption] = useState('');
   const [location, setLocation] = useState('');
   const [file, setFile] = useState<File | null>(null);
@@ -43,7 +43,8 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
   };
 
   const handlePost = async () => {
-    if (!file || !profile?.id) return;
+    const userId = profile?.id || user?.id;
+    if (!file || !userId) return;
 
     try {
       setIsUploading(true);
@@ -69,7 +70,7 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
 
       // 3. Insert post metadata into Supabase 'posts' table
       const { error } = await supabase.from('posts').insert({
-        user_id: profile.id,
+        user_id: userId,
         image_url: fileType === 'image' ? finalUrl : finalUrl + '#t=0.1', // Video thumbnail fallback
         video_url: fileType === 'video' ? finalUrl : null,
         caption: caption.trim(),
