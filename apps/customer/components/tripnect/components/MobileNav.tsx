@@ -226,13 +226,13 @@ export function MobileNav({
 
         {/* Center: Action Button */}
         <div className="flex-1 flex justify-center relative z-20 pb-2">
-            <button onClick={onPlusClick} className="group flex flex-col items-center justify-center -mt-6 relative select-none touch-none">
-                <div className="w-[44px] h-[44px] rounded-2xl flex items-center justify-center border-[4px] border-white relative z-10 overflow-hidden bg-orange-400 transition-transform active:scale-95 shadow-sm">
+            <button {...plusButtonHandlers} className="group flex flex-col items-center justify-center -mt-6 relative select-none touch-none">
+                <div className="w-[44px] h-[44px] rounded-2xl flex items-center justify-center border-[4px] border-white relative z-10 overflow-hidden bg-orange-400 transition-transform active:scale-95 shadow-sm" style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}>
                     <motion.div 
                         className="absolute bottom-0 left-0 w-full bg-orange-600"
                         initial={{ height: "0%" }}
-                        animate={{ height: activeContext ? "100%" : "0%" }}
-                        transition={{ duration: 0.2, ease: "linear" }}
+                        animate={{ height: activeContext ? "100%" : isPlusPressing ? "100%" : "0%" }}
+                        transition={{ duration: isPlusPressing ? 0.6 : 0.2, ease: "linear" }}
                     />
 
                     {/* Icon */}

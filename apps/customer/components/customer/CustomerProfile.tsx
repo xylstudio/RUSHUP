@@ -130,28 +130,29 @@ const CustomerProfile: React.FC<CustomerProfileProps> = ({
   ]
 
   return (
-    <div className="screen-view h-full overflow-y-auto no-scrollbar pb-32 bg-white">
+    <div className="screen-view h-full overflow-y-auto no-scrollbar pb-32 bg-[#FAFAFA]">
       
-      {/* 1. COMPACT APP HEADER */}
-      <section className="pt-16 pb-12 px-6 border-b border-black/5">
-        <div className="flex items-center gap-6">
-          <div className="w-20 h-20 bg-[#1A1A18] text-[#E4BBAE] flex items-center justify-center text-3xl font-serif-thai rounded-none border border-black/10 shrink-0">
-            {displayName ? displayName.charAt(0).toUpperCase() : <User size={32} strokeWidth={1} />}
-          </div>
-          <div className="min-w-0 flex-1">
-            <h1 className="font-serif-thai text-3xl text-[#111111] leading-tight uppercase truncate">
-              {displayName || copy.memberLabel}
-            </h1>
-            <p className="sans-font text-[10px] font-bold text-black/30 uppercase tracking-widest mt-1 truncate">
-              {profile?.email}
-            </p>
-          </div>
+      {/* 1. INSTAGRAM STYLE HEADER */}
+      <section className="pt-16 pb-8 px-6 bg-white border-b border-gray-100">
+        <div className="flex justify-between items-start mb-6">
+          <div className="flex-1" />
           <button 
             onClick={async () => { await supabase.auth.signOut(); window.location.href = '/'; }}
-            className="w-12 h-12 border border-black/5 flex items-center justify-center text-black/30 hover:text-red-500 transition-colors"
+            className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors rounded-full"
           >
-            <LogOut size={18} strokeWidth={1.5} />
+            <LogOut size={20} strokeWidth={1.5} />
           </button>
+        </div>
+        <div className="flex flex-col items-center text-center">
+          <div className="w-24 h-24 bg-gray-100 text-gray-500 flex items-center justify-center text-4xl rounded-full mb-4 shadow-sm">
+            {displayName ? displayName.charAt(0).toUpperCase() : <User size={40} strokeWidth={1.5} />}
+          </div>
+          <h1 className="text-xl font-semibold text-gray-900 leading-tight">
+            {displayName || copy.memberLabel}
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            {profile?.email}
+          </p>
         </div>
       </section>
 
@@ -163,69 +164,75 @@ const CustomerProfile: React.FC<CustomerProfileProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="mt-8 px-6 space-y-3"
+            className="mt-6"
           >
-            <span className="sans-font text-[10px] font-black uppercase tracking-[0.3em] text-black/20 block mb-6 px-2">{copy.accountSettings || 'การตั้งค่าบัญชี'}</span>
-            
-            {/* Personal Info - Full Width List Item */}
-            <button 
-              onClick={() => setActiveTab('personal')}
-              className="w-full flex items-center gap-5 p-6 bg-[#FAF9F6] border border-black/5 rounded-none text-left active:bg-black active:text-white transition-all group"
-            >
-              <div className="w-10 h-10 flex items-center justify-center border border-black/5 group-active:border-white/20 transition-colors">
-                <User size={18} strokeWidth={1.5} />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-serif-thai text-lg uppercase tracking-tight">{copy.personalInfo || 'ข้อมูลส่วนตัว'}</h3>
-                <p className="sans-font text-[9px] font-bold text-black/30 group-active:text-white/40 uppercase tracking-widest mt-0.5">{copy.personalInfoDesc || 'แก้ไขชื่อ และข้อมูลติดต่อของคุณ'}</p>
-              </div>
-              <ArrowRight size={16} strokeWidth={1} className="text-black/20 group-active:text-white" />
-            </button>
-
-            {/* My Estates - Full Width List Item */}
-            <Link 
-              href="/dashboard/customer/houses"
-              className="w-full flex items-center gap-5 p-6 bg-white border border-black rounded-none text-left active:invert transition-all group"
-            >
-              <div className="w-10 h-10 flex items-center justify-center border border-black/5">
-                <Home size={18} strokeWidth={1.5} />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-serif-thai text-lg uppercase tracking-tight">{copy.myEstates || 'สถานที่ของฉัน'}</h3>
-                <p className="sans-font text-[9px] font-bold text-black/30 uppercase tracking-widest mt-0.5">{copy.myEstatesDesc || 'จัดการบ้าน และที่อยู่รับบริการ'}</p>
-              </div>
-              <ArrowRight size={16} strokeWidth={1} className="text-black/20" />
-            </Link>
-
-            <div className="pt-8 space-y-3">
-              <span className="sans-font text-[10px] font-black uppercase tracking-[0.3em] text-black/20 block mb-4 px-2">{copy.generalSettings || 'การตั้งค่าทั่วไป'}</span>
-              
-              {menuItems.filter(m => !['personal', 'houses'].includes(m.id)).map((item) => (
+            {/* Group 1: Personal & Estates */}
+            <div className="px-4 mb-6">
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-2">{copy.accountSettings || 'Account Settings'}</h3>
+              <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
                 <button 
-                  key={item.id}
-                  onClick={() => setActiveTab(item.id as ActiveTab)}
-                  className="w-full flex items-center gap-5 p-5 bg-white border border-black/5 rounded-none text-left active:bg-gray-50 transition-all group"
+                  onClick={() => setActiveTab('personal')}
+                  className="w-full flex items-center gap-4 p-4 text-left active:bg-gray-50 transition-colors border-b border-gray-50 group"
                 >
-                  <div className="w-10 h-10 flex items-center justify-center text-black/30 group-active:text-black transition-colors">
-                    {item.icon}
+                  <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center">
+                    <User size={20} strokeWidth={1.5} />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-serif-thai text-base uppercase tracking-tight">{item.label}</h3>
-                    <p className="sans-font text-[9px] font-bold text-black/20 uppercase tracking-widest mt-0.5">
-                      {item.sub}
-                    </p>
+                    <h4 className="text-base font-medium text-gray-800">{copy.personalInfo || 'Personal Information'}</h4>
                   </div>
-                  <ArrowRight size={16} strokeWidth={1} className="text-black/10" />
+                  <ArrowRight size={18} strokeWidth={1.5} className="text-gray-300 group-hover:text-gray-500" />
                 </button>
-              ))}
+
+                <Link 
+                  href="/dashboard/customer/houses"
+                  className="w-full flex items-center gap-4 p-4 text-left active:bg-gray-50 transition-colors group"
+                >
+                  <div className="w-10 h-10 rounded-full bg-green-50 text-green-500 flex items-center justify-center">
+                    <Home size={20} strokeWidth={1.5} />
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-base font-medium text-gray-800">{copy.myEstates || 'My Estates'}</h4>
+                  </div>
+                  <ArrowRight size={18} strokeWidth={1.5} className="text-gray-300 group-hover:text-gray-500" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Group 2: General Settings */}
+            <div className="px-4 mb-6">
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-2">{copy.generalSettings || 'General Settings'}</h3>
+              <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                {menuItems.filter(m => !['personal', 'houses'].includes(m.id)).map((item, index, arr) => (
+                  <button 
+                    key={item.id}
+                    onClick={() => setActiveTab(item.id as ActiveTab)}
+                    className={`w-full flex items-center gap-4 p-4 text-left active:bg-gray-50 transition-colors group ${index < arr.length - 1 ? 'border-b border-gray-50' : ''}`}
+                  >
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      item.id === 'line' ? 'bg-[#06C755]/10 text-[#06C755]' :
+                      item.id === 'language' ? 'bg-orange-50 text-orange-500' :
+                      'bg-gray-100 text-gray-600'
+                    }`}>
+                      {item.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-base font-medium text-gray-800">{item.label}</h4>
+                      {item.id === 'line' && (
+                        <p className="text-xs text-gray-500 mt-0.5">{item.sub}</p>
+                      )}
+                    </div>
+                    <ArrowRight size={18} strokeWidth={1.5} className="text-gray-300 group-hover:text-gray-500" />
+                  </button>
+                ))}
+              </div>
             </div>
             
-            <div className="pt-12">
+            <div className="px-4 pb-8">
               <button 
                 onClick={async () => { await supabase.auth.signOut(); window.location.href = '/'; }}
-                className="w-full py-5 border border-red-100 text-red-500 sans-font text-[11px] font-black uppercase tracking-[0.4em] active:bg-red-50 transition-all"
+                className="w-full py-4 text-red-500 text-sm font-medium rounded-2xl active:bg-red-50 transition-colors text-center bg-white border border-gray-100 shadow-sm"
               >
-                {copy.logoutLabel || 'ออกจากระบบ (Logout)'}
+                {copy.logoutLabel || 'Log Out'}
               </button>
             </div>
           </motion.div>
@@ -236,133 +243,118 @@ const CustomerProfile: React.FC<CustomerProfileProps> = ({
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="mt-8 px-6"
+            className="mt-6 px-4"
           >
             {/* Sub Header */}
-            <div className="flex items-center gap-4 mb-10 pb-6 border-b border-black/5">
-              <button onClick={() => setActiveTab('menu')} className="w-10 h-10 flex items-center justify-center border border-black/5 active:bg-black active:text-white transition-all">
-                <ArrowLeft size={18} strokeWidth={1.5} />
+            <div className="flex items-center gap-4 mb-6">
+              <button onClick={() => setActiveTab('menu')} className="w-10 h-10 flex items-center justify-center rounded-full active:bg-gray-200 transition-colors">
+                <ArrowLeft size={24} strokeWidth={1.5} className="text-gray-900" />
               </button>
-              <h2 className="font-serif-thai text-xl uppercase tracking-tight text-[#111111]">
-                {activeTab === 'personal' ? (copy.editPersonalInfo || 'แก้ไขข้อมูลส่วนตัว') : activeTab === 'line' ? (copy.lineNotificationHeader || 'การแจ้งเตือน LINE') : activeTab === 'language' ? (copy.languageSettingsTitle || 'ตั้งค่าภาษา') : (copy.securityLabel || 'ความปลอดภัย')}
+              <h2 className="text-xl font-semibold text-gray-900">
+                {activeTab === 'personal' ? (copy.editPersonalInfo || 'Edit Profile') : activeTab === 'line' ? (copy.lineNotificationHeader || 'LINE Notifications') : activeTab === 'language' ? (copy.languageSettingsTitle || 'Language Settings') : (copy.securityLabel || 'Security')}
               </h2>
             </div>
 
-            <div className="space-y-10">
+            <div className="space-y-6">
               {activeTab === 'personal' && (
-                <form onSubmit={handleUpdateProfile} className="space-y-8">
-                  <div className="space-y-8">
-                    <div className="space-y-3">
-                      <label className="sans-font text-[10px] font-black uppercase tracking-[0.3em] text-black/30 px-1">{copy.displayNameLabel || 'ชื่อที่แสดง'}</label>
+                <form onSubmit={handleUpdateProfile} className="space-y-6 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+                  <div className="space-y-5">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-600 px-1">{copy.displayNameLabel || 'Display Name'}</label>
                       <input 
                         type="text" 
                         value={displayName} 
                         onChange={(e) => setDisplayName(e.target.value)} 
-                        className="w-full bg-[#FAF9F6] border border-black/5 focus:border-black rounded-none p-4 text-base transition-all outline-none" 
-                        placeholder={copy.displayNamePlaceholder || 'ระบุชื่อ-นามสกุลของคุณ'}
+                        className="w-full bg-gray-50 border border-gray-200 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 rounded-2xl p-4 text-base transition-all outline-none" 
+                        placeholder={copy.displayNamePlaceholder || 'Your Name'}
                       />
                     </div>
-                    <div className="space-y-3">
-                      <label className="sans-font text-[10px] font-black uppercase tracking-[0.3em] text-black/30 px-1">{copy.phoneNumberLabel || 'เบอร์โทรศัพท์ติดต่อ'}</label>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-600 px-1">{copy.phoneNumberLabel || 'Phone Number'}</label>
                       <input 
                         type="tel" 
                         value={phone} 
                         onChange={(e) => setPhone(e.target.value)} 
-                        className="w-full bg-[#FAF9F6] border border-black/5 focus:border-black rounded-none p-4 text-base transition-all outline-none" 
+                        className="w-full bg-gray-50 border border-gray-200 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 rounded-2xl p-4 text-base transition-all outline-none" 
                         placeholder={copy.phonePlaceholder || '08X XXX XXXX'}
                       />
                     </div>
-                    <div className="space-y-3">
-                      <label className="sans-font text-[10px] font-black uppercase tracking-[0.3em] text-black/30 px-1">{copy.contactAddressLabel || 'ที่อยู่ติดต่อ'}</label>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium text-gray-600 px-1">{copy.contactAddressLabel || 'Address'}</label>
                       <textarea 
                         rows={3} 
                         value={address} 
                         onChange={(e) => setAddress(e.target.value)} 
-                        className="w-full bg-[#FAF9F6] border border-black/5 focus:border-black rounded-none p-4 text-base transition-all outline-none resize-none" 
-                        placeholder={copy.addressPlaceholder || 'ระบุที่อยู่สำหรับการจัดส่งหรือติดต่อ...'}
+                        className="w-full bg-gray-50 border border-gray-200 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 rounded-2xl p-4 text-base transition-all outline-none resize-none" 
+                        placeholder={copy.addressPlaceholder || 'Your Address...'}
                       />
                     </div>
                   </div>
                   <button 
                     type="submit" 
                     disabled={isSubmitting} 
-                    className="w-full py-5 bg-black text-white rounded-none sans-font text-[11px] font-black uppercase tracking-[0.5em] active:opacity-80 transition-all flex items-center justify-center gap-4"
+                    className="w-full py-4 mt-2 bg-gray-900 text-white rounded-2xl text-base font-medium active:bg-gray-800 transition-colors flex items-center justify-center gap-2"
                   >
-                    {isSubmitting && <Loader2 size={16} className="animate-spin" />}
-                    {isSubmitting ? (copy.savingChanges || 'กำลังบันทึก...') : (copy.saveChanges || 'บันทึกการเปลี่ยนแปลง')}
+                    {isSubmitting && <Loader2 size={18} className="animate-spin" />}
+                    {isSubmitting ? (copy.savingChanges || 'Saving...') : (copy.saveChanges || 'Save Changes')}
                   </button>
                 </form>
               )}
 
               {activeTab === 'line' && (
-                <div className="space-y-8">
-                  <div className="border border-black p-10 text-center space-y-8">
-                    <div className="flex justify-center">
-                      <div className={`w-16 h-16 flex items-center justify-center border border-black/5 ${lineUserId ? 'bg-[#06C755] text-white' : 'bg-[#FAF9F6] text-black/20'}`}>
-                        <MessageCircle size={24} strokeWidth={1.5} />
-                      </div>
+                <div className="bg-white border border-gray-100 rounded-3xl p-8 text-center shadow-sm">
+                  <div className="flex justify-center mb-6">
+                    <div className={`w-20 h-20 rounded-full flex items-center justify-center ${lineUserId ? 'bg-[#06C755] text-white' : 'bg-gray-100 text-gray-400'}`}>
+                      <MessageCircle size={32} strokeWidth={1.5} />
                     </div>
-                    <div className="space-y-2">
-                      <h4 className="font-serif-thai text-xl uppercase tracking-tight">LINE Official Connect</h4>
-                      <p className="sans-font text-[9px] font-bold text-black/30 font-black uppercase tracking-widest">
-                        {lineUserId ? (copy.serviceConnected || 'เชื่อมต่อบริการแล้ว') : (copy.notConnected || 'ยังไม่ได้เชื่อมต่อ')}
-                      </p>
-                    </div>
-                    <p className="sans-font text-[11px] text-gray-400 leading-relaxed font-medium uppercase tracking-[0.1em]">
-                      {copy.lineConnectDesc || 'เชื่อมต่อเพื่อรับการแจ้งเตือนสถานะงานดูแลสวนแบบเรียลไทม์ผ่าน LINE Official Account ของเรา'}
-                    </p>
-                    <a 
-                      href="/api/auth/line/link" 
-                      className={`w-full py-4 text-[11px] font-black uppercase tracking-[0.4em] text-center block transition-all ${lineUserId ? 'bg-white text-black border border-black' : 'bg-[#06C755] text-white'}`}
-                    >
-                      {lineUserId ? (copy.updateConnection || 'อัปเดตการเชื่อมต่อ') : (copy.connectLineNow || 'เชื่อมต่อ LINE ทันที')}
-                    </a>
                   </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">LINE Official Connect</h4>
+                  <p className={`text-sm font-medium mb-4 ${lineUserId ? 'text-[#06C755]' : 'text-gray-500'}`}>
+                    {lineUserId ? (copy.serviceConnected || 'Connected') : (copy.notConnected || 'Not Connected')}
+                  </p>
+                  <p className="text-sm text-gray-500 leading-relaxed mb-8">
+                    {copy.lineConnectDesc || 'Connect with LINE to receive real-time notifications for your garden care services.'}
+                  </p>
+                  <a 
+                    href="/api/auth/line/link" 
+                    className={`w-full py-4 text-sm font-semibold rounded-2xl text-center block transition-colors ${lineUserId ? 'bg-gray-100 text-gray-800 active:bg-gray-200' : 'bg-[#06C755] text-white active:bg-[#05b34c]'}`}
+                  >
+                    {lineUserId ? (copy.updateConnection || 'Update Connection') : (copy.connectLineNow || 'Connect LINE')}
+                  </a>
                 </div>
               )}
 
               {activeTab === 'language' && (
-                <div className="space-y-8">
-                  <div className="border border-black p-10 text-center space-y-8">
-                    <div className="flex justify-center">
-                      <div className="w-16 h-16 flex items-center justify-center border border-black/5 bg-[#FAF9F6] text-orange-500">
-                        <Languages size={24} strokeWidth={1.5} />
-                      </div>
+                <div className="bg-white border border-gray-100 rounded-3xl p-8 text-center shadow-sm">
+                  <div className="flex justify-center mb-6">
+                    <div className="w-20 h-20 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center">
+                      <Languages size={32} strokeWidth={1.5} />
                     </div>
-                    <div className="space-y-2">
-                      <h4 className="font-serif-thai text-xl uppercase tracking-tight">{copy.languageSettingsTitle || 'การตั้งค่าภาษา'}</h4>
-                      <p className="sans-font text-[9px] font-bold text-black/30 font-black uppercase tracking-widest">
-                        {copy.selectLanguageDesc || 'เลือกภาษาที่ใช้ในระบบ'}
-                      </p>
-                    </div>
-                    <div className="text-left mt-8">
-                      <LanguageSettings />
-                    </div>
+                  </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">{copy.languageSettingsTitle || 'Language Settings'}</h4>
+                  <p className="text-sm text-gray-500 mb-8">
+                    {copy.selectLanguageDesc || 'Select your preferred language.'}
+                  </p>
+                  <div className="text-left bg-gray-50 rounded-2xl p-4 border border-gray-100">
+                    <LanguageSettings />
                   </div>
                 </div>
               )}
 
               {activeTab === 'security' && (
-                <div className="space-y-8">
-                  <div className="border border-black p-10 text-center space-y-8">
-                    <div className="flex justify-center">
-                      <div className="w-16 h-16 flex items-center justify-center border border-black/5 bg-[#FAF9F6] text-black">
-                        <Lock size={24} strokeWidth={1.5} />
-                      </div>
+                <div className="bg-white border border-gray-100 rounded-3xl p-8 text-center shadow-sm">
+                  <div className="flex justify-center mb-6">
+                    <div className="w-20 h-20 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center">
+                      <Lock size={32} strokeWidth={1.5} />
                     </div>
-                    <div className="space-y-2">
-                      <h4 className="font-serif-thai text-xl uppercase tracking-tight">{copy.securityLabel || 'ความปลอดภัย'}</h4>
-                      <p className="sans-font text-[9px] font-bold text-black/30 font-black uppercase tracking-widest">
-                        {copy.passwordManagement || 'การจัดการรหัสผ่าน'}
-                      </p>
-                    </div>
-                    <p className="sans-font text-[11px] text-gray-400 leading-relaxed font-medium uppercase tracking-[0.1em]">
-                      {copy.passwordDesc || 'การเปลี่ยนรหัสผ่านเป็นประจำช่วยเพิ่มความปลอดภัยให้กับบัญชีของคุณ'}
-                    </p>
-                    <button className="w-full py-4 border border-black text-black bg-white sans-font text-[11px] font-black uppercase tracking-[0.4em] active:bg-black active:text-white transition-all">
-                      {copy.changePassword || 'เปลี่ยนรหัสผ่านใหม่'}
-                    </button>
                   </div>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">{copy.securityLabel || 'Security'}</h4>
+                  <p className="text-sm text-gray-500 mb-8 leading-relaxed">
+                    {copy.passwordDesc || 'Manage your password to keep your account secure.'}
+                  </p>
+                  <button className="w-full py-4 bg-gray-100 text-gray-800 rounded-2xl text-sm font-semibold active:bg-gray-200 transition-colors">
+                    {copy.changePassword || 'Change Password'}
+                  </button>
                 </div>
               )}
             </div>
@@ -377,15 +369,15 @@ const CustomerProfile: React.FC<CustomerProfileProps> = ({
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             exit={{ opacity: 0, y: 20 }} 
-            className="fixed bottom-10 left-6 right-6 z-[300]"
+            className="fixed bottom-24 left-6 right-6 z-[300] flex justify-center"
           >
-            <div className={`p-5 border shadow-xl flex items-center gap-4 ${
+            <div className={`px-6 py-3 rounded-full shadow-lg flex items-center gap-3 ${
               feedback.type === 'success' 
-              ? 'bg-black text-[#E4BBAE] border-black' 
-              : 'bg-red-700 text-white border-red-800'
+              ? 'bg-gray-900 text-white' 
+              : 'bg-red-600 text-white'
             }`}>
-              {feedback.type === 'success' ? <Check size={16} /> : <Info size={16} />}
-              <span className="sans-font text-[11px] font-black uppercase tracking-widest">{feedback.message}</span>
+              {feedback.type === 'success' ? <Check size={18} /> : <Info size={18} />}
+              <span className="text-sm font-medium">{feedback.message}</span>
             </div>
           </motion.div>
         )}

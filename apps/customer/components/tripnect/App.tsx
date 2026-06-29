@@ -517,7 +517,8 @@ export default function App({ services = [], orders = [], profile = null }: { se
               showMagicRandomizer={showMagicRandomizer}
               isMenuOpen={isMobileMenuOpen}
               setIsMenuOpen={setIsMobileMenuOpen}
-              onPlusClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              plusButtonHandlers={plusButtonHandlers}
+              isPlusPressing={isPlusButtonPressing}
               activeContext={activeContext} 
               onCreatePostClick={() => setIsCreatePostOpen(true)}
           />
