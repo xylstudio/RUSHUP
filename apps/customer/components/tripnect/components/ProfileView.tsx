@@ -120,15 +120,28 @@ export function ProfileView() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const { theme, toggleTheme } = useTheme();
-  const { profile } = useAuth();
+  const { profile, user, loading } = useAuth();
   
-  // Maps DB profile to component expected structure
-  const viewingUser = profile ? {
-    id: profile.id,
-    fullName: profile.first_name ? `${profile.first_name} ${profile.last_name || ''}`.trim() : 'นักเดินทางไร้นาม',
-    username: profile.first_name ? profile.first_name.toLowerCase() : 'traveler',
-    avatarUrl: profile.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800',
-  } : null;
+  // Maps DB profile to component expected structure, fallback to auth user if profile is missing
+  const viewingUser = useMemo(() => {
+    if (profile) {
+      return {
+        id: profile.id,
+        fullName: profile.first_name ? `${profile.first_name} ${profile.last_name || ''}`.trim() : 'นักเดินทางไร้นาม',
+        username: profile.first_name ? profile.first_name.toLowerCase() : 'traveler',
+        avatarUrl: profile.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800',
+      };
+    }
+    if (user) {
+      return {
+        id: user.id,
+        fullName: user.email?.split('@')[0] || 'นักเดินทางใหม่',
+        username: user.email?.split('@')[0] || 'traveler',
+        avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800',
+      };
+    }
+    return null;
+  }, [profile, user]);
 
   const isOwnProfile = true;
   
@@ -198,8 +211,12 @@ export function ProfileView() {
     ชนบท: CHIANG_MAI_DISTRICTS.filter(d => d.zone === 'ชนบท'),
   };
 
-  if (!viewingUser) {
+  if (loading) {
     return <div className="min-h-screen bg-white dark:bg-stone-950 flex items-center justify-center text-stone-500">กำลังโหลดข้อมูลโปรไฟล์...</div>;
+  }
+
+  if (!viewingUser) {
+    return <div className="min-h-screen bg-white dark:bg-stone-950 flex items-center justify-center text-stone-500">ไม่พบข้อมูลโปรไฟล์ กรุณาเข้าสู่ระบบใหม่อีกครั้ง</div>;
   }
 
   return (
