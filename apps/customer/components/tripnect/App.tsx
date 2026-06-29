@@ -35,6 +35,7 @@ import { MyPostsView } from './components/MyPostsView';
 import { SettingsView } from './components/SettingsView';
 import { HelpCenterView } from './components/HelpCenterView';
 import { SearchView } from './components/SearchView';
+import { CreatePostModal } from './components/CreatePostModal';
 
 // Import ThemeProvider
 import { ThemeProvider } from './contexts/ThemeContext';
@@ -129,56 +130,58 @@ function useLongPress(
 
 export default function App({ services = [], orders = [], profile = null }: { services?: any[], orders?: any[], profile?: any }) {
   const [dbPosts, setDbPosts] = useState<PostData[]>([]);
+  const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
+
+  const fetchPosts = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('posts')
+        .select(`
+          id,
+          image_url,
+          video_url,
+          caption,
+          location,
+          price,
+          discount,
+          created_at,
+          user_id,
+          profiles (
+            id,
+            first_name,
+            last_name,
+            avatar_url
+          )
+        `)
+        .order('created_at', { ascending: false });
+
+      if (data && !error) {
+        const formatted: PostData[] = data.map((post: any) => ({
+          id: post.id,
+          user: {
+            id: post.profiles?.id || post.user_id,
+            username: post.profiles?.first_name ? post.profiles.first_name.toLowerCase() : 'traveler',
+            fullName: post.profiles ? `${post.profiles.first_name || ''} ${post.profiles.last_name || ''}`.trim() : 'นักเดินทางไร้นาม',
+            avatarUrl: post.profiles?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800',
+            rating: 9.5
+          },
+          imageUrl: post.image_url,
+          videoUrl: post.video_url || undefined,
+          likes: 0,
+          caption: post.caption || '',
+          timestamp: new Date(post.created_at).toLocaleDateString('th-TH'),
+          comments: 0
+        }));
+        setDbPosts(formatted);
+      }
+    } catch (err) {
+      console.error('Error fetching posts:', err);
+    }
+  }, []);
 
   useEffect(() => {
-    async function fetchPosts() {
-      try {
-        const { data, error } = await supabase
-          .from('posts')
-          .select(`
-            id,
-            image_url,
-            video_url,
-            caption,
-            location,
-            price,
-            discount,
-            created_at,
-            user_id,
-            profiles (
-              id,
-              first_name,
-              last_name,
-              avatar_url
-            )
-          `)
-          .order('created_at', { ascending: false });
-
-        if (data && !error) {
-          const formatted: PostData[] = data.map((post: any) => ({
-            id: post.id,
-            user: {
-              id: post.profiles?.id || post.user_id,
-              username: post.profiles?.first_name ? post.profiles.first_name.toLowerCase() : 'traveler',
-              fullName: post.profiles ? `${post.profiles.first_name || ''} ${post.profiles.last_name || ''}`.trim() : 'นักเดินทางไร้นาม',
-              avatarUrl: post.profiles?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800',
-              rating: 9.5
-            },
-            imageUrl: post.image_url,
-            videoUrl: post.video_url || undefined,
-            likes: 0,
-            caption: post.caption || '',
-            timestamp: new Date(post.created_at).toLocaleDateString('th-TH'),
-            comments: 0
-          }));
-          setDbPosts(formatted);
-        }
-      } catch (err) {
-        console.error('Error fetching posts:', err);
-      }
-    }
     fetchPosts();
-  }, []);
+  }, [fetchPosts]);
   const [activeTab, setActiveTab] = useState<'home' | 'search' | 'mail' | 'wallet'>('home');
   const [activeCategory, setActiveCategory] = useState<Category | 'all'>('food'); // Default to food for RUSHUP
   const [homeTab, setHomeTab] = useState<'foryou' | 'following'>('foryou');
@@ -517,6 +520,7 @@ export default function App({ services = [], orders = [], profile = null }: { se
               plusButtonHandlers={plusButtonHandlers}
               isPlusPressing={isPlusButtonPressing}
               activeContext={activeContext} 
+              onCreatePostClick={() => setIsCreatePostOpen(true)}
           />
         </motion.div>
       )}
@@ -571,7 +575,7 @@ export default function App({ services = [], orders = [], profile = null }: { se
 
       {/* Desktop Sidebar */}
       <div className="hidden md:block fixed z-50 h-full">
-         <Sidebar />
+         <Sidebar onCreateClick={() => setIsCreatePostOpen(true)} />
       </div>
 
       {/* Fullscreen Video */}
@@ -592,6 +596,13 @@ export default function App({ services = [], orders = [], profile = null }: { se
             onClose={() => setIsStoriesViewerOpen(false)} 
         />
       )}
+
+      {/* Create Post Modal */}
+      <CreatePostModal 
+          isOpen={isCreatePostOpen}
+          onClose={() => setIsCreatePostOpen(false)}
+          onPostCreated={fetchPosts}
+      />
     </div>
     </ThemeProvider>
   );

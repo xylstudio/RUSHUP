@@ -109,6 +109,7 @@ interface MobileNavProps {
   plusButtonHandlers?: any;
   isPlusPressing?: boolean;
   activeContext?: string | null;
+  onCreatePostClick?: () => void;
 }
 
 export function MobileNav({ 
@@ -123,7 +124,8 @@ export function MobileNav({
     setIsMenuOpen,
     plusButtonHandlers,
     isPlusPressing = false,
-    activeContext
+    activeContext,
+    onCreatePostClick
 }: MobileNavProps) {
   
   const getIconProps = (tabName: string) => {
@@ -162,7 +164,7 @@ export function MobileNav({
             <div className="w-10 h-1 bg-slate-100 rounded-full mx-auto mb-6" />
             
             <div className="flex justify-evenly items-start mb-6">
-                <button className="flex flex-col items-center gap-1.5 group w-16">
+                <button onClick={() => { if(setIsMenuOpen && onCreatePostClick) { setIsMenuOpen(false); onCreatePostClick(); } }} className="flex flex-col items-center gap-1.5 group w-16">
                     <div className="w-12 h-12 rounded-full bg-slate-50 border border-slate-100 flex items-center justify-center group-active:scale-95 transition-transform duration-200">
                         <Image className="w-5 h-5 text-slate-900" strokeWidth={1.5} />
                     </div>

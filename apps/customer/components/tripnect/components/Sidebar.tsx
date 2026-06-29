@@ -4,9 +4,10 @@ import { useAuth } from '../../../lib/AuthContext';
 
 interface SidebarProps {
   className?: string;
+  onCreateClick?: () => void;
 }
 
-export function Sidebar({ className }: SidebarProps) {
+export function Sidebar({ className, onCreateClick }: SidebarProps) {
   const { profile } = useAuth();
   const avatarUrl = profile?.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800';
 
@@ -17,7 +18,7 @@ export function Sidebar({ className }: SidebarProps) {
     { icon: Film, label: 'วิดีโอ' },
     { icon: MessageCircle, label: 'ข้อความ' },
     { icon: Heart, label: 'การแจ้งเตือน' },
-    { icon: PlusSquare, label: 'สร้าง' },
+    { icon: PlusSquare, label: 'สร้าง', action: 'create' },
     { 
       icon: null, 
       label: 'โปรไฟล์', 
@@ -47,6 +48,12 @@ export function Sidebar({ className }: SidebarProps) {
           <a
             key={item.label}
             href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              if (item.action === 'create' && onCreateClick) {
+                onCreateClick();
+              }
+            }}
             className={clsx(
               "flex items-center p-3 rounded-xl transition-all duration-200 group",
               item.active 
