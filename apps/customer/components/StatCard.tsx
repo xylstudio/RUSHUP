@@ -10,30 +10,28 @@ interface StatCardProps {
 
 export default function StatCard({ icon, value, label, subtext, loading = false }: StatCardProps) {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col gap-2 min-w-[180px] relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:scale-[1.02] hover:border-green-xylem/20 group cursor-pointer">
-      {/* Accent top border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-green-xylem transition-all duration-300 group-hover:h-1.5"></div>
-      
-      {/* Icon with green color */}
-      <div className="mb-2 text-green-xylem transition-transform duration-300 group-hover:scale-110">{icon}</div>
+    <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-stone-100/50 p-6 flex flex-col gap-3 min-w-[180px] relative overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/10 hover:-translate-y-1 hover:border-orange-200 group cursor-pointer">
+      {/* Icon with orange gradient background */}
+      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-orange-100 to-orange-50 flex items-center justify-center text-orange-600 transition-transform duration-300 group-hover:scale-110 shadow-sm shadow-orange-100">
+        {icon}
+      </div>
       
       {loading ? (
         // Skeleton loading state
-        <>
-          <div className="h-8 bg-gray-200 rounded animate-pulse mb-2"></div>
-          <div className="h-4 bg-gray-200 rounded animate-pulse mb-1 w-3/4"></div>
-          {subtext && <div className="h-3 bg-gray-200 rounded animate-pulse w-1/2"></div>}
-        </>
+        <div className="mt-2">
+          <div className="h-8 bg-stone-200 rounded-lg animate-pulse mb-3 w-1/2"></div>
+          <div className="h-4 bg-stone-100 rounded-md animate-pulse w-3/4"></div>
+        </div>
       ) : (
-        <>
-          <div className="text-3xl font-bold text-gray-900 transition-colors duration-300 group-hover:text-green-xylem">{value}</div>
-          <div className="text-sm text-gray-500 font-medium uppercase tracking-wide transition-colors duration-300 group-hover:text-gray-700">{label}</div>
-          {subtext && <div className="text-xs text-gray-400 mt-1 transition-colors duration-300 group-hover:text-gray-500">{subtext}</div>}
-        </>
+        <div className="mt-1">
+          <div className="text-3xl font-extrabold text-stone-900 transition-colors duration-300">{value}</div>
+          <div className="text-[13px] text-stone-500 font-bold mt-1 transition-colors duration-300 group-hover:text-stone-700">{label}</div>
+          {subtext && <div className="text-[11px] text-stone-400 mt-1.5 transition-colors duration-300 font-medium">{subtext}</div>}
+        </div>
       )}
       
       {/* Subtle background pattern on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-xylem/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+      <div className="absolute -bottom-10 -right-10 w-32 h-32 bg-gradient-to-tl from-orange-500/5 to-transparent rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none blur-2xl"></div>
     </div>
   );
 } 
