@@ -1,24 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { createAnonSupabaseServerClient } from '../../../../lib/server/compliance';
 
 export async function POST(request: NextRequest) {
   try {
-    // 1. Authenticate user
-    const supabase = createAnonSupabaseServerClient();
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
-
-    if (authError || !user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
-    // 2. Parse request body
+    // 1. Parse request body
     const body = await request.json();
-    const { filename, contentType } = body;
+    const { filename, contentType, userId } = body;
 
-    if (!filename || !contentType) {
-      return NextResponse.json({ error: 'Missing filename or contentType' }, { status: 400 });
+    if (!filename || !contentType || !userId) {
+      return NextResponse.json({ error: 'Missing filename, contentType, or userId' }, { status: 400 });
     }
 
     // 3. Setup S3 Client for Cloudflare R2
@@ -45,7 +36,7 @@ export async function POST(request: NextRequest) {
     // Format: users/{userId}/avatar/{timestamp}_{filename}
     const timestamp = Date.now();
     const safeFilename = filename.replace(/[^a-zA-Z0-9.-]/g, '_');
-    const objectKey = `users/${user.id}/avatar/${timestamp}_${safeFilename}`;
+    const objectKey = `users/${userId}/avatar/${timestamp}_${safeFilename}`;
 
     // 5. Create presigned URL command
     const command = new PutObjectCommand({

@@ -53,7 +53,7 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
       const res = await fetch('/api/upload/presign', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ filename: file.name, contentType: file.type }),
+        body: JSON.stringify({ filename: file.name, contentType: file.type, userId: userId }),
       });
 
       if (!res.ok) {
