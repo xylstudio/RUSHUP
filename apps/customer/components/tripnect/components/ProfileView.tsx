@@ -1,4 +1,4 @@
-import { MapPin, Settings, Camera, ChevronRight, Globe, Image, Edit2, Bookmark, Heart, MessageCircle, Map as MapIcon, Award, Briefcase, Sun, Moon, User, ShoppingBag, Grid3x3, Tag, Truck } from 'lucide-react';
+import { MapPin, Settings, Camera, ChevronRight, Globe, Image, Edit2, Bookmark, Heart, MessageCircle, Map as MapIcon, Award, Briefcase, Sun, Moon, User, ShoppingBag, Grid3x3, Tag, Truck, Plus } from 'lucide-react';
 import { useState, useRef, useMemo, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
