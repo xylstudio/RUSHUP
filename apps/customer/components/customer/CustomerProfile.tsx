@@ -7,7 +7,7 @@ import {
   MessageCircle, Settings2, Lock, LogOut, CheckCircle2,
   ArrowRight, ArrowLeft, BellRing, Languages, Smartphone,
   Camera, Briefcase, Building2, Upload, Loader2, Info, Check,
-  Home, Edit3, Trash2, Plus
+  Home, Edit3, Trash2, Plus, ShoppingBag, Heart
 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -130,162 +130,207 @@ const CustomerProfile: React.FC<CustomerProfileProps> = ({
   ]
 
   return (
-    <div className="screen-view h-full overflow-y-auto no-scrollbar pb-32 bg-[#FAFAFA]">
+  // Instagram Grid Items (Dummy data for now, could be replaced with real orders/items)
+  const gridItems = [
+    { id: 1, type: 'order', label: 'Order #1234', icon: <ShoppingBag size={24} /> },
+    { id: 2, type: 'house', label: 'My House', icon: <Home size={24} /> },
+    { id: 3, type: 'report', label: 'Service Report', icon: <Info size={24} /> },
+    { id: 4, type: 'order', label: 'Order #1235', icon: <ShoppingBag size={24} /> },
+    { id: 5, type: 'order', label: 'Order #1236', icon: <ShoppingBag size={24} /> },
+    { id: 6, type: 'house', label: 'Office', icon: <Building2 size={24} /> },
+  ]
+
+  return (
+    <div className="h-full overflow-y-auto no-scrollbar pb-32 bg-white text-gray-900">
       
-      {/* 1. INSTAGRAM STYLE HEADER */}
-      <section className="pt-16 pb-8 px-6 bg-white border-b border-gray-100">
-        <div className="flex justify-between items-start mb-6">
-          <div className="flex-1" />
-          <button 
-            onClick={async () => { await supabase.auth.signOut(); window.location.href = '/'; }}
-            className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-red-500 transition-colors rounded-full"
-          >
-            <LogOut size={20} strokeWidth={1.5} />
-          </button>
+      {/* HEADER (Username and Settings) */}
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 px-4 h-14 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Lock size={16} strokeWidth={2} />
+          <h1 className="text-base font-semibold">{displayName || profile?.email?.split('@')[0] || 'Member'}</h1>
         </div>
-        <div className="flex flex-col items-center text-center">
-          <div className="w-24 h-24 bg-gray-100 text-gray-500 flex items-center justify-center text-4xl rounded-full mb-4 shadow-sm">
-            {displayName ? displayName.charAt(0).toUpperCase() : <User size={40} strokeWidth={1.5} />}
-          </div>
-          <h1 className="text-xl font-semibold text-gray-900 leading-tight">
-            {displayName || copy.memberLabel}
-          </h1>
-          <p className="text-sm text-gray-500 mt-1">
-            {profile?.email}
-          </p>
-        </div>
-      </section>
+        <button 
+          onClick={async () => { await supabase.auth.signOut(); window.location.href = '/'; }}
+          className="w-8 h-8 flex items-center justify-center text-gray-900 hover:text-red-500 transition-colors rounded-full"
+        >
+          <LogOut size={20} strokeWidth={1.5} />
+        </button>
+      </header>
 
       <AnimatePresence mode="wait">
         {activeTab === 'menu' ? (
-          /* 2. MOBILE APP LIST LAYOUT */
           <motion.div 
             key="menu"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="mt-6"
           >
-            {/* Group 1: Personal & Estates */}
-            <div className="px-4 mb-6">
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-2">{copy.accountSettings || 'Account Settings'}</h3>
-              <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+            {/* 1. INSTAGRAM PROFILE TOP SECTION */}
+            <section className="pt-6 px-4">
+              <div className="flex items-center justify-between mb-4">
+                {/* Avatar */}
+                <div className="w-20 h-20 bg-gradient-to-tr from-yellow-400 via-orange-500 to-purple-500 rounded-full p-[2px] flex-shrink-0 cursor-pointer">
+                  <div className="w-full h-full bg-white rounded-full p-[2px]">
+                    <div className="w-full h-full bg-gray-100 rounded-full flex items-center justify-center text-2xl text-gray-400 overflow-hidden">
+                       {profile?.avatar_url ? (
+                         <img src={profile.avatar_url} alt="Profile" className="w-full h-full object-cover" />
+                       ) : (
+                         displayName ? displayName.charAt(0).toUpperCase() : <User size={32} strokeWidth={1.5} />
+                       )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Stats */}
+                <div className="flex-1 flex items-center justify-around ml-6">
+                  <div className="flex flex-col items-center">
+                    <span className="text-lg font-semibold leading-tight">12</span>
+                    <span className="text-xs text-gray-500">Orders</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <span className="text-lg font-semibold leading-tight">2</span>
+                    <span className="text-xs text-gray-500">Places</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <span className="text-lg font-semibold leading-tight">850</span>
+                    <span className="text-xs text-gray-500">Pts</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* BIO SECTION */}
+              <div className="mb-4">
+                <h2 className="font-semibold text-sm leading-tight">{displayName || copy.memberLabel}</h2>
+                <p className="text-sm text-gray-600 mt-0.5">{profile?.email}</p>
+                {address && <p className="text-sm mt-0.5">{address}</p>}
+                {phone && <p className="text-sm text-blue-900 mt-0.5">{phone}</p>}
+              </div>
+
+              {/* ACTIONS */}
+              <div className="flex gap-2 mb-6">
                 <button 
                   onClick={() => setActiveTab('personal')}
-                  className="w-full flex items-center gap-4 p-4 text-left active:bg-gray-50 transition-colors border-b border-gray-50 group"
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 active:scale-95 transition-all text-sm font-semibold rounded-lg py-1.5"
                 >
-                  <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center">
-                    <User size={20} strokeWidth={1.5} />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-base font-medium text-gray-800">{copy.personalInfo || 'Personal Information'}</h4>
-                  </div>
-                  <ArrowRight size={18} strokeWidth={1.5} className="text-gray-300 group-hover:text-gray-500" />
+                  {copy.editPersonalInfo || 'Edit Profile'}
                 </button>
-
-                <Link 
-                  href="/dashboard/customer/houses"
-                  className="w-full flex items-center gap-4 p-4 text-left active:bg-gray-50 transition-colors group"
+                <button 
+                  className="flex-1 bg-gray-100 hover:bg-gray-200 active:scale-95 transition-all text-sm font-semibold rounded-lg py-1.5"
                 >
-                  <div className="w-10 h-10 rounded-full bg-green-50 text-green-500 flex items-center justify-center">
-                    <Home size={20} strokeWidth={1.5} />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="text-base font-medium text-gray-800">{copy.myEstates || 'My Estates'}</h4>
-                  </div>
-                  <ArrowRight size={18} strokeWidth={1.5} className="text-gray-300 group-hover:text-gray-500" />
-                </Link>
+                  Share Profile
+                </button>
               </div>
-            </div>
 
-            {/* Group 2: General Settings */}
-            <div className="px-4 mb-6">
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-2">{copy.generalSettings || 'General Settings'}</h3>
-              <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
-                {menuItems.filter(m => !['personal', 'houses'].includes(m.id)).map((item, index, arr) => (
-                  <button 
-                    key={item.id}
-                    onClick={() => setActiveTab(item.id as ActiveTab)}
-                    className={`w-full flex items-center gap-4 p-4 text-left active:bg-gray-50 transition-colors group ${index < arr.length - 1 ? 'border-b border-gray-50' : ''}`}
+              {/* STORY HIGHLIGHTS (SETTINGS) */}
+              <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2 mb-4">
+                {menuItems.filter(m => m.id !== 'personal').map((item) => (
+                  <div 
+                    key={item.id} 
+                    className="flex flex-col items-center gap-1 cursor-pointer group"
+                    onClick={() => {
+                      if (item.isLink) window.location.href = item.href || '/'
+                      else setActiveTab(item.id as ActiveTab)
+                    }}
                   >
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      item.id === 'line' ? 'bg-[#06C755]/10 text-[#06C755]' :
-                      item.id === 'language' ? 'bg-orange-50 text-orange-500' :
-                      'bg-gray-100 text-gray-600'
-                    }`}>
-                      {item.icon}
+                    <div className="w-16 h-16 rounded-full border border-gray-200 p-0.5 group-active:scale-95 transition-transform">
+                      <div className={`w-full h-full rounded-full flex items-center justify-center ${item.color.split(' ')[0]} ${item.color.split(' ')[1]}`}>
+                        {item.icon}
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-base font-medium text-gray-800">{item.label}</h4>
-                      {item.id === 'line' && (
-                        <p className="text-xs text-gray-500 mt-0.5">{item.sub}</p>
-                      )}
-                    </div>
-                    <ArrowRight size={18} strokeWidth={1.5} className="text-gray-300 group-hover:text-gray-500" />
-                  </button>
+                    <span className="text-[10px] text-gray-900 truncate max-w-[64px] text-center">{item.label}</span>
+                  </div>
                 ))}
               </div>
-            </div>
-            
-            <div className="px-4 pb-8">
-              <button 
-                onClick={async () => { await supabase.auth.signOut(); window.location.href = '/'; }}
-                className="w-full py-4 text-red-500 text-sm font-medium rounded-2xl active:bg-red-50 transition-colors text-center bg-white border border-gray-100 shadow-sm"
-              >
-                {copy.logoutLabel || 'Log Out'}
-              </button>
-            </div>
+            </section>
+
+            {/* CONTENT GRID */}
+            <section className="border-t border-gray-100">
+              <div className="flex justify-around items-center h-12 border-b border-gray-100">
+                 <button className="flex-1 flex justify-center items-center h-full border-b-2 border-gray-900 text-gray-900">
+                    <ShoppingBag size={20} strokeWidth={1.5} />
+                 </button>
+                 <button className="flex-1 flex justify-center items-center h-full text-gray-400">
+                    <Info size={20} strokeWidth={1.5} />
+                 </button>
+                 <button className="flex-1 flex justify-center items-center h-full text-gray-400">
+                    <Heart size={20} strokeWidth={1.5} />
+                 </button>
+              </div>
+              
+              <div className="grid grid-cols-3 gap-0.5 mt-0.5">
+                {gridItems.map((item) => (
+                  <div key={item.id} className="aspect-square bg-gray-100 flex flex-col items-center justify-center text-gray-400 hover:bg-gray-200 transition-colors cursor-pointer">
+                    {item.icon}
+                    <span className="text-[10px] mt-2 font-medium">{item.label}</span>
+                  </div>
+                ))}
+                {/* Fill empty spots if needed to look like a grid */}
+                {[...Array(3)].map((_, i) => (
+                  <div key={`empty-${i}`} className="aspect-square bg-gray-50" />
+                ))}
+              </div>
+            </section>
           </motion.div>
         ) : (
-          /* 3. MOBILE OPTIMIZED EDIT VIEWS */
+          /* EDIT VIEWS */
           <motion.div 
             key="detail"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="mt-6 px-4"
+            className="h-full bg-white relative z-50"
           >
-            {/* Sub Header */}
-            <div className="flex items-center gap-4 mb-6">
-              <button onClick={() => setActiveTab('menu')} className="w-10 h-10 flex items-center justify-center rounded-full active:bg-gray-200 transition-colors">
-                <ArrowLeft size={24} strokeWidth={1.5} className="text-gray-900" />
-              </button>
-              <h2 className="text-xl font-semibold text-gray-900">
-                {activeTab === 'personal' ? (copy.editPersonalInfo || 'Edit Profile') : activeTab === 'line' ? (copy.lineNotificationHeader || 'LINE Notifications') : activeTab === 'language' ? (copy.languageSettingsTitle || 'Language Settings') : (copy.securityLabel || 'Security')}
-              </h2>
-            </div>
+            {/* Header */}
+            <header className="sticky top-0 bg-white border-b border-gray-100 px-4 h-14 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <button onClick={() => setActiveTab('menu')} className="active:opacity-50">
+                  <ArrowLeft size={24} strokeWidth={1.5} />
+                </button>
+                <h1 className="text-base font-semibold">
+                  {activeTab === 'personal' ? (copy.editPersonalInfo || 'Edit Profile') : activeTab === 'line' ? (copy.lineNotificationHeader || 'LINE') : activeTab === 'language' ? (copy.languageSettingsTitle || 'Language') : (copy.securityLabel || 'Security')}
+                </h1>
+              </div>
+            </header>
 
-            <div className="space-y-6">
+            <div className="p-4">
               {activeTab === 'personal' && (
-                <form onSubmit={handleUpdateProfile} className="space-y-6 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
-                  <div className="space-y-5">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-600 px-1">{copy.displayNameLabel || 'Display Name'}</label>
+                <form onSubmit={handleUpdateProfile} className="space-y-6">
+                  {/* Change Avatar Mockup */}
+                  <div className="flex flex-col items-center py-4">
+                    <div className="w-20 h-20 bg-gray-100 text-gray-400 rounded-full flex items-center justify-center mb-4">
+                      {displayName ? displayName.charAt(0).toUpperCase() : <User size={32} strokeWidth={1.5} />}
+                    </div>
+                    <button type="button" className="text-blue-500 font-semibold text-sm">Change profile photo</button>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex flex-col border-b border-gray-200 pb-2">
+                      <label className="text-xs text-gray-500 mb-1">{copy.displayNameLabel || 'Name'}</label>
                       <input 
                         type="text" 
                         value={displayName} 
                         onChange={(e) => setDisplayName(e.target.value)} 
-                        className="w-full bg-gray-50 border border-gray-200 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 rounded-2xl p-4 text-base transition-all outline-none" 
+                        className="text-sm focus:outline-none" 
                         placeholder={copy.displayNamePlaceholder || 'Your Name'}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-600 px-1">{copy.phoneNumberLabel || 'Phone Number'}</label>
+                    <div className="flex flex-col border-b border-gray-200 pb-2">
+                      <label className="text-xs text-gray-500 mb-1">{copy.phoneNumberLabel || 'Phone'}</label>
                       <input 
                         type="tel" 
                         value={phone} 
                         onChange={(e) => setPhone(e.target.value)} 
-                        className="w-full bg-gray-50 border border-gray-200 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 rounded-2xl p-4 text-base transition-all outline-none" 
-                        placeholder={copy.phonePlaceholder || '08X XXX XXXX'}
+                        className="text-sm focus:outline-none" 
+                        placeholder={copy.phonePlaceholder || 'Phone Number'}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium text-gray-600 px-1">{copy.contactAddressLabel || 'Address'}</label>
+                    <div className="flex flex-col border-b border-gray-200 pb-2">
+                      <label className="text-xs text-gray-500 mb-1">{copy.contactAddressLabel || 'Bio / Address'}</label>
                       <textarea 
-                        rows={3} 
+                        rows={2} 
                         value={address} 
                         onChange={(e) => setAddress(e.target.value)} 
-                        className="w-full bg-gray-50 border border-gray-200 focus:border-gray-900 focus:ring-1 focus:ring-gray-900 rounded-2xl p-4 text-base transition-all outline-none resize-none" 
+                        className="text-sm focus:outline-none resize-none" 
                         placeholder={copy.addressPlaceholder || 'Your Address...'}
                       />
                     </div>
@@ -293,31 +338,31 @@ const CustomerProfile: React.FC<CustomerProfileProps> = ({
                   <button 
                     type="submit" 
                     disabled={isSubmitting} 
-                    className="w-full py-4 mt-2 bg-gray-900 text-white rounded-2xl text-base font-medium active:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+                    className="w-full py-3 mt-4 bg-blue-500 text-white rounded-lg text-sm font-semibold active:bg-blue-600 transition-colors flex items-center justify-center gap-2"
                   >
-                    {isSubmitting && <Loader2 size={18} className="animate-spin" />}
-                    {isSubmitting ? (copy.savingChanges || 'Saving...') : (copy.saveChanges || 'Save Changes')}
+                    {isSubmitting && <Loader2 size={16} className="animate-spin" />}
+                    {isSubmitting ? (copy.savingChanges || 'Saving...') : (copy.saveChanges || 'Done')}
                   </button>
                 </form>
               )}
 
               {activeTab === 'line' && (
-                <div className="bg-white border border-gray-100 rounded-3xl p-8 text-center shadow-sm">
+                <div className="text-center pt-8 px-4">
                   <div className="flex justify-center mb-6">
                     <div className={`w-20 h-20 rounded-full flex items-center justify-center ${lineUserId ? 'bg-[#06C755] text-white' : 'bg-gray-100 text-gray-400'}`}>
                       <MessageCircle size={32} strokeWidth={1.5} />
                     </div>
                   </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">LINE Official Connect</h4>
+                  <h4 className="text-lg font-semibold text-gray-900 mb-2">LINE Connect</h4>
                   <p className={`text-sm font-medium mb-4 ${lineUserId ? 'text-[#06C755]' : 'text-gray-500'}`}>
                     {lineUserId ? (copy.serviceConnected || 'Connected') : (copy.notConnected || 'Not Connected')}
                   </p>
                   <p className="text-sm text-gray-500 leading-relaxed mb-8">
-                    {copy.lineConnectDesc || 'Connect with LINE to receive real-time notifications for your garden care services.'}
+                    {copy.lineConnectDesc || 'Connect with LINE to receive real-time notifications for your services.'}
                   </p>
                   <a 
                     href="/api/auth/line/link" 
-                    className={`w-full py-4 text-sm font-semibold rounded-2xl text-center block transition-colors ${lineUserId ? 'bg-gray-100 text-gray-800 active:bg-gray-200' : 'bg-[#06C755] text-white active:bg-[#05b34c]'}`}
+                    className={`w-full py-3 text-sm font-semibold rounded-lg text-center block transition-colors ${lineUserId ? 'bg-gray-100 text-gray-900' : 'bg-[#06C755] text-white'}`}
                   >
                     {lineUserId ? (copy.updateConnection || 'Update Connection') : (copy.connectLineNow || 'Connect LINE')}
                   </a>
@@ -325,34 +370,23 @@ const CustomerProfile: React.FC<CustomerProfileProps> = ({
               )}
 
               {activeTab === 'language' && (
-                <div className="bg-white border border-gray-100 rounded-3xl p-8 text-center shadow-sm">
-                  <div className="flex justify-center mb-6">
-                    <div className="w-20 h-20 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center">
-                      <Languages size={32} strokeWidth={1.5} />
-                    </div>
-                  </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">{copy.languageSettingsTitle || 'Language Settings'}</h4>
-                  <p className="text-sm text-gray-500 mb-8">
-                    {copy.selectLanguageDesc || 'Select your preferred language.'}
-                  </p>
-                  <div className="text-left bg-gray-50 rounded-2xl p-4 border border-gray-100">
-                    <LanguageSettings />
-                  </div>
+                <div className="pt-4">
+                  <LanguageSettings />
                 </div>
               )}
 
               {activeTab === 'security' && (
-                <div className="bg-white border border-gray-100 rounded-3xl p-8 text-center shadow-sm">
+                <div className="pt-8 px-4 text-center">
                   <div className="flex justify-center mb-6">
-                    <div className="w-20 h-20 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center">
-                      <Lock size={32} strokeWidth={1.5} />
+                    <div className="w-16 h-16 rounded-full bg-gray-100 text-gray-900 flex items-center justify-center">
+                      <Lock size={24} strokeWidth={1.5} />
                     </div>
                   </div>
-                  <h4 className="text-lg font-semibold text-gray-900 mb-2">{copy.securityLabel || 'Security'}</h4>
-                  <p className="text-sm text-gray-500 mb-8 leading-relaxed">
-                    {copy.passwordDesc || 'Manage your password to keep your account secure.'}
+                  <h4 className="text-lg font-semibold mb-2">{copy.securityLabel || 'Security'}</h4>
+                  <p className="text-sm text-gray-500 mb-8">
+                    {copy.passwordDesc || 'Manage your password and security settings.'}
                   </p>
-                  <button className="w-full py-4 bg-gray-100 text-gray-800 rounded-2xl text-sm font-semibold active:bg-gray-200 transition-colors">
+                  <button className="w-full py-3 bg-gray-100 text-gray-900 rounded-lg text-sm font-semibold">
                     {copy.changePassword || 'Change Password'}
                   </button>
                 </div>
@@ -362,21 +396,19 @@ const CustomerProfile: React.FC<CustomerProfileProps> = ({
         )}
       </AnimatePresence>
 
-      {/* 4. APP TOAST FEEDBACK */}
+      {/* TOAST FEEDBACK */}
       <AnimatePresence>
         {feedback && (
           <motion.div 
             initial={{ opacity: 0, y: 20 }} 
             animate={{ opacity: 1, y: 0 }} 
             exit={{ opacity: 0, y: 20 }} 
-            className="fixed bottom-24 left-6 right-6 z-[300] flex justify-center"
+            className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[300]"
           >
-            <div className={`px-6 py-3 rounded-full shadow-lg flex items-center gap-3 ${
-              feedback.type === 'success' 
-              ? 'bg-gray-900 text-white' 
-              : 'bg-red-600 text-white'
+            <div className={`px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 ${
+              feedback.type === 'success' ? 'bg-gray-900 text-white' : 'bg-red-500 text-white'
             }`}>
-              {feedback.type === 'success' ? <Check size={18} /> : <Info size={18} />}
+              {feedback.type === 'success' ? <Check size={16} /> : <Info size={16} />}
               <span className="text-sm font-medium">{feedback.message}</span>
             </div>
           </motion.div>
