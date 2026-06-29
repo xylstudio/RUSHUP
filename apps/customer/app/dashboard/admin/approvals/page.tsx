@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { getPendingApprovals, approveUser } from '../../../../../lib/supabaseClient';
+import { getPendingApprovals, approveUser } from '../../../../lib/supabaseClient';
 import { CheckCircleIcon, XCircleIcon, StorefrontIcon, TruckIcon } from '@heroicons/react/24/outline';
-import type { Profile } from '../../../../../lib/supabaseClient';
+import type { Profile } from '../../../../lib/supabaseClient';
 
 export default function ApprovalsPage() {
   const [activeTab, setActiveTab] = useState<'merchant' | 'staff'>('merchant');
