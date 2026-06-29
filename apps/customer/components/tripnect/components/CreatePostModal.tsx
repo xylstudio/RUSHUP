@@ -88,9 +88,10 @@ export function CreatePostModal({ isOpen, onClose, onPostCreated }: CreatePostMo
       onPostCreated();
       onClose();
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error creating post:', error);
-      alert('ไม่สามารถอัปโหลดโพสต์ได้ กรุณาลองใหม่อีกครั้ง');
+      const errMsg = error instanceof Error ? error.message : JSON.stringify(error);
+      alert(`ไม่สามารถอัปโหลดโพสต์ได้: ${errMsg}`);
     } finally {
       setIsUploading(false);
     }
