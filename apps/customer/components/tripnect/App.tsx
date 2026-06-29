@@ -128,7 +128,14 @@ function useLongPress(
   };
 }
 
-export default function App({ services = [], orders = [], profile = null }: { services?: any[], orders?: any[], profile?: any }) {
+interface TripnectAppProps {
+  services?: any[];
+  branches?: any[];
+  orders?: any[];
+  profile?: any;
+}
+
+export default function App({ services = [], branches = [], orders = [], profile = null }: TripnectAppProps) {
   const [dbPosts, setDbPosts] = useState<PostData[]>([]);
   const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
 
@@ -554,6 +561,7 @@ export default function App({ services = [], orders = [], profile = null }: { se
           onClose={() => setShowFoodDelivery(false)} 
           initialSearchQuery={activeCategory === 'food' ? "" : ""}
           services={services}
+          branches={branches}
         />
 
       <MagicRandomizer 

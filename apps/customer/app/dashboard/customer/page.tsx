@@ -84,6 +84,7 @@ import {
   getMarketplacePlants,
   getOrdersWithDetails,
   getPosMenuItems,
+  getBranches,
   supabase,
   type Document,
   type House,
@@ -1276,6 +1277,7 @@ export default function CustomerDashboardPage() {
   const [documents, setDocuments] = useState<Document[]>([])
   const [plants, setPlants] = useState<MarketplacePlant[]>([])
   const [services, setServices] = useState<Service[]>([])
+  const [branches, setBranches] = useState<any[]>([])
   const [priceTemplates, setPriceTemplates] = useState<PriceTemplate[]>([])
   const [progressMap, setProgressMap] = useState<Record<string, ProgressItem>>({})
   const [notifications, setNotifications] = useState<any[]>([])
@@ -1592,6 +1594,7 @@ export default function CustomerDashboardPage() {
         fetchAuthorizedJson<{ data?: PriceTemplate[] }>(`/api/customer/price-templates?_t=${Date.now()}`),
         fetchAuthorizedJson<{ notifications?: any[] }>(`/api/notifications?limit=20&_t=${Date.now()}`),
         getSystemFeatures(),
+        queryData(getBranches()), // results[9]
       ])
 
       if (ignore) return
@@ -1664,6 +1667,13 @@ export default function CustomerDashboardPage() {
       const featuresResult = results[8]
       if (featuresResult.status === 'fulfilled') {
         setFeatures(featuresResult.value?.data || DEFAULT_SYSTEM_FEATURES)
+      }
+
+      const branchesResult = results[9]
+      if (branchesResult.status === 'fulfilled') {
+        setBranches(branchesResult.value?.data || [])
+      } else {
+        setBranches([])
       }
 
       const failedIndexes = results
@@ -2437,6 +2447,6 @@ export default function CustomerDashboardPage() {
   }
 
   return (
-    <TripnectApp services={services} orders={orders} profile={profile} />
+    <TripnectApp services={services} branches={branches} orders={orders} profile={profile} />
   )
 }

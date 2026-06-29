@@ -141,39 +141,44 @@ interface FoodDeliveryModalProps {
   onClose: () => void;
   initialSearchQuery?: string;
   services?: any[];
+  branches?: any[];
 }
 
-export function FoodDeliveryModal({ isOpen, onClose, initialSearchQuery = '', services = [] }: FoodDeliveryModalProps) {
+export function FoodDeliveryModal({ isOpen, onClose, initialSearchQuery = '', services = [], branches = [] }: FoodDeliveryModalProps) {
   // Map RUSHUP services to Restaurants
   const dynamicRestaurants = useMemo(() => {
-    if (!services || services.length === 0) return RESTAURANTS;
+    if (!branches || branches.length === 0) return RESTAURANTS;
     
-    // Group services into a single "RUSHUP Kitchen" restaurant for now, or map each service to a menu item
-    const menuItems = services.map(s => ({
-        id: s.id,
-        name: s.name,
-        description: s.description || '',
-        price: s.price || 0,
-        image: s.image_url || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=600',
-        category: 'All',
-        popular: true
-    }));
+    return branches.map((branch, index) => {
+        // Filter services for this branch
+        const branchServices = services.filter(s => s.branch_id === branch.id || !s.branch_id);
+        
+        const menuItems = branchServices.map(s => ({
+            id: s.id,
+            name: s.name,
+            description: s.description || '',
+            price: s.price || 0,
+            image: s.image_url || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=600',
+            category: 'All',
+            popular: true
+        }));
 
-    return [{
-        id: 'rushup',
-        name: 'RUSHUP Kitchen',
-        rating: 4.9,
-        reviews: 999,
-        time: '15-20 min',
-        deliveryFee: 15,
-        category: 'all',
-        image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80',
-        coverImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80',
-        tags: ['อาหาร', 'เครื่องดื่ม'],
-        distance: '0 km',
-        menu: menuItems
-    }];
-  }, [services]);
+        return {
+            id: branch.id,
+            name: branch.branch_name || 'RUSHUP Kitchen',
+            rating: 4.9,
+            reviews: Math.floor(Math.random() * 500) + 50,
+            time: '15-30 min',
+            deliveryFee: 15,
+            category: index % 2 === 0 ? 'thai' : 'cafe',
+            image: branch.logo_url || 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80',
+            coverImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80',
+            tags: ['อาหาร', 'เครื่องดื่ม'],
+            distance: (Math.random() * 5).toFixed(1) + ' km',
+            menu: menuItems
+        };
+    });
+  }, [services, branches]);
 
   const [view, setView] = useState<'HOME' | 'RESTAURANT' | 'CART' | 'TRACKING'>('HOME');
   const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
