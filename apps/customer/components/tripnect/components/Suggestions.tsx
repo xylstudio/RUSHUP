@@ -45,7 +45,7 @@ export function Suggestions() {
                         <div className="flex flex-col">
                             <span className="text-sm font-bold text-stone-900 group-hover:text-orange-600 transition-colors cursor-pointer">{user.username}</span>
                             <span className="text-[10px] text-stone-400 uppercase tracking-wide font-medium">
-                                {user.rating ? `${user.rating} ยอดเยี่ยม` : 'สมาชิกใหม่ Tripnect'}
+                                {user.rating ? `${user.rating} ยอดเยี่ยม` : 'สมาชิกใหม่ RUSHUP'}
                             </span>
                         </div>
                     </div>

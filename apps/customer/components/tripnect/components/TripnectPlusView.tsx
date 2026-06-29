@@ -1,7 +1,7 @@
 import { Crown, Check, Sparkles, Zap, Shield, Globe, Star, TrendingUp, X } from 'lucide-react';
 import { useState } from 'react';
 
-export function TripnectPlusView() {
+export function RUSHUPPlusView() {
   const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly'>('yearly');
 
   const features = [
@@ -25,7 +25,7 @@ export function TripnectPlusView() {
         <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-3xl mx-auto mb-4 flex items-center justify-center">
           <Crown size={32} strokeWidth={1.5} />
         </div>
-        <h1 className="text-2xl font-bold mb-2">Tripnect Plus</h1>
+        <h1 className="text-2xl font-bold mb-2">RUSHUP Plus</h1>
         <p className="text-white/90 text-sm">ปลดล็อกประสบการณ์เต็มรูปแบบ</p>
       </div>
 

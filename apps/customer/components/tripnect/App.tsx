@@ -29,7 +29,7 @@ import { BookingWidget } from './components/BookingWidget';
 
 // Import new views
 import { ProfileView } from './components/ProfileView';
-import { TripnectPlusView } from './components/TripnectPlusView';
+import { RUSHUPPlusView } from './components/RUSHUPPlusView';
 import { SavedReviewsView } from './components/SavedReviewsView';
 import { MyPostsView } from './components/MyPostsView';
 import { SettingsView } from './components/SettingsView';
@@ -196,7 +196,7 @@ export default function App({ services = [], orders = [], profile = null }: { se
   const [showRideModal, setShowRideModal] = useState(false);
   const [showPassport, setShowPassport] = useState(false);
 
-  // Map RUSHUPAPP services (pos_menu_items) to Tripnect POSTS format
+  // Map RUSHUPAPP services (pos_menu_items) to RUSHUP POSTS format
   const dynamicPosts: PostData[] = useMemo(() => {
     if (!services || services.length === 0) return [];
     return services.map((item, index) => ({
@@ -354,12 +354,12 @@ export default function App({ services = [], orders = [], profile = null }: { se
       case 'mail': return "ข้อความ";
       case 'trip': return "ค้นหา"; 
       case 'profile': return "โปรไฟล์";
-      case 'plus': return "Tripnect Plus";
+      case 'plus': return "RUSHUP Plus";
       case 'saved': return "รีวิวที่บันทึก";
       case 'myposts': return "รายการที่สร้าง";
       case 'settings': return "การตั้งค่า";
       case 'help': return "ศูนย์ช่วยเหลือ";
-      default: return "Tripnect";
+      default: return "RUSHUP";
     }
   };
 
@@ -495,7 +495,7 @@ export default function App({ services = [], orders = [], profile = null }: { se
             {activeTab === 'wallet' && <WalletView />}
             {activeTab === 'trip' && <ExploreView />}
             {activeTab === 'profile' && <ProfileView />}
-            {activeTab === 'plus' && <TripnectPlusView />}
+            {activeTab === 'plus' && <RUSHUPPlusView />}
             {activeTab === 'saved' && <SavedReviewsView />}
             {activeTab === 'myposts' && <MyPostsView />}
             {activeTab === 'settings' && <SettingsView />}

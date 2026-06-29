@@ -3,7 +3,7 @@ import React from 'react';
 import { useAuth } from '../../../lib/AuthContext';
 import { clsx } from 'clsx';
 import { motion } from 'framer-motion';
-import { TripnectLogo } from './Logo';
+import { RUSHUPLogo } from './Logo';
 
 // --- Mobile Sidebar Component (Unchanged) ---
 export function MobileSidebar({ onClose, onOpenPassport, onNavigate }: { onClose: () => void; onOpenPassport?: () => void; onNavigate?: (tab: string) => void }) {
@@ -14,8 +14,8 @@ export function MobileSidebar({ onClose, onOpenPassport, onNavigate }: { onClose
 
     const menuItems = [
         { icon: User, label: 'ข้อมูลส่วนตัว', href: '#', action: 'profile' },
-        { icon: Globe, label: 'Tripnect Passport', href: '#', highlight: true, action: 'passport' },
-        { icon: Star, label: 'Tripnect Plus', href: '#', action: 'plus' },
+        { icon: Globe, label: 'RUSHUP Passport', href: '#', highlight: true, action: 'passport' },
+        { icon: Star, label: 'RUSHUP Plus', href: '#', action: 'plus' },
         { icon: Sparkles, label: 'รีวิวที่บันทึกไว้', href: '#', action: 'saved' },
         { icon: FileText, label: 'รายการที่สร้าง', href: '#', action: 'myposts' },
     ];

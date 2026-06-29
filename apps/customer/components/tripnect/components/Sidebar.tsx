@@ -38,7 +38,7 @@ export function Sidebar({ className, onCreateClick }: SidebarProps) {
     <div className={clsx("flex flex-col h-full border-r border-stone-100 bg-white p-3 pt-8 pb-5 fixed w-64 hidden md:flex z-50", className)}>
       <div className="mb-10 px-6">
         <h1 className="font-sans text-3xl font-bold tracking-tighter text-black hidden xl:block">
-           Tripnect<span className="text-orange-600">.</span>
+           RUSHUP<span className="text-orange-600">.</span>
         </h1>
         <div className="xl:hidden p-2 flex justify-center">
              <span className="text-black text-xl font-bold">T<span className="text-orange-600">.</span></span>

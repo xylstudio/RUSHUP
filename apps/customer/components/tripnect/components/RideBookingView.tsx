@@ -44,7 +44,7 @@ export function RideBookingView({ onClose }: { onClose?: () => void }) {
           {/* Logo */}
           <div className="flex justify-center items-center h-full flex-1">
             <h1 className="font-sans text-xl font-black tracking-tighter text-slate-900">
-              Tripnect<span className="text-orange-500">.</span>
+              RUSHUP<span className="text-orange-500">.</span>
             </h1>
           </div>
 
@@ -61,7 +61,7 @@ export function RideBookingView({ onClose }: { onClose?: () => void }) {
       <div className="bg-gradient-to-r from-orange-400 to-orange-500 pt-4 pb-4 px-4">
         <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-lg flex items-center justify-between">
           <div>
-            <h2 className="text-orange-600 font-bold text-lg">Tripnect Saver</h2>
+            <h2 className="text-orange-600 font-bold text-lg">RUSHUP Saver</h2>
             <p className="text-gray-600 text-sm">ราคาใหม่! ถูกกว่าวิส</p>
           </div>
           <div className="relative w-24 h-24 bg-gradient-to-br from-orange-100 to-orange-200 rounded-xl flex items-center justify-center">

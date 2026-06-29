@@ -44,7 +44,7 @@ interface MobileHeaderProps {
 }
 
 export function MobileHeader({ 
-  title = "Tripnect", 
+  title = "RUSHUP", 
   onOpenSidebar,
   isHome = false,
   homeTab = 'foryou', 
@@ -59,7 +59,7 @@ export function MobileHeader({
     "ค้นหาที่พักริมทะเล...",
     "ทริปดำน้ำสุดพิเศษ...",
     "รถเช่าราคาประหยัด...",
-    "Tripnect ครบ จบ ทุกเรื่องเที่ยว..."
+    "RUSHUP ครบ จบ ทุกเรื่องเที่ยว..."
   ];
   
   const typewriterText = useTypewriter(phrases);
@@ -84,7 +84,7 @@ export function MobileHeader({
                 {/* Title or Home Tabs */}
                 <div className="flex justify-center items-center h-full flex-1">
                     <h1 className="font-sans text-xl font-black tracking-tighter text-slate-900 dark:text-stone-100">
-                        Tripnect<span className="text-orange-500">.</span>
+                        RUSHUP<span className="text-orange-500">.</span>
                     </h1>
                 </div>
 

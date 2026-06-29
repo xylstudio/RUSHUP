@@ -119,7 +119,7 @@ export function SettingsView() {
 
         {/* Version */}
         <div className="text-center pt-4 pb-2">
-          <p className="text-xs text-slate-400">Tripnect v2.0.1</p>
+          <p className="text-xs text-slate-400">RUSHUP v2.0.1</p>
         </div>
       </div>
     </div>

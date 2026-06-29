@@ -139,7 +139,7 @@ export function PassportModal({ isOpen, onClose }: PassportModalProps) {
 
               {/* Footer */}
               <div className="p-4 border-t border-white/5 bg-black/20 text-center">
-                 <p className="text-[10px] text-stone-600 font-mono">Tripnect Authority • Valid Worldwide</p>
+                 <p className="text-[10px] text-stone-600 font-mono">RUSHUP Authority • Valid Worldwide</p>
               </div>
 
             </div>

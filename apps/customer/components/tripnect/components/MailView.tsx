@@ -40,7 +40,7 @@ const CHATS: Chat[] = [
   },
   {
     id: 2,
-    name: 'Tripnect Support',
+    name: 'RUSHUP Support',
     message: 'ขอบคุณที่ใช้บริการค่ะ 🙏',
     time: '12:30',
     unread: 0,

@@ -146,7 +146,7 @@ export function WalletView() {
                      <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
                         <CreditCard className="w-4 h-4 text-white" />
                      </div>
-                     <span className="text-[15px] font-medium text-white tracking-wide">Tripnect Pay</span>
+                     <span className="text-[15px] font-medium text-white tracking-wide">RUSHUP Pay</span>
                 </div>
                 
                 <div className="flex justify-between items-end relative z-10">

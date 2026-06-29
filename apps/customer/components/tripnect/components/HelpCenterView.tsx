@@ -28,7 +28,7 @@ export function HelpCenterView() {
       ]
     },
     {
-      title: 'Tripnect Plus',
+      title: 'RUSHUP Plus',
       questions: [
         'ประโยชน์ของ Plus',
         'วิธีสมัครและยกเลิก',

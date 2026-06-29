@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-export function TripnectLogo({ size = 40, className = "", onClick }: { size?: number, className?: string, onClick?: () => void }) {
+export function RUSHUPLogo({ size = 40, className = "", onClick }: { size?: number, className?: string, onClick?: () => void }) {
   return (
     <motion.div 
       className={`relative flex items-center justify-center ${onClick ? 'cursor-pointer' : ''} ${className}`} 
