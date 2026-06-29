@@ -180,6 +180,7 @@ export function FoodDeliveryModal({ isOpen, onClose, initialSearchQuery = '', se
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
+  const [isCheckingOut, setIsCheckingOut] = useState(false);
 
   // Reset state when closed or opened with query
   useEffect(() => {
@@ -625,10 +626,41 @@ export function FoodDeliveryModal({ isOpen, onClose, initialSearchQuery = '', se
               {/* Bottom Action */}
               <div className="fixed bottom-0 left-0 right-0 bg-white p-4 pb-10 border-t border-stone-100 z-30">
                   <button 
-                    onClick={() => setView('TRACKING')}
-                    className="w-full h-14 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-2xl font-bold text-lg shadow-lg shadow-orange-200 active:scale-[0.98] transition-transform flex items-center justify-center gap-2 mb-20 md:mb-0"
+                    disabled={isCheckingOut}
+                    onClick={async () => {
+                        setIsCheckingOut(true);
+                        try {
+                            const payload = {
+                                items: cart.map(item => ({
+                                    id: item.id,
+                                    sale_price: item.price,
+                                    quantity: item.quantity
+                                })),
+                                orderType: 'delivery',
+                                deliveryAddress: 'คอนโดของคุณ (สุขุมวิท 55)',
+                                deliveryFee: fee,
+                                customerName: 'Customer',
+                                phoneNumber: '0800000000',
+                                branchId: selectedRestaurant?.id === 'rushup' ? null : selectedRestaurant?.id
+                            };
+                            const res = await fetch('/api/checkout', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(payload)
+                            });
+                            if (!res.ok) throw new Error('Checkout failed');
+                            setView('TRACKING');
+                            setCart([]); // Clear cart after success
+                        } catch (err) {
+                            console.error(err);
+                            alert('ไม่สามารถทำการสั่งซื้อได้ในขณะนี้');
+                        } finally {
+                            setIsCheckingOut(false);
+                        }
+                    }}
+                    className="w-full h-14 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-2xl font-bold text-lg shadow-lg shadow-orange-200 active:scale-[0.98] transition-transform flex items-center justify-center gap-2 mb-20 md:mb-0 disabled:opacity-50"
                   >
-                      <span>สั่งเลย</span>
+                      <span>{isCheckingOut ? 'กำลังดำเนินการ...' : 'สั่งเลย'}</span>
                       <span className="bg-white/20 px-2 py-0.5 rounded text-sm">฿{total}</span>
                   </button>
               </div>

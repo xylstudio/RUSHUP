@@ -1,4 +1,4 @@
-import { Heart, MessageCircle, Bookmark, MoreHorizontal, Play, ArrowRight, Car, Share2, User } from 'lucide-react';
+import { Heart, MessageCircle, Bookmark, MoreHorizontal, Play, ArrowRight, Car, Share2, User, ShoppingBag } from 'lucide-react';
 import { PostData } from '../data';
 import { useState } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -127,20 +127,20 @@ export function Post({ post, onVideoClick, onBookingClick, onRideClick, onCommen
           {/* Clean Booking (No Button Look) */}
           <div className="flex flex-col items-end gap-1 pl-2">
              <div className="flex items-center gap-2">
-
-
-                 <button 
-                    className="h-11 pl-6 pr-2 bg-orange-50 hover:bg-orange-100 rounded-full flex items-center justify-between gap-3 active:scale-95 transition-all group cursor-pointer"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onBookingClick(post);
-                    }}
-                 >
-                    <span className="text-xs font-bold text-orange-900 uppercase tracking-widest">จอง</span>
-                    <div className="w-8 h-8 rounded-full bg-orange-500 shadow-md shadow-orange-200 flex items-center justify-center text-white group-hover:scale-110 group-hover:rotate-[-15deg] transition-all duration-300">
-                        <ArrowRight className="w-4 h-4" />
-                    </div>
-                </button>
+                 {post.price ? (
+                   <button 
+                      className="h-11 pl-6 pr-2 bg-orange-50 hover:bg-orange-100 rounded-full flex items-center justify-between gap-3 active:scale-95 transition-all group cursor-pointer"
+                      onClick={(e) => {
+                          e.stopPropagation();
+                          onBookingClick(post);
+                      }}
+                   >
+                      <span className="text-xs font-bold text-orange-900 uppercase tracking-widest">สั่งซื้อ</span>
+                      <div className="w-8 h-8 rounded-full bg-orange-500 shadow-md shadow-orange-200 flex items-center justify-center text-white group-hover:scale-110 group-hover:rotate-[-15deg] transition-all duration-300">
+                          <ShoppingBag className="w-4 h-4" />
+                      </div>
+                  </button>
+                 ) : null}
              </div>
              <span className="text-xs font-medium text-slate-400 mr-2">฿{post.price?.toLocaleString() || '1,290'}</span>
           </div>

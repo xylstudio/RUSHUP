@@ -458,7 +458,13 @@ export default function App({ services = [], orders = [], profile = null }: { se
                               const videoIndex = videoOnlyPosts.findIndex(p => p.id === videoPost.id);
                               setSelectedVideoIndex(videoIndex >= 0 ? videoIndex : 0);
                             }}
-                            onBookingClick={setSelectedBookingPost}
+                            onBookingClick={(post) => {
+                                if (post.price) {
+                                    setShowFoodDelivery(true);
+                                } else {
+                                    setSelectedBookingPost(post);
+                                }
+                            }}
                             onRideClick={() => setShowRideModal(true)}
                             onCommentsOpenChange={setIsCommentsModalOpen}
                             onShareOpenChange={setIsShareModalOpen}
