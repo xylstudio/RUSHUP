@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../contexts/ThemeContext';
+import { useAuth } from '../../../../lib/AuthContext';
+import { updateProfileAvatar } from '../../../../lib/supabaseClient';
+import { useRef } from 'react';
 
 interface TravelBadge {
   id: number;
@@ -113,12 +116,69 @@ const totalDistricts = CHIANG_MAI_DISTRICTS.length;
 
 export function ProfileView() {
   const [activeTab, setActiveTab] = useState<'trips' | 'map' | 'badges' | 'bucket'>('trips');
-  const { theme, toggleTheme } = useTheme();
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
-  const viewingUser = CURRENT_USER;
+  const { theme, toggleTheme } = useTheme();
+  const { profile } = useAuth();
+  
+  // Maps DB profile to component expected structure
+  const viewingUser = profile ? {
+    id: profile.id,
+    fullName: profile.first_name ? `${profile.first_name} ${profile.last_name || ''}`.trim() : 'นักเดินทางไร้นาม',
+    username: profile.first_name ? profile.first_name.toLowerCase() : 'traveler',
+    avatarUrl: profile.avatar_url || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800',
+  } : null;
+
   const isOwnProfile = true;
   
-  const userPosts = POSTS?.filter(post => post?.user?.username === viewingUser?.username) || [];
+  const userPosts = POSTS?.filter(post => post?.user?.username === CURRENT_USER?.username) || [];
+
+  const handleAvatarClick = () => {
+    if (isOwnProfile && fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !profile?.id) return;
+    
+    try {
+      setIsUploading(true);
+      
+      // 1. Get presigned URL
+      const res = await fetch('/api/upload/presign', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: file.name, contentType: file.type }),
+      });
+      
+      if (!res.ok) throw new Error('Failed to get upload URL');
+      const { presignedUrl, finalUrl } = await res.json();
+      
+      // 2. Upload to Cloudflare R2
+      const uploadRes = await fetch(presignedUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type },
+        body: file,
+      });
+      
+      if (!uploadRes.ok) throw new Error('Failed to upload file to Cloudflare');
+      
+      // 3. Update Supabase Profile
+      await updateProfileAvatar(profile.id, finalUrl);
+      
+      // Force reload to see changes (in a real app, you might update context state instead)
+      window.location.reload();
+      
+    } catch (error) {
+      console.error('Error uploading avatar:', error);
+      alert('ไม่สามารถอัปโหลดรูปภาพได้ กรุณาลองใหม่อีกครั้ง');
+    } finally {
+      setIsUploading(false);
+    }
+  };
   
   const travelStats = {
     districts: visitedDistricts.length,
@@ -139,7 +199,7 @@ export function ProfileView() {
   };
 
   if (!viewingUser) {
-    return <div className="min-h-screen bg-white dark:bg-stone-950 flex items-center justify-center">Loading...</div>;
+    return <div className="min-h-screen bg-white dark:bg-stone-950 flex items-center justify-center text-stone-500">กำลังโหลดข้อมูลโปรไฟล์...</div>;
   }
 
   return (
@@ -183,9 +243,22 @@ export function ProfileView() {
               <span className="text-[11px] font-black text-white">Lv.{travelStats.level}</span>
             </div>
             {isOwnProfile && (
-              <button className="absolute -bottom-2 -right-2 w-9 h-9 bg-stone-900 dark:bg-orange-500 rounded-full flex items-center justify-center hover:bg-stone-800 dark:hover:bg-orange-600 transition-colors shadow-lg border-[3px] border-white dark:border-stone-950">
-                <Camera size={14} className="text-white" strokeWidth={2.5} />
-              </button>
+              <>
+                <input 
+                  type="file" 
+                  ref={fileInputRef} 
+                  onChange={handleFileChange} 
+                  accept="image/*" 
+                  className="hidden" 
+                />
+                <button 
+                  onClick={handleAvatarClick}
+                  disabled={isUploading}
+                  className={`absolute -bottom-2 -right-2 w-9 h-9 bg-stone-900 dark:bg-orange-500 rounded-full flex items-center justify-center hover:bg-stone-800 dark:hover:bg-orange-600 transition-colors shadow-lg border-[3px] border-white dark:border-stone-950 ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                  <Camera size={14} className="text-white" strokeWidth={2.5} />
+                </button>
+              </>
             )}
           </div>
 

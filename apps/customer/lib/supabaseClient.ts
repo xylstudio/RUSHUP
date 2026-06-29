@@ -3416,3 +3416,15 @@ export const approveUser = async (userId: string): Promise<{ error: any }> => {
   }
 };
 
+export const updateProfileAvatar = async (userId: string, avatarUrl: string) => {
+  try {
+    const { error } = await supabase
+      .from('profiles')
+      .update({ avatar_url: avatarUrl })
+      .eq('id', userId);
+    return { error };
+  } catch (error) {
+    return { error };
+  }
+};
+
